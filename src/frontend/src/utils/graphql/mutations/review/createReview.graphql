@@ -1,0 +1,11 @@
+mutation CreateReview($input: ReviewInput!) {
+    createReview(input: $input) {
+        id
+        createdAt
+        updatedAt
+        text
+        score
+        creatorId
+        referenceId
+    }
+}

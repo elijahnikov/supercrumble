@@ -1,0 +1,5 @@
+query Review($id: String!) {
+    review(id: $id) {
+        ...ReviewSnippet
+    }
+}

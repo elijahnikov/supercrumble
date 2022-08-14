@@ -1,0 +1,6 @@
+mutation UpdateReview($referenceId: String!, $text: String!) {
+    updateReview(referenceId: $referenceId, text: $text) {
+        id
+        text
+    }
+}

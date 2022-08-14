@@ -1,3 +1,4 @@
+import Layout from '@/components/Common/Layout/Layout';
 import NavBar from '@/components/Common/NavBar/NavBar';
 import { useMeQuery } from '@/generated/graphql';
 import { withApollo } from '@/utils/withApollo';
@@ -8,7 +9,9 @@ const HomePage = () => {
     const {data, loading, error} = useMeQuery()
 
     return (
-        <NavBar userData={data!!}/>
+        <Layout>
+            <h1>test</h1>
+        </Layout>
     )
 }
 

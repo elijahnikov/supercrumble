@@ -1,0 +1,3 @@
+mutation ReviewCommentVote($value: Int!, $reviewCommentId: Int!) {
+    reviewCommentVote(value: $value, reviewCommentId: $reviewCommentId)
+}

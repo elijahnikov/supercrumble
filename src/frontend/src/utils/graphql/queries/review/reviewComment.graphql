@@ -1,0 +1,5 @@
+query ReviewComment($id: Int!) {
+    reviewComment(id: $id) {
+        ...ReviewCommentSnippet
+    }
+}

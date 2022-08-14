@@ -1,0 +1,17 @@
+fragment ReviewCommentSnippet on ReviewComment {
+    id
+    parentId
+    creatorId
+    reviewId
+    text
+    score
+    voteStatus
+    createdAt
+    updatedAt
+    creator {
+        id
+        username
+        displayName
+        avatar
+    }
+}

@@ -1,0 +1,26 @@
+query Reviews($limit: Int!, $cursor: String, $text: String) {
+    reviews(limit: $limit, cursor: $cursor, text: $text) {
+        hasMore
+        reviews {
+            id
+            referenceId
+            movieId
+            text
+            movie_poster
+            movie_title
+            movie_release_year
+            ratingGiven
+            score
+            createdAt
+            updatedAt
+            voteStatus
+            noOfComments
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+    }
+}

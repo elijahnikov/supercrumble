@@ -1,0 +1,15 @@
+fragment UserFragment on User {
+    id
+    username
+    displayName
+    email
+    avatar
+    bio
+    bioLink
+    totalFilmsWatched
+    totalHoursWatched
+    createdAt
+    updatedAt
+    usernameChangeDate
+    onboarded
+}

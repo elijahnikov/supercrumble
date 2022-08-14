@@ -1,0 +1,6 @@
+mutation SignS3($filetype:String!, $filename:String!){
+  signS3(filetype:$filetype, filename:$filename){
+    signedRequest
+    url
+  }
+}

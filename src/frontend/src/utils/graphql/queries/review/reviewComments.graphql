@@ -1,0 +1,8 @@
+query ReviewComments($limit: Int!, $cursor: String, $reviewId: Int!) {
+    reviewComments(limit: $limit, cursor: $cursor, reviewId: $reviewId) {
+        hasMore
+        reviewComments {
+            ...ReviewCommentSnippet
+        }
+    }
+}

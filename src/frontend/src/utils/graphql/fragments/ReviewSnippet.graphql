@@ -1,0 +1,22 @@
+fragment ReviewSnippet on Review {
+    id
+    referenceId
+    movieId
+    text
+    movie_poster
+    movie_title
+    movie_release_year
+    ratingGiven
+    score
+    containsSpoilers
+    createdAt
+    updatedAt
+    voteStatus
+    noOfComments
+    creator {
+        id
+        username
+        displayName
+        avatar
+    }
+}

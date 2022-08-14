@@ -1,0 +1,16 @@
+mutation CreateReviewComment($input: ReviewCommentInput!) {
+    createReviewComment(input: $input) {
+        id
+        parentId
+        reviewId
+        text
+        createdAt
+        updatedAt
+        creator {
+            id
+            username
+            displayName
+            avatar
+        }
+    }
+}

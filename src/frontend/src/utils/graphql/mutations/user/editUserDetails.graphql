@@ -1,0 +1,5 @@
+mutation EditUserDetails($input: UserDetailsInput!) {
+    editUserDetails(input: $input) {
+        ...UserResponse
+    }
+}
