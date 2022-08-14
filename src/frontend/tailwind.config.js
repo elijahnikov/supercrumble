@@ -4,8 +4,14 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: "class",
   theme: {
     extend: {
+      screens: {
+        navBar: '1900px',
+        navBarCollapse: '1000px',
+        navBarCollapse2x: '500px'
+      },
       fontFamily: {
         primary: ['Inter', ...fontFamily.sans],
       },
@@ -24,6 +30,13 @@ module.exports = {
           900: 'rgb(var(--tw-color-primary-900) / <alpha-value>)',
         },
         dark: '#222222',
+        crumble: {
+          100: '#171B23',
+          200: '#0C1117',
+          300: '#02040A'
+        },
+        superRed: '#FD4443',
+        superBorder: '#2B2B2B'
       },
       keyframes: {
         flicker: {

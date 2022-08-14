@@ -28,6 +28,38 @@
   /* #endregion  /**======== Primary Color =========== */
 }
 
+@layer components {
+
+  .navBar-links-container {
+      @apply hover:cursor-pointer hover:text-white 
+           text-gray-400 flex mb-7 bg-none navBar:w-[70%] 
+           w-[55px] navBar:mr-[2vw] ml-[20px] 
+           hover:bg-crumble-100 p-1 rounded-md pr-4
+  }
+
+  .navBar-links-icon-container {
+      @apply rounded-full fill-white p-2 hover:cursor-pointer 
+              navBar:hover:bg-transparent
+  }
+
+  .navBar-links-text {
+      @apply invisible ml-2 mt-[7px] font-semibold navBar:visible
+  }
+
+  .navBar-create-review-container {
+      @apply hover:cursor-pointer hover:text-white 
+      text-white flex mb-7 bg-scRed navBar:w-[70%] 
+      w-[55px] navBar:mr-[2vw] ml-[20px] 
+      hover:bg-red-400 rounded-full p-1
+  }
+
+  .navBar-create-review-icon-container {
+      @apply rounded-full fill-white p-2 hover:cursor-pointer 
+    navBar:hover:bg-transparent ml-0 navBar:ml-2
+  }
+
+}
+
 @layer base {
   /* inter var - latin */
   @font-face {
@@ -68,6 +100,10 @@
   h4,
   .h4 {
     @apply font-primary text-base font-bold md:text-lg;
+  }
+
+  html {
+    @apply bg-crumble-300
   }
 
   body,
