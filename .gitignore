@@ -9,6 +9,8 @@ node_modules
 /.next/
 /out/
 
+src/frontend/build
+src/backend/build
 /build
 
 .DS_Store
