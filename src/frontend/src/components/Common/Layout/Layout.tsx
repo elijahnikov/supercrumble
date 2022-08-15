@@ -1,5 +1,7 @@
 import { useMeQuery } from '@/generated/graphql';
-import * as React from 'react';
+import { useState } from 'react';
+import { BiSearch } from 'react-icons/bi';
+import InputField from '../InputField/InputField';
 import MainNavBar from '../NavBar/NavBar';
 
 interface LayoutProps {
@@ -8,14 +10,28 @@ interface LayoutProps {
 
 const Layout = ({children}: LayoutProps) => {
 
+    const [searchTerm, setSearchTerm] = useState("")
+
     const {data, loading, error} = useMeQuery()
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value)
+    }
 
     return (
         <div> 
             <div className='z-10'>
                 <MainNavBar userData={data!!}/>
             </div>
-            <div className='navBarCollapse:w-[60%] navBarCollapse:left-[20vw] absolute left-[13vw] float-left w-[70%] h-[100%] border-r-[1px] border-l-[1px] border-crumble-100'>
+            <div className='layout-container'>
+                <div className='w-[70%] mx-auto mt-5'>
+                    <InputField 
+                        placeholder='search for anything' 
+                        name='search' 
+                        type='text' 
+                        onChangeHandler={handleSearch}
+                    />
+                </div>
                 {children}
             </div>
         </div>

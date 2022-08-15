@@ -58,6 +58,14 @@
     navBar:hover:bg-transparent ml-0 navBar:ml-2
   }
 
+  .layout-container { 
+    @apply navBarCollapse:w-[60%] 
+      navBarCollapse:left-[20vw]  
+      absolute left-[13vw] float-left 
+      w-[70%] h-[100%] border-crumble-100
+      text-white
+  }
+
 }
 
 @layer base {

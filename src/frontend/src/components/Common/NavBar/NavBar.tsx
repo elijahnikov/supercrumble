@@ -191,11 +191,10 @@ const MainNavBar = ({userData}: MainNavBarProps) => {
                                         <u.icon />
                                     </div>
                                     {u.showTooltip &&
-                                        <div className='absolute left-[120px] mb-[20px] text-md bg-crumble-200 p-2 rounded-md'>
+                                        <div className='absolute left-[120px] mb-[20px] text-md bg-crumble-100 p-2 rounded-md'>
                                             {u.title}
                                         </div>  
-                                    }
-                                    
+                                    }   
                                 </div>
                             ))}
                         </div>

@@ -10,7 +10,6 @@ const HomePage = () => {
 
     return (
         <Layout>
-            <h1>test</h1>
         </Layout>
     )
 }
