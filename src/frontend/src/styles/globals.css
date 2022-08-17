@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+svg.star-svg { 
+  display: inline-block;
+}
+
 :root {
   /* #region  /**=========== Primary Color =========== */
   /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
@@ -48,7 +53,7 @@
 
   .navBar-create-review-container {
       @apply hover:cursor-pointer hover:text-white 
-      text-white flex mb-7 bg-scRed navBar:w-[70%] 
+      text-white flex mb-7 bg-superRed navBar:w-[70%] 
       w-[55px] navBar:mr-[2vw] ml-[20px] 
       hover:bg-red-400 rounded-full p-1
   }
@@ -64,6 +69,33 @@
       absolute left-[13vw] float-left 
       w-[70%] h-[100%] border-crumble-100
       text-white
+  }
+
+  .spoilerCheckbox {
+    @apply
+    appearance-none h-4 w-4 border
+    border-gray-700 rounded-sm
+    bg-gray-800 checked:bg-superRed
+    focus:outline-none transition mt-1
+    float-left mr-2 cursor-pointer
+  }
+
+  .handleCreateReview {
+    @apply w-full inline-flex justify-center 
+    rounded-md border border-transparent shadow-sm 
+    px-4 py-2 bg-red-600 text-base font-medium text-white
+    hover:bg-red-700 focus:outline-none focus:ring-2 
+    focus:ring-offset-2 focus:ring-red-500 
+    sm:ml-3 sm:w-auto sm:text-sm
+  }
+
+  .cancelCreateReview {
+    @apply mt-3 w-full inline-flex justify-center 
+    rounded-md border border-gray-300 shadow-sm 
+    px-4 py-2 bg-white text-base font-medium 
+    text-gray-700 hover:bg-gray-50 focus:outline-none 
+    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
+    sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
   }
 
 }

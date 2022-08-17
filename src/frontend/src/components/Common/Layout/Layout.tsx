@@ -6,9 +6,12 @@ import MainNavBar from '../NavBar/NavBar';
 
 interface LayoutProps {
     children: React.ReactNode;
+    title?: string;
+    showNavBar?: boolean;
+    showSearch?: boolean
 }
 
-const Layout = ({children}: LayoutProps) => {
+const Layout = ({children, ...props}: LayoutProps) => {
 
     const [searchTerm, setSearchTerm] = useState("")
 
@@ -20,18 +23,23 @@ const Layout = ({children}: LayoutProps) => {
 
     return (
         <div> 
-            <div className='z-10'>
-                <MainNavBar userData={data!!}/>
-            </div>
-            <div className='layout-container'>
-                <div className='w-[70%] mx-auto mt-5'>
-                    <InputField 
-                        placeholder='search for anything' 
-                        name='search' 
-                        type='text' 
-                        onChangeHandler={handleSearch}
-                    />
+            {props.showNavBar ? (
+                <div className='z-10'>
+                    <MainNavBar userData={data!!}/>
                 </div>
+            ) : null}
+            <div className='layout-container'>
+                {props.showSearch ? (
+                    <div className='w-[70%] mx-auto mt-5'>
+                        <InputField 
+                            placeholder='search for anything' 
+                            name='search' 
+                            type='text' 
+                            onChangeHandler={handleSearch}
+                        />
+                    </div>
+                ) : null}
+                {props.title && <h2 className='ml-[180px] mt-5 mb-[-20px]'>{props.title}</h2>}
                 {children}
             </div>
         </div>

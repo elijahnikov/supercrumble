@@ -9,6 +9,8 @@ node_modules
 /.next/
 /out/
 
+src/frontend/dist
+src/backend/dist
 src/frontend/build
 src/backend/build
 /build
