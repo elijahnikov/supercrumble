@@ -21,9 +21,35 @@ export type FieldError = {
   message: Scalars['String'];
 };
 
+export type FilmInput = {
+  backdropPath: Scalars['String'];
+  movieId: Scalars['Float'];
+  movieTitle: Scalars['String'];
+  overview: Scalars['String'];
+  posterPath: Scalars['String'];
+  releaseDate: Scalars['String'];
+};
+
+export type Films = {
+  __typename?: 'Films';
+  backdropPath: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['Float'];
+  likeCount: Scalars['Float'];
+  listCount: Scalars['Float'];
+  movieId: Scalars['Float'];
+  movieTitle: Scalars['String'];
+  overview: Scalars['String'];
+  posterPath: Scalars['String'];
+  releaseDate: Scalars['String'];
+  updatedAt: Scalars['String'];
+  watchCount: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   changeUsername?: Maybe<UserResponse>;
+  createFilm: Films;
   createReview: Review;
   createReviewComment: ReviewComment;
   deleteReview: Scalars['Boolean'];
@@ -43,6 +69,11 @@ export type Mutation = {
 
 export type MutationChangeUsernameArgs = {
   input: NewUsernameInput;
+};
+
+
+export type MutationCreateFilmArgs = {
+  input: FilmInput;
 };
 
 
@@ -306,6 +337,13 @@ export type ReviewCommentVoteMutationVariables = Exact<{
 
 
 export type ReviewCommentVoteMutation = { __typename?: 'Mutation', reviewCommentVote: boolean };
+
+export type CreateFilmMutationVariables = Exact<{
+  input: FilmInput;
+}>;
+
+
+export type CreateFilmMutation = { __typename?: 'Mutation', createFilm: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } };
 
 export type CreateReviewMutationVariables = Exact<{
   input: ReviewInput;
@@ -610,6 +648,50 @@ export function useReviewCommentVoteMutation(baseOptions?: Apollo.MutationHookOp
 export type ReviewCommentVoteMutationHookResult = ReturnType<typeof useReviewCommentVoteMutation>;
 export type ReviewCommentVoteMutationResult = Apollo.MutationResult<ReviewCommentVoteMutation>;
 export type ReviewCommentVoteMutationOptions = Apollo.BaseMutationOptions<ReviewCommentVoteMutation, ReviewCommentVoteMutationVariables>;
+export const CreateFilmDocument = gql`
+    mutation CreateFilm($input: FilmInput!) {
+  createFilm(input: $input) {
+    id
+    movieId
+    movieTitle
+    overview
+    posterPath
+    backdropPath
+    releaseDate
+    watchCount
+    listCount
+    likeCount
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateFilmMutationFn = Apollo.MutationFunction<CreateFilmMutation, CreateFilmMutationVariables>;
+
+/**
+ * __useCreateFilmMutation__
+ *
+ * To run a mutation, you first call `useCreateFilmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFilmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFilmMutation, { data, loading, error }] = useCreateFilmMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateFilmMutation(baseOptions?: Apollo.MutationHookOptions<CreateFilmMutation, CreateFilmMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateFilmMutation, CreateFilmMutationVariables>(CreateFilmDocument, options);
+      }
+export type CreateFilmMutationHookResult = ReturnType<typeof useCreateFilmMutation>;
+export type CreateFilmMutationResult = Apollo.MutationResult<CreateFilmMutation>;
+export type CreateFilmMutationOptions = Apollo.BaseMutationOptions<CreateFilmMutation, CreateFilmMutationVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: ReviewInput!) {
   createReview(input: $input) {

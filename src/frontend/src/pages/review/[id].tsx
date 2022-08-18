@@ -7,6 +7,7 @@ import { getReviewFromURL } from '@/utils/getReviewFromURL';
 import { withApollo } from '@/utils/withApollo';
 import { useEffect, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
+import NextLink from 'next/link';
 
 interface ReviewPageProps {}
 
@@ -37,15 +38,23 @@ const ReviewPage = ({}) => {
                 <h3 className="mt-10 mb-[-30px] text-white">Review</h3>
             </div> */}
             <div className='mb-20 flex justify-center'>
-                <div className='mt-20 mb-20 w-[100%] overflow-hidden rounded-xl border-[1px] border-crumble-100 bg-crumble-300 shadow-md navBarCollapse:mt-10 navBarCollapse:max-w-[70%]'>
+                <div className='pageFrame'>
                     <div>
                         <div className='p-5'>
                             {/* MOVIE POSTER */}
                             <div className='float-left w-[25%]'>
-                                <img
-                                    className='float-right mb-10 inline aspect-auto rounded-md navBarCollapse2x:w-full'
-                                    src={`https://image.tmdb.org/t/p/w500/${data.review.movie_poster}`}
-                                />
+                                <NextLink
+                                    href='/film/[id]'
+                                    as={`/film/${data.review.movie_title.replace(
+                                        /\s+/g,
+                                        ''
+                                    )}-${data.review.movieId}`}
+                                >
+                                    <img
+                                        className='float-right mb-10 inline aspect-auto cursor-pointer rounded-md navBarCollapse2x:w-full'
+                                        src={`https://image.tmdb.org/t/p/w500/${data.review.movie_poster}`}
+                                    />
+                                </NextLink>
                                 <div className='float-left mt-[-20px] mb-10'>
                                     <UpvoteButton
                                         review={data.review}
@@ -70,9 +79,17 @@ const ReviewPage = ({}) => {
                                         </p>
                                     </div>
                                     <div className='mt-3'>
-                                        <h3 className='mt-4 inline text-white'>
-                                            {data.review.movie_title}{' '}
-                                        </h3>
+                                        <NextLink
+                                            href='/film/[id]'
+                                            as={`/film/${data.review.movie_title.replace(
+                                                /\s+/g,
+                                                ''
+                                            )}-${data.review.movieId}}`}
+                                        >
+                                            <h3 className='mt-4 inline cursor-pointer text-white'>
+                                                {data.review.movie_title}{' '}
+                                            </h3>
+                                        </NextLink>
                                         <h4 className='mt-4 inline text-superRed'>
                                             {data.review.movie_release_year}
                                         </h4>
@@ -103,11 +120,11 @@ const ReviewPage = ({}) => {
                                         </p>
                                     )}
                                     <span
-                                        className={`cursor-pointer ${
+                                        className={`${
                                             data.review.containsSpoilers
                                                 ? !spoilerActive
-                                                    ? 'text-white'
-                                                    : 'active-text-red-400 bg-superRed text-superRed'
+                                                    ? 'cursor-pointer text-white'
+                                                    : 'active-text-red-400 cursor-pointer bg-superRed text-superRed'
                                                 : 'bg-transparent text-white'
                                         }`}
                                         onClick={() =>
@@ -119,13 +136,13 @@ const ReviewPage = ({}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className='relative top-10 mb-5 p-5'>
-                            <ReviewCommentSection
-                                user={meData!!}
-                                review={data.review}
-                            />
-                        </div>
                     </div>
+                    {/* <div className='relative top-10 mb-5 bg-superRed p-5'> */}
+                    <ReviewCommentSection
+                        user={meData!!}
+                        review={data.review}
+                    />
+                    {/* </div> */}
                 </div>
             </div>
         </Layout>

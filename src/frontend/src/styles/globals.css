@@ -2,193 +2,196 @@
 @tailwind components;
 @tailwind utilities;
 
-
-svg.star-svg { 
-  display: inline-block;
+svg.star-svg {
+    display: inline-block;
 }
 
 :root {
-  /* #region  /**=========== Primary Color =========== */
-  /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
-  --tw-color-primary-50: 240 249 255;
-  --tw-color-primary-100: 224 242 254;
-  --tw-color-primary-200: 186 230 253;
-  --tw-color-primary-300: 125 211 252;
-  --tw-color-primary-400: 56 189 248;
-  --tw-color-primary-500: 14 165 233;
-  --tw-color-primary-600: 2 132 199;
-  --tw-color-primary-700: 3 105 161;
-  --tw-color-primary-800: 7 89 133;
-  --tw-color-primary-900: 12 74 110;
-  --color-primary-50: rgb(var(--tw-color-primary-50)); /* #f0f9ff */
-  --color-primary-100: rgb(var(--tw-color-primary-100)); /* #e0f2fe */
-  --color-primary-200: rgb(var(--tw-color-primary-200)); /* #bae6fd */
-  --color-primary-300: rgb(var(--tw-color-primary-300)); /* #7dd3fc */
-  --color-primary-400: rgb(var(--tw-color-primary-400)); /* #38bdf8 */
-  --color-primary-500: rgb(var(--tw-color-primary-500)); /* #0ea5e9 */
-  --color-primary-600: rgb(var(--tw-color-primary-600)); /* #0284c7 */
-  --color-primary-700: rgb(var(--tw-color-primary-700)); /* #0369a1 */
-  --color-primary-800: rgb(var(--tw-color-primary-800)); /* #075985 */
-  --color-primary-900: rgb(var(--tw-color-primary-900)); /* #0c4a6e */
-  /* #endregion  /**======== Primary Color =========== */
+    /* #region  /**=========== Primary Color =========== */
+    /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
+    --tw-color-primary-50: 240 249 255;
+    --tw-color-primary-100: 224 242 254;
+    --tw-color-primary-200: 186 230 253;
+    --tw-color-primary-300: 125 211 252;
+    --tw-color-primary-400: 56 189 248;
+    --tw-color-primary-500: 14 165 233;
+    --tw-color-primary-600: 2 132 199;
+    --tw-color-primary-700: 3 105 161;
+    --tw-color-primary-800: 7 89 133;
+    --tw-color-primary-900: 12 74 110;
+    --color-primary-50: rgb(var(--tw-color-primary-50)); /* #f0f9ff */
+    --color-primary-100: rgb(var(--tw-color-primary-100)); /* #e0f2fe */
+    --color-primary-200: rgb(var(--tw-color-primary-200)); /* #bae6fd */
+    --color-primary-300: rgb(var(--tw-color-primary-300)); /* #7dd3fc */
+    --color-primary-400: rgb(var(--tw-color-primary-400)); /* #38bdf8 */
+    --color-primary-500: rgb(var(--tw-color-primary-500)); /* #0ea5e9 */
+    --color-primary-600: rgb(var(--tw-color-primary-600)); /* #0284c7 */
+    --color-primary-700: rgb(var(--tw-color-primary-700)); /* #0369a1 */
+    --color-primary-800: rgb(var(--tw-color-primary-800)); /* #075985 */
+    --color-primary-900: rgb(var(--tw-color-primary-900)); /* #0c4a6e */
+    /* #endregion  /**======== Primary Color =========== */
 }
 
 @layer components {
+    .navBar-links-container {
+        @apply mb-7 ml-[20px] 
+           flex w-[55px] rounded-md bg-none p-1 
+           pr-4 text-gray-400 hover:cursor-pointer 
+           hover:bg-crumble-100 hover:text-white navBar:mr-[2vw] navBar:w-[70%];
+    }
 
-  .navBar-links-container {
-      @apply hover:cursor-pointer hover:text-white 
-           text-gray-400 flex mb-7 bg-none navBar:w-[70%] 
-           w-[55px] navBar:mr-[2vw] ml-[20px] 
-           hover:bg-crumble-100 p-1 rounded-md pr-4
-  }
+    .navBar-links-icon-container {
+        @apply rounded-full fill-white p-2 hover:cursor-pointer 
+              navBar:hover:bg-transparent;
+    }
 
-  .navBar-links-icon-container {
-      @apply rounded-full fill-white p-2 hover:cursor-pointer 
-              navBar:hover:bg-transparent
-  }
+    .navBar-links-text {
+        @apply invisible ml-2 mt-[7px] font-semibold navBar:visible;
+    }
 
-  .navBar-links-text {
-      @apply invisible ml-2 mt-[7px] font-semibold navBar:visible
-  }
+    .navBar-create-review-container {
+        @apply mb-7 ml-[20px] 
+      flex w-[55px] rounded-full bg-superRed p-1 
+      text-white hover:cursor-pointer hover:bg-red-400 
+      hover:text-white navBar:mr-[2vw] navBar:w-[70%];
+    }
 
-  .navBar-create-review-container {
-      @apply hover:cursor-pointer hover:text-white 
-      text-white flex mb-7 bg-superRed navBar:w-[70%] 
-      w-[55px] navBar:mr-[2vw] ml-[20px] 
-      hover:bg-red-400 rounded-full p-1
-  }
+    .navBar-create-review-icon-container {
+        @apply ml-0 rounded-full fill-white p-2 
+    hover:cursor-pointer navBar:ml-2 navBar:hover:bg-transparent;
+    }
 
-  .navBar-create-review-icon-container {
-      @apply rounded-full fill-white p-2 hover:cursor-pointer 
-    navBar:hover:bg-transparent ml-0 navBar:ml-2
-  }
+    .layout-container {
+        @apply absolute 
+      left-[13vw]  
+      float-left h-[100%] w-[70%] 
+      border-crumble-100 text-white navBarCollapse:left-[20vw]
+      navBarCollapse:w-[60%];
+    }
 
-  .layout-container { 
-    @apply navBarCollapse:w-[60%] 
-      navBarCollapse:left-[20vw]  
-      absolute left-[13vw] float-left 
-      w-[70%] h-[100%] border-crumble-100
-      text-white
-  }
+    .spoilerCheckbox {
+        @apply float-left mt-1 mr-2 h-4
+    w-4 cursor-pointer
+    appearance-none rounded-sm
+    border border-gray-700 bg-gray-800
+    transition checked:bg-superRed focus:outline-none;
+    }
 
-  .spoilerCheckbox {
-    @apply
-    appearance-none h-4 w-4 border
-    border-gray-700 rounded-sm
-    bg-gray-800 checked:bg-superRed
-    focus:outline-none transition mt-1
-    float-left mr-2 cursor-pointer
-  }
-
-  .handleCreateReview {
-    @apply w-full inline-flex justify-center 
-    rounded-md border border-transparent shadow-sm 
-    px-4 py-2 bg-red-600 text-base font-medium text-white
+    .handleCreateReview {
+        @apply inline-flex w-full justify-center 
+    rounded-md border border-transparent bg-red-600 
+    px-4 py-2 text-base font-medium text-white shadow-sm
     hover:bg-red-700 focus:outline-none focus:ring-2 
-    focus:ring-offset-2 focus:ring-red-500 
-    sm:ml-3 sm:w-auto sm:text-sm
-  }
+    focus:ring-red-500 focus:ring-offset-2 
+    sm:ml-3 sm:w-auto sm:text-sm;
+    }
 
-  .cancelCreateReview {
-    @apply mt-3 w-full inline-flex justify-center 
-    rounded-md border border-gray-300 shadow-sm 
-    px-4 py-2 bg-white text-base font-medium 
-    text-gray-700 hover:bg-gray-50 focus:outline-none 
-    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 
-    sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
-  }
+    .cancelCreateReview {
+        @apply mt-3 inline-flex w-full justify-center 
+    rounded-md border border-gray-300 bg-white 
+    px-4 py-2 text-base font-medium text-gray-700 
+    shadow-sm hover:bg-gray-50 focus:outline-none 
+    focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
+    sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+    }
 
+    .pageFrame {
+        @apply mt-20 mb-20 w-[100%] 
+        overflow-hidden rounded-xl border-[1px] 
+        border-crumble-100 bg-crumble-300 
+        shadow-md navBarCollapse:mt-10 navBarCollapse:max-w-[70%];
+    }
 }
 
 @layer base {
-  /* inter var - latin */
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: optional;
-    src: url('/fonts/inter-var-latin.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212,
-      U+2215, U+FEFF, U+FFFD;
-  }
+    /* inter var - latin */
+    @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: optional;
+        src: url('/fonts/inter-var-latin.woff2') format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+            U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+            U+2212, U+2215, U+FEFF, U+FFFD;
+    }
 
-  .cursor-newtab {
-    cursor: url('/images/new-tab.png') 10 10, pointer;
-  }
+    .cursor-newtab {
+        cursor: url('/images/new-tab.png') 10 10, pointer;
+    }
 
-  /* #region  /**=========== Typography =========== */
-  .h0 {
-    @apply font-primary text-3xl font-bold md:text-5xl;
-  }
+    /* #region  /**=========== Typography =========== */
+    .h0 {
+        @apply font-primary text-3xl font-bold md:text-5xl;
+    }
 
-  h1,
-  .h1 {
-    @apply font-primary text-2xl font-bold md:text-4xl;
-  }
+    h1,
+    .h1 {
+        @apply font-primary text-2xl font-bold md:text-4xl;
+    }
 
-  h2,
-  .h2 {
-    @apply font-primary text-xl font-bold md:text-3xl;
-  }
+    h2,
+    .h2 {
+        @apply font-primary text-xl font-bold md:text-3xl;
+    }
 
-  h3,
-  .h3 {
-    @apply font-primary text-lg font-bold md:text-2xl;
-  }
+    h3,
+    .h3 {
+        @apply font-primary text-lg font-bold md:text-2xl;
+    }
 
-  h4,
-  .h4 {
-    @apply font-primary text-base font-bold md:text-lg;
-  }
+    h4,
+    .h4 {
+        @apply font-primary text-base font-bold md:text-lg;
+    }
 
-  html {
-    @apply bg-crumble-300
-  }
+    html {
+        @apply bg-crumble-300;
+    }
 
-  body,
-  .p {
-    @apply font-primary text-sm md:text-base;
-  }
-  /* #endregion  /**======== Typography =========== */
+    body,
+    .p {
+        @apply font-primary text-sm md:text-base;
+    }
+    /* #endregion  /**======== Typography =========== */
 
-  .layout {
-    /* 1100px */
-    max-width: 68.75rem;
-    @apply mx-auto w-11/12;
-  }
+    .layout {
+        /* 1100px */
+        max-width: 68.75rem;
+        @apply mx-auto w-11/12;
+    }
 
-  .bg-dark a.custom-link {
-    @apply border-gray-200 hover:border-gray-200/0;
-  }
+    .bg-dark a.custom-link {
+        @apply border-gray-200 hover:border-gray-200/0;
+    }
 
-  /* Class to adjust with sticky footer */
-  .min-h-main {
-    @apply min-h-[calc(100vh-56px)];
-  }
+    /* Class to adjust with sticky footer */
+    .min-h-main {
+        @apply min-h-[calc(100vh-56px)];
+    }
 }
 
 @layer utilities {
-  .animated-underline {
-    background-image: linear-gradient(#33333300, #33333300),
-      linear-gradient(
-        to right,
-        var(--color-primary-400),
-        var(--color-primary-500)
-      );
-    background-size: 100% 2px, 0 2px;
-    background-position: 100% 100%, 0 100%;
-    background-repeat: no-repeat;
-  }
-  @media (prefers-reduced-motion: no-preference) {
     .animated-underline {
-      transition: 0.3s ease;
-      transition-property: background-size, color, background-color,
-        border-color;
+        background-image: linear-gradient(#33333300, #33333300),
+            linear-gradient(
+                to right,
+                var(--color-primary-400),
+                var(--color-primary-500)
+            );
+        background-size: 100% 2px, 0 2px;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
     }
-  }
-  .animated-underline:hover,
-  .animated-underline:focus-visible {
-    background-size: 0 2px, 100% 2px;
-  }
+    @media (prefers-reduced-motion: no-preference) {
+        .animated-underline {
+            transition: 0.3s ease;
+            transition-property: background-size, color, background-color,
+                border-color;
+        }
+    }
+    .animated-underline:hover,
+    .animated-underline:focus-visible {
+        background-size: 0 2px, 100% 2px;
+    }
 }
