@@ -22,8 +22,8 @@ const Cast = ({ cast }: CastProps) => {
     return (
         <div>
             <br />
-            <div className='mb-[10px] flex pb-2'>
-                <div className='align-right float-right inline w-[450px]'>
+            <div className='mb-[10px] flex w-[580px] pb-2'>
+                <div className='align-right float-right inline w-[460px]'>
                     {cast &&
                         cast.slice(0, amountShowed).map((j: CastObjectType) => (
                             <div

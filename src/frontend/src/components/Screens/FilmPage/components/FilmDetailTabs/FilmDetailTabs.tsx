@@ -78,7 +78,7 @@ const FilmDetailTabs = ({
     };
 
     return (
-        <div>
+        <div className='w-[580px]'>
             {/* TABS */}
             <div className='mt-[60px]'>
                 {tabMap.map((tab) => (
@@ -97,7 +97,7 @@ const FilmDetailTabs = ({
                     </div>
                 ))}
             </div>
-            <div className='mb-5'>
+            <div className='mb-5 w-[580px]'>
                 <div className='mt-5'>
                     {currentTabDataName === 'cast' && <Cast cast={cast} />}
                     {currentTabDataName === 'crew' && <Crew crew={crew} />}

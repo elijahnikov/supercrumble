@@ -50,10 +50,6 @@ const FilmPage = ({}: FilmPageProps) => {
     }, []);
 
     useEffect(() => {
-        console.log(extraMovieData);
-    }, [extraMovieData]);
-
-    useEffect(() => {
         if (movieData.id) {
             getFilm({
                 variables: {
@@ -70,12 +66,12 @@ const FilmPage = ({}: FilmPageProps) => {
                     <div className='pageFrame h-[300px] text-center'>
                         <h1 className='mt-[100px]'>:/</h1>
                         <h1 className='mt-[5px]'>Film not found.</h1>
-                        <a
-                            href='/'
+                        <p
+                            onClick={() => router.back()}
                             className='cursor-pointer text-superRed hover:underline'
                         >
                             Go back
-                        </a>
+                        </p>
                     </div>
                 </div>
             </Layout>
