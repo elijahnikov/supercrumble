@@ -8,6 +8,7 @@ import { withApollo } from '@/utils/withApollo';
 import { useEffect, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import NextLink from 'next/link';
+import { formatForURL } from '@/utils/url/formatForURL';
 
 interface ReviewPageProps {}
 
@@ -45,9 +46,8 @@ const ReviewPage = ({}) => {
                             <div className='float-left w-[25%]'>
                                 <NextLink
                                     href='/film/[id]'
-                                    as={`/film/${data.review.movie_title.replace(
-                                        /\s+/g,
-                                        ''
+                                    as={`/film/${formatForURL(
+                                        data.review.movie_title.toString()
                                     )}-${data.review.movieId}`}
                                 >
                                     <img
@@ -81,10 +81,9 @@ const ReviewPage = ({}) => {
                                     <div className='mt-3'>
                                         <NextLink
                                             href='/film/[id]'
-                                            as={`/film/${data.review.movie_title.replace(
-                                                /\s+/g,
-                                                ''
-                                            )}-${data.review.movieId}}`}
+                                            as={`/film/${formatForURL(
+                                                data.review.movie_title.toString()
+                                            )}-${data.review.movieId}`}
                                         >
                                             <h3 className='mt-4 inline cursor-pointer text-white'>
                                                 {data.review.movie_title}{' '}

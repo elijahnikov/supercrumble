@@ -63,10 +63,10 @@ svg.star-svg {
 
     .layout-container {
         @apply absolute 
-      left-[13vw]  
-      float-left h-[100%] w-[70%] 
-      border-crumble-100 text-white navBarCollapse:left-[20vw]
-      navBarCollapse:w-[60%];
+      left-[10vw]  
+      float-left h-[100%] w-[80%] 
+      border-crumble-100 text-white navBarCollapse:left-[15vw]
+      navBarCollapse:w-[70%];
     }
 
     .spoilerCheckbox {
@@ -98,8 +98,8 @@ svg.star-svg {
     .pageFrame {
         @apply mt-20 mb-20 w-[100%] 
         overflow-hidden rounded-xl border-[1px] 
-        border-crumble-100 bg-crumble-300 
-        shadow-md navBarCollapse:mt-10 navBarCollapse:max-w-[70%];
+        border-crumble-100 bg-crumble-200 
+        shadow-md navBarCollapse:mt-10 navBarCollapse:max-w-[65%];
     }
 }
 

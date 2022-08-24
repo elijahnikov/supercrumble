@@ -44,7 +44,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
 
     const searchMovie = async () => {
         if (movieName) {
-            const url = `https://api.themoviedb.org/3/search/movie?api_key=062b67bca7a1dbc477fd28d5b6a7eb99&query=${movieName}`;
+            const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${movieName}`;
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);
@@ -72,6 +72,18 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
 
     const handleCreateReview = async () => {
         setLoading(true);
+        const filmResponse = await createFilm({
+            variables: {
+                input: {
+                    movieId: chosenMovieDetails.id,
+                    movieTitle: chosenMovieDetails.title,
+                    overview: chosenMovieDetails.overview,
+                    posterPath: chosenMovieDetails.poster,
+                    backdropPath: chosenMovieDetails.backdrop,
+                    releaseDate: chosenMovieDetails.releaseDate,
+                },
+            },
+        });
         const response = await createReview({
             variables: {
                 input: {
@@ -85,18 +97,6 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                 },
             },
         });
-        const filmResponse = await createFilm({
-            variables: {
-                input: {
-                    movieId: chosenMovieDetails.id,
-                    movieTitle: chosenMovieDetails.title,
-                    overview: chosenMovieDetails.overview,
-                    posterPath: chosenMovieDetails.poster,
-                    backdropPath: chosenMovieDetails.backdrop,
-                    releaseDate: chosenMovieDetails.releaseDate,
-                },
-            },
-        });
         if (filmResponse.errors) {
             console.log(filmResponse.errors);
         }
@@ -104,7 +104,9 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
         router.push(`/review/${response.data?.createReview.referenceId}`);
     };
 
-    const handleChange = (event: any) => {
+    const handleMovieNameChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setMovieName(event.target.value);
     };
 
@@ -238,8 +240,12 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                                                                             className='w-[100%] rounded border-gray-800 bg-crumble-100 py-2 px-3 text-white'
                                                                             name='searchFilms'
                                                                             placeholder='search film...'
-                                                                            onChangeHandler={
-                                                                                handleChange
+                                                                            handleChange={(
+                                                                                e: React.ChangeEvent<HTMLInputElement>
+                                                                            ) =>
+                                                                                handleMovieNameChange(
+                                                                                    e
+                                                                                )
                                                                             }
                                                                             type='text'
                                                                         />

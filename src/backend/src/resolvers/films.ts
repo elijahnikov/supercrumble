@@ -1,9 +1,16 @@
 import { Films } from "../entities/films";
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import {
+    Arg,
+    Ctx,
+    Int,
+    Mutation,
+    Query,
+    Resolver,
+    UseMiddleware,
+} from "type-graphql";
 import { isAuth } from "../middleware/isAuth";
 import { MyContext } from "../types";
 import { FilmInput } from "./inputs/FilmInput";
-import { getConnection } from "typeorm";
 
 @Resolver()
 export class FilmsResolver {
@@ -20,15 +27,6 @@ export class FilmsResolver {
             where: { movieId: input.movieId },
         });
 
-        await getConnection()
-            .createQueryBuilder()
-            .update(Films)
-            .set({
-                watchCount: () => '"watchCount" + 1',
-            })
-            .where("movieId = :movieId", { movieId: input.movieId })
-            .execute();
-
         if (check) {
             return null;
         }
@@ -36,5 +34,12 @@ export class FilmsResolver {
         return Films.create({
             ...input,
         }).save();
+    }
+
+    @Query(() => Films, { nullable: true })
+    film(
+        @Arg("movieId", () => Int) movieId: number
+    ): Promise<Films | undefined> {
+        return Films.findOne({ where: { movieId: movieId } });
     }
 }

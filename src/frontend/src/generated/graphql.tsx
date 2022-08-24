@@ -49,7 +49,7 @@ export type Films = {
 export type Mutation = {
   __typename?: 'Mutation';
   changeUsername?: Maybe<UserResponse>;
-  createFilm: Films;
+  createFilm?: Maybe<Films>;
   createReview: Review;
   createReviewComment: ReviewComment;
   deleteReview: Scalars['Boolean'];
@@ -168,6 +168,7 @@ export type PaginatedReviews = {
 
 export type Query = {
   __typename?: 'Query';
+  film?: Maybe<Films>;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
@@ -175,6 +176,11 @@ export type Query = {
   reviewComment?: Maybe<ReviewComment>;
   reviewComments: PaginatedReviewComments;
   reviews: PaginatedReviews;
+};
+
+
+export type QueryFilmArgs = {
+  movieId: Scalars['Int'];
 };
 
 
@@ -343,7 +349,14 @@ export type CreateFilmMutationVariables = Exact<{
 }>;
 
 
-export type CreateFilmMutation = { __typename?: 'Mutation', createFilm: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } };
+export type CreateFilmMutation = { __typename?: 'Mutation', createFilm?: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } | null };
+
+export type FilmQueryVariables = Exact<{
+  movieId: Scalars['Int'];
+}>;
+
+
+export type FilmQuery = { __typename?: 'Query', film?: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } | null };
 
 export type CreateReviewMutationVariables = Exact<{
   input: ReviewInput;
@@ -692,6 +705,52 @@ export function useCreateFilmMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateFilmMutationHookResult = ReturnType<typeof useCreateFilmMutation>;
 export type CreateFilmMutationResult = Apollo.MutationResult<CreateFilmMutation>;
 export type CreateFilmMutationOptions = Apollo.BaseMutationOptions<CreateFilmMutation, CreateFilmMutationVariables>;
+export const FilmDocument = gql`
+    query Film($movieId: Int!) {
+  film(movieId: $movieId) {
+    id
+    movieId
+    movieTitle
+    overview
+    posterPath
+    backdropPath
+    releaseDate
+    watchCount
+    listCount
+    likeCount
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useFilmQuery__
+ *
+ * To run a query within a React component, call `useFilmQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmQuery({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useFilmQuery(baseOptions: Apollo.QueryHookOptions<FilmQuery, FilmQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmQuery, FilmQueryVariables>(FilmDocument, options);
+      }
+export function useFilmLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmQuery, FilmQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmQuery, FilmQueryVariables>(FilmDocument, options);
+        }
+export type FilmQueryHookResult = ReturnType<typeof useFilmQuery>;
+export type FilmLazyQueryHookResult = ReturnType<typeof useFilmLazyQuery>;
+export type FilmQueryResult = Apollo.QueryResult<FilmQuery, FilmQueryVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: ReviewInput!) {
   createReview(input: $input) {

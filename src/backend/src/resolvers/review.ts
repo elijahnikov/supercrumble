@@ -18,6 +18,7 @@ import { getConnection } from "typeorm";
 import { Upvote } from "../entities/upvote";
 import { User } from "../entities/user";
 import { ReviewInput } from "./inputs/ReviewInput";
+import { Films } from "../entities/films";
 
 //detect whether there is no more data to paginate through
 @ObjectType()
@@ -181,6 +182,15 @@ export class ReviewResolver {
         if (!req.session.userId) {
             return null;
         }
+
+        await getConnection()
+            .createQueryBuilder()
+            .update(Films)
+            .set({
+                watchCount: () => '"watchCount" + 1',
+            })
+            .where("movieId = :movieId", { movieId: input.movieId })
+            .execute();
 
         return Review.create({
             creatorId: req.session.userId,

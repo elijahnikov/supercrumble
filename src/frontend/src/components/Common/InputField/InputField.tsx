@@ -7,10 +7,10 @@ type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
     icon?: any;
     placeholder: string;
     type: string;
-    onChangeHandler: Function;
-}
+    handleChange: Function;
+};
 
-const InputField = ({icon, size: _, ...props}: InputFieldProps) => {
+const InputField = ({ icon, size: _, ...props }: InputFieldProps) => {
     let IconTag = icon ? icon : null;
     return (
         <div className='w-[100%] text-left'>
@@ -27,10 +27,10 @@ const InputField = ({icon, size: _, ...props}: InputFieldProps) => {
                 type={props.type}
                 spellCheck={false}
                 placeholder={props.placeholder}
-                onChange={(e) => props.onChangeHandler(e)}
+                onChange={(e) => props.handleChange(e)}
             />
         </div>
-    )
+    );
 };
 
 export default InputField;
