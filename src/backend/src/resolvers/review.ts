@@ -120,7 +120,18 @@ export class ReviewResolver {
     async reviews(
         @Arg("limit", () => Int, { nullable: true }) limit: number,
         @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
-        @Arg("text", () => String, { nullable: true }) text: string | null
+        @Arg("text", () => String, { nullable: true }) text: string | null,
+        @Arg("movieId", () => Int, { nullable: true }) movieId: number,
+        @Arg("orderBy", () => String, {
+            defaultValue: "createdAt",
+            nullable: true,
+        })
+        orderBy: string | null,
+        @Arg("orderDir", () => String, {
+            defaultValue: "DESC",
+            nullable: true,
+        })
+        orderDir: "DESC" | "ASC"
     ): Promise<PaginatedReviews> {
         const maxLimit = Math.min(50, limit);
         //+1 to see if there are more posts to return after the initial call to get
@@ -145,7 +156,7 @@ export class ReviewResolver {
         const qb = getConnection()
             .getRepository(Review)
             .createQueryBuilder("rv")
-            .orderBy('rv."createdAt"', "DESC")
+            .orderBy(`rv."${orderBy}"`, orderDir)
             .take(maxLimitPlusOne);
         if (cursor) {
             qb.where('rv. "createdAt" < :cursor', {
@@ -154,6 +165,9 @@ export class ReviewResolver {
         }
         if (text) {
             qb.andWhere('rv."text" = :text', { text: text });
+        }
+        if (movieId) {
+            qb.andWhere('rv."movieId" = :movieId', { movieId: movieId });
         }
         // qb.andWhere('pst. "createdAt" < :start_at', { start_at: '2020-04-05  10:41:30.746877' })
 

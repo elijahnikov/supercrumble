@@ -20,6 +20,10 @@ interface FilmDetailTabsProps {
     countries: ProductionCountriesType[];
     languages: LanguagesType[];
     alternativeTitles: AlternativeTitleType[];
+    genres: {
+        id: number;
+        name: string;
+    }[];
 }
 
 const FilmDetailTabs = ({
@@ -29,6 +33,7 @@ const FilmDetailTabs = ({
     countries,
     languages,
     alternativeTitles,
+    genres,
 }: FilmDetailTabsProps) => {
     const [currentTabDataName, setCurrentTabDataName] = useState('cast');
     const [tabMap, setTabMap] = useState<tabMenuType[]>([
@@ -104,7 +109,9 @@ const FilmDetailTabs = ({
                             alternativeTitles={alternativeTitles}
                         />
                     )}
-                    {currentTabDataName === 'genres' && <Genres />}
+                    {currentTabDataName === 'genres' && (
+                        <Genres genres={genres} />
+                    )}
                 </div>
             </div>
         </div>

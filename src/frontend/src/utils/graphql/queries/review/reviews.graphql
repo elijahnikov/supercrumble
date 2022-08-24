@@ -1,26 +1,22 @@
-query Reviews($limit: Int!, $cursor: String, $text: String) {
-    reviews(limit: $limit, cursor: $cursor, text: $text) {
+query Reviews(
+    $limit: Int!
+    $cursor: String
+    $text: String
+    $movieId: Int
+    $orderBy: String
+    $orderDir: String
+) {
+    reviews(
+        limit: $limit
+        cursor: $cursor
+        text: $text
+        movieId: $movieId
+        orderBy: $orderBy
+        orderDir: $orderDir
+    ) {
         hasMore
         reviews {
-            id
-            referenceId
-            movieId
-            text
-            movie_poster
-            movie_title
-            movie_release_year
-            ratingGiven
-            score
-            createdAt
-            updatedAt
-            voteStatus
-            noOfComments
-            creator {
-                id
-                username
-                displayName
-                avatar
-            }
+            ...ReviewSnippet
         }
     }
 }

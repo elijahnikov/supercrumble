@@ -215,6 +215,9 @@ export type QueryReviewCommentsArgs = {
 export type QueryReviewsArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  movieId?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
 };
 
@@ -459,10 +462,13 @@ export type ReviewsQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
+  movieId?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type GetUserByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
@@ -1203,33 +1209,22 @@ export type ReviewCommentsQueryHookResult = ReturnType<typeof useReviewCommentsQ
 export type ReviewCommentsLazyQueryHookResult = ReturnType<typeof useReviewCommentsLazyQuery>;
 export type ReviewCommentsQueryResult = Apollo.QueryResult<ReviewCommentsQuery, ReviewCommentsQueryVariables>;
 export const ReviewsDocument = gql`
-    query Reviews($limit: Int!, $cursor: String, $text: String) {
-  reviews(limit: $limit, cursor: $cursor, text: $text) {
+    query Reviews($limit: Int!, $cursor: String, $text: String, $movieId: Int, $orderBy: String, $orderDir: String) {
+  reviews(
+    limit: $limit
+    cursor: $cursor
+    text: $text
+    movieId: $movieId
+    orderBy: $orderBy
+    orderDir: $orderDir
+  ) {
     hasMore
     reviews {
-      id
-      referenceId
-      movieId
-      text
-      movie_poster
-      movie_title
-      movie_release_year
-      ratingGiven
-      score
-      createdAt
-      updatedAt
-      voteStatus
-      noOfComments
-      creator {
-        id
-        username
-        displayName
-        avatar
-      }
+      ...ReviewSnippet
     }
   }
 }
-    `;
+    ${ReviewSnippetFragmentDoc}`;
 
 /**
  * __useReviewsQuery__
@@ -1246,6 +1241,9 @@ export const ReviewsDocument = gql`
  *      limit: // value for 'limit'
  *      cursor: // value for 'cursor'
  *      text: // value for 'text'
+ *      movieId: // value for 'movieId'
+ *      orderBy: // value for 'orderBy'
+ *      orderDir: // value for 'orderDir'
  *   },
  * });
  */

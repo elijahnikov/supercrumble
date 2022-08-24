@@ -21,6 +21,7 @@ const Cast = ({ cast }: CastProps) => {
 
     return (
         <div>
+            <br />
             <div className='mb-[10px] flex pb-2'>
                 <div className='align-right float-right inline w-[450px]'>
                     {cast &&

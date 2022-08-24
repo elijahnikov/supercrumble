@@ -1,5 +1,7 @@
 import Layout from '@/components/Common/Layout/Layout';
 import FilmDetailTabs from '@/components/Screens/FilmPage/components/FilmDetailTabs/FilmDetailTabs';
+import FilmStats from '@/components/Screens/FilmPage/components/FilmStats/FilmStats';
+import ReviewSection from '@/components/Screens/FilmPage/components/ReviewSection/ReviewSection';
 import TertiaryInfo from '@/components/Screens/FilmPage/components/TertiaryInfo/TertiaryInfo';
 import { useFilmLazyQuery } from '@/generated/graphql';
 import { getFromURL } from '@/utils/url/getFromURL';
@@ -17,12 +19,11 @@ const FilmPage = ({}: FilmPageProps) => {
 
     const router = useRouter();
 
-    const [getFilm, { loading, error, data: extraMovieData }] =
-        useFilmLazyQuery({
-            variables: {
-                movieId: movieData.id,
-            },
-        });
+    const [getFilm, { data: extraMovieData }] = useFilmLazyQuery({
+        variables: {
+            movieId: movieData.id,
+        },
+    });
 
     const getMovieDetails = async () => {
         setFetchLoading(true);
@@ -32,7 +33,7 @@ const FilmPage = ({}: FilmPageProps) => {
                 : '';
         try {
             if (filmId) {
-                const url = `https://api.themoviedb.org/3/movie/${filmId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&append_to_response=videos,images,credits,external_ids,alternative_titles`;
+                const url = `https://api.themoviedb.org/3/movie/${filmId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&append_to_response=videos,images,credits,alternative_titles,themes`;
                 const response = await fetch(url);
                 const data = await response.json();
                 setMovieData(data);
@@ -49,6 +50,10 @@ const FilmPage = ({}: FilmPageProps) => {
     }, []);
 
     useEffect(() => {
+        console.log(extraMovieData);
+    }, [extraMovieData]);
+
+    useEffect(() => {
         if (movieData.id) {
             getFilm({
                 variables: {
@@ -56,14 +61,32 @@ const FilmPage = ({}: FilmPageProps) => {
                 },
             });
         }
-        console.log(movieData);
     }, [movieData]);
+
+    if (!movieData || movieData.success === false) {
+        return (
+            <Layout showNavBar={true} showSearch={true}>
+                <div className='mb-20 flex justify-center'>
+                    <div className='pageFrame h-[300px] text-center'>
+                        <h1 className='mt-[100px]'>:/</h1>
+                        <h1 className='mt-[5px]'>Film not found.</h1>
+                        <a
+                            href='/'
+                            className='cursor-pointer text-superRed hover:underline'
+                        >
+                            Go back
+                        </a>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
 
     return (
         <Layout showNavBar={true} showSearch={true}>
             <div className='mb-20 flex justify-center'>
                 <div className='pageFrame'>
-                    {fetchLoading && !movieData ? (
+                    {fetchLoading && movieData.success === false ? (
                         <div>loading...</div>
                     ) : (
                         <>
@@ -74,25 +97,14 @@ const FilmPage = ({}: FilmPageProps) => {
                                         src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
                                     />
                                     <br />
-                                    <div className='ml-11 inline'>
-                                        <p className='inline text-sm'>
-                                            {extraMovieData?.film?.watchCount}
-                                        </p>
-                                        <BsFillEyeFill className='ml-2 mt-[-2px] inline h-3 w-3 fill-superRed' />
-                                        <p className='ml-3 inline text-sm'>
-                                            {extraMovieData?.film?.listCount}
-                                        </p>
-                                        <BsFillGridFill className='ml-2 mt-[-2px] inline h-3 w-3 fill-superRed' />
-                                        <p className='ml-3 inline text-sm'>
-                                            {extraMovieData?.film?.likeCount}
-                                        </p>
-                                        <BsFillHeartFill className='ml-2 mt-[-2px] inline h-3 w-3 fill-superRed' />
-                                    </div>
+                                    <FilmStats
+                                        extraMovieData={extraMovieData}
+                                    />
                                 </div>
-                                <div className='float-right mt-2 ml-5'>
-                                    <h2 className='inline  text-white'>
+                                <div className='float-right mt-2 ml-5 w-[400px]'>
+                                    <span className='break-word inline text-[24px] font-bold text-white'>
                                         {movieData.original_title}
-                                    </h2>
+                                    </span>
                                     <h3 className='ml-3 inline font-semibold text-superRed'>
                                         {movieData.release_date
                                             ? movieData.release_date.split(
@@ -100,7 +112,7 @@ const FilmPage = ({}: FilmPageProps) => {
                                               )[0]
                                             : ''}
                                     </h3>
-                                    <div className='mt-2 text-sm'>
+                                    <div className='mt-2 text-xs'>
                                         <p className='inline text-gray-400'>
                                             Directed by{' '}
                                         </p>
@@ -143,19 +155,22 @@ const FilmPage = ({}: FilmPageProps) => {
                                         languages={movieData?.spoken_languages}
                                         alternativeTitles={
                                             movieData?.alternative_titles
+                                                ?.titles
                                         }
+                                        genres={movieData?.genres}
                                     />
                                     <TertiaryInfo
                                         runtime={movieData?.runtime}
-                                        imdbLink={
-                                            movieData?.external_ids?.imdb_id
-                                        }
+                                        imdbLink={movieData?.imdb_id}
                                         tmdbLink={movieData?.id}
                                     />
                                 </div>
                             </div>
                         </>
                     )}
+                    <div className='p-10'>
+                        <ReviewSection movieId={movieData?.id} />
+                    </div>
                 </div>
             </div>
         </Layout>

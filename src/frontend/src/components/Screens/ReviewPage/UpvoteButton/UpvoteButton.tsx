@@ -77,12 +77,7 @@ const UpvoteButton = ({ review, variant }: UpvoteButtonProps) => {
                 <div
                     onClick={voteHandler}
                     className={`display-inline hover:bg-scBlack-100 float-left 
-                    mb-7 flex rounded-md p-1 text-gray-400 hover:cursor-pointer hover:text-white 
-                    ${
-                        review.voteStatus === 1
-                            ? 'bg-gray-800'
-                            : 'text-gray-700'
-                    }`}
+                    flex rounded-md p-1 text-gray-400 hover:cursor-pointer hover:text-white `}
                 >
                     <BsFillHeartFill
                         className={`
@@ -93,11 +88,17 @@ const UpvoteButton = ({ review, variant }: UpvoteButtonProps) => {
                             }`}
                     />
                 </div>
-                <p
-                    className={`display-inline float-right ml-4 text-lg text-white`}
-                >
-                    {kFormatter(review.score)}
-                </p>
+                {variant === 'small' ? (
+                    <p className='display-inline float-right ml-2 mt-[2px] text-[12px] text-white'>
+                        {kFormatter(review.score)} likes
+                    </p>
+                ) : (
+                    <p
+                        className={`display-inline float-right ml-4 text-lg text-white`}
+                    >
+                        {kFormatter(review.score)}
+                    </p>
+                )}
             </div>
         </div>
     );

@@ -39,7 +39,7 @@ const Crew = ({ crew }: CrewProps) => {
                                     <>
                                         {jobs[job.title] && (
                                             <div className='mt-[-10px] mb-[25px] flex w-[400px] border-b-[1px] border-gray-800'>
-                                                <p className='inline text-[14px]'>
+                                                <p className='inline text-[14px] text-gray-300'>
                                                     {job.label.toLocaleUpperCase()}
                                                 </p>
                                                 <div className='align-right float-right ml-auto inline w-[200px] text-right'>

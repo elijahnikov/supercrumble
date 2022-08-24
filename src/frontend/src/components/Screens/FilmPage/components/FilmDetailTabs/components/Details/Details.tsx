@@ -26,7 +26,9 @@ const Details = ({
                     <div>
                         <>
                             <div className='mt-[-10px] mb-[25px] flex w-[400px] border-b-[1px] border-gray-800'>
-                                <p className='inline text-[14px]'>STUDIOS</p>
+                                <p className='inline text-[14px] text-gray-300'>
+                                    STUDIOS
+                                </p>
 
                                 <div className='align-right float-right ml-auto inline w-[200px] text-right'>
                                     {companies.map(
@@ -46,7 +48,9 @@ const Details = ({
                     <div>
                         <>
                             <div className='mt-[-10px] mb-[25px] flex w-[400px] border-b-[1px] border-gray-800'>
-                                <p className='inline text-[14px]'>COUNTRIES</p>
+                                <p className='inline text-[14px] text-gray-300'>
+                                    COUNTRIES
+                                </p>
 
                                 <div className='align-right float-right ml-auto inline w-[200px] text-right'>
                                     {countries.map(
@@ -66,7 +70,9 @@ const Details = ({
                     <div>
                         <>
                             <div className='mt-[-10px] mb-[25px] flex w-[400px] border-b-[1px] border-gray-800'>
-                                <p className='inline text-[14px]'>LANGUAGES</p>
+                                <p className='inline text-[14px] text-gray-300'>
+                                    LANGUAGES
+                                </p>
 
                                 <div className='align-right float-right ml-auto inline w-[200px] text-right'>
                                     {languages.map(
@@ -86,7 +92,7 @@ const Details = ({
                     <div>
                         <>
                             <div className='mt-[-10px] mb-[25px] flex w-[400px] border-b-[1px] border-gray-800'>
-                                <p className='inline text-[14px]'>
+                                <p className='inline text-[14px] text-gray-300'>
                                     ALTERNATIVE TITLES
                                 </p>
 
