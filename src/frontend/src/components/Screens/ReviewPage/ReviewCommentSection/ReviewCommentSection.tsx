@@ -11,7 +11,7 @@ import {
 } from '@/generated/graphql';
 import { epochToDateTime } from '@/utils/EpochToDateTime';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, MutableRefObject, useEffect, useState } from 'react';
 import { BsFillReplyFill, BsThreeDots } from 'react-icons/bs';
 import ReviewCommentUpvote from './components/ReviewCommentUpvote/ReviewCommentUpvote';
 
@@ -19,9 +19,11 @@ interface ReviewCommentSectionProps {
     user: MeQuery;
     review: ReviewSnippetFragment;
     parentId?: number;
+    scrollToRef?: MutableRefObject<any>;
 }
 
 const ReviewCommentSection = ({
+    scrollToRef,
     user,
     review,
     parentId,
@@ -51,8 +53,9 @@ const ReviewCommentSection = ({
     });
 
     return (
-        <div className='p-5'>
+        <div className='float-right mr-[70px] mt-[40px] w-[70%] p-5'>
             <div className='mb-10'>
+                <p className='mb-2'>Comments</p>
                 <InputArea
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
@@ -76,7 +79,7 @@ const ReviewCommentSection = ({
                 >
                     Post
                 </Button>
-                <div className='relative mt-[70px]'>
+                <div className='relative mt-[70px]' ref={scrollToRef}>
                     {commentsData?.reviewComments.reviewComments
                         .filter((obj) => {
                             return !obj.parentId;
@@ -84,31 +87,30 @@ const ReviewCommentSection = ({
                         .map((d) => (
                             <div
                                 key={d.id}
-                                className='mb-2 border-b-[1px] border-crumble-100 p-4 text-white'
+                                className='mb-4 rounded-lg border-[1px] border-crumble-100 bg-crumble-200 p-4 text-white'
                             >
-                                <div className='mb-5 inline'>
+                                <div className='inline mb-5'>
                                     <img
                                         className='inline h-[20px] w-[20px] rounded-full object-cover'
                                         src={d.creator.avatar!!}
                                     />
-                                    <p className='ml-2 inline text-sm text-gray-500'>
+                                    <p className='inline ml-2 text-sm text-gray-500'>
                                         {d.creator.username} says,
                                     </p>
-                                    <p className='float-right ml-2 mt-2 inline text-xs text-gray-500'>
+                                    <p className='inline float-right ml-2 mt-2 text-xs text-gray-500'>
                                         {epochToDateTime(d.createdAt)}
                                     </p>
 
                                     <br />
                                     <p className='mt-4'>{d.text}</p>
-                                    <br />
 
                                     <div className='mt-[20px] inline-block'>
-                                        <div className='float-left mt-1 inline'>
+                                        <div className='inline float-left mt-1'>
                                             <ReviewCommentUpvote
                                                 reviewComment={d}
                                             />
                                         </div>
-                                        <p className='ml-2 inline text-sm text-gray-400'>
+                                        <p className='inline ml-2 text-sm text-gray-400'>
                                             {d.score}
                                         </p>
                                         {/* <div className='float-right ml-2 ml-[20px] mt-[2px] inline w-[400px]'>
@@ -137,7 +139,7 @@ const ReviewCommentSection = ({
                                             leaveFrom='transform opacity-100 scale-100'
                                             leaveTo='transform opacity-0 scale-95'
                                         >
-                                            <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md bg-crumble-200 ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                                            <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md bg-crumble-100 ring-1 ring-black ring-opacity-5 focus:outline-none'>
                                                 <div className='px-1 py-1 '>
                                                     {user.me?.id ===
                                                         d.creator.id && (

@@ -5,10 +5,13 @@ import { useMeQuery } from '@/generated/graphql';
 import { epochToDate } from '@/utils/EpochToDate';
 import { getReviewFromURL } from '@/utils/getReviewFromURL';
 import { withApollo } from '@/utils/withApollo';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import NextLink from 'next/link';
 import { formatForURL } from '@/utils/url/formatForURL';
+import { kFormatter } from '@/utils/kFormatter';
+import { BiComment } from 'react-icons/bi';
+import { BsFillArrowDownCircleFill } from 'react-icons/bs';
 
 interface ReviewPageProps {}
 
@@ -16,6 +19,7 @@ const ReviewPage = ({}) => {
     const { data, loading, error } = getReviewFromURL();
     const { data: meData, loading: meLoading } = useMeQuery();
     const [spoilerActive, setSpoilerActive] = useState(false);
+    const myRef = useRef<any>(null);
 
     useEffect(() => {
         if (data?.review) setSpoilerActive(data.review.containsSpoilers);
@@ -33,17 +37,47 @@ const ReviewPage = ({}) => {
         return <div>loading...</div>;
     }
 
+    const ScrollDemo = () => {
+        const executeScroll = () =>
+            myRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest',
+            });
+        // run this function from an event handler or an effect to execute scroll
+
+        return (
+            <>
+                <div
+                    onClick={executeScroll}
+                    className='float-left mt-[-25px] inline-block cursor-pointer'
+                >
+                    <BiComment className='inline mr-3 ml-[90px]' />
+                    <p className='inline mr-1 text-[12px] text-white'>
+                        {kFormatter(data?.review?.noOfComments)} comments
+                    </p>
+                    <BsFillArrowDownCircleFill className='inline float-right ml-[10px] mt-[5px]' />
+                </div>
+            </>
+        );
+    };
+
     return (
-        <Layout showNavBar={true} showSearch={true}>
+        <Layout
+            showNavBar={true}
+            showSearch={true}
+            backgroundImage={data.review.backdrop}
+        >
             {/* <div className="flex text-left w-[60%] navBarCollapse:max-w-2xl mx-auto">
                 <h3 className="mt-10 mb-[-30px] text-white">Review</h3>
             </div> */}
             <div className='mb-20 flex justify-center'>
                 <div className='pageFrame'>
                     <div>
-                        <div className='p-5'>
+                        <div className='mt-[100px] p-5'>
                             {/* MOVIE POSTER */}
-                            <div className='float-left w-[25%]'>
+                            <br />
+                            <div className=' float-left w-[25%]'>
                                 <NextLink
                                     href='/film/[id]'
                                     as={`/film/${formatForURL(
@@ -51,19 +85,13 @@ const ReviewPage = ({}) => {
                                     )}-${data.review.movieId}`}
                                 >
                                     <img
-                                        className='float-right mb-10 inline aspect-auto cursor-pointer rounded-md navBarCollapse2x:w-full'
+                                        className=' inline aspect-auto h-[300px] cursor-pointer rounded-md '
                                         src={`https://image.tmdb.org/t/p/w500/${data.review.movie_poster}`}
                                     />
                                 </NextLink>
-                                <div className='float-left mt-[-20px] mb-10'>
-                                    <UpvoteButton
-                                        review={data.review}
-                                        variant={'small'}
-                                    />
-                                </div>
                             </div>
                             {/* REVIEW DETAILS */}
-                            <div className='float-left mb-10 ml-5 inline-block w-[71%] text-white'>
+                            <div className='float-left mt-[180px] mb-10  inline-block w-[71%] text-white'>
                                 <div>
                                     <div>
                                         <img
@@ -71,7 +99,7 @@ const ReviewPage = ({}) => {
                                             src={data.review.creator.avatar!!}
                                             alt='Profile image'
                                         />
-                                        <p className='ml-3 inline text-sm'>
+                                        <p className='inline ml-3 text-sm'>
                                             Review by{' '}
                                         </p>
                                         <p className='inline text-sm font-bold'>
@@ -85,11 +113,11 @@ const ReviewPage = ({}) => {
                                                 data.review.movie_title.toString()
                                             )}-${data.review.movieId}`}
                                         >
-                                            <h3 className='mt-4 inline cursor-pointer text-white'>
+                                            <h3 className='inline mt-4 cursor-pointer text-white'>
                                                 {data.review.movie_title}{' '}
                                             </h3>
                                         </NextLink>
-                                        <h4 className='mt-4 inline text-superRed'>
+                                        <h4 className='inline mt-4 text-superRed'>
                                             {data.review.movie_release_year}
                                         </h4>
                                         <Rating
@@ -112,7 +140,15 @@ const ReviewPage = ({}) => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className='mt-10 mb-20'>
+                                <div className='float-left mt-[20px] inline-block'>
+                                    <UpvoteButton
+                                        review={data.review}
+                                        variant={'small'}
+                                    />
+                                    {ScrollDemo()}
+                                </div>
+
+                                <div className='mt-[70px] mb-20'>
                                     {data.review.containsSpoilers && (
                                         <p className='text-sm italic text-gray-500'>
                                             Contains spoilers...
@@ -137,10 +173,13 @@ const ReviewPage = ({}) => {
                         </div>
                     </div>
                     {/* <div className='relative top-10 mb-5 bg-superRed p-5'> */}
-                    <ReviewCommentSection
-                        user={meData!!}
-                        review={data.review}
-                    />
+                    <div>
+                        <ReviewCommentSection
+                            scrollToRef={myRef}
+                            user={meData!!}
+                            review={data.review}
+                        />
+                    </div>
                     {/* </div> */}
                 </div>
             </div>

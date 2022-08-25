@@ -4,6 +4,7 @@ fragment ReviewSnippet on Review {
     movieId
     text
     movie_poster
+    backdrop
     movie_title
     movie_release_year
     ratingGiven

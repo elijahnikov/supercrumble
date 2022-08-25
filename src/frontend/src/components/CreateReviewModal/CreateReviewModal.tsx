@@ -90,6 +90,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                     containsSpoilers: spoilerChecked,
                     movieId: chosenMovieDetails.id,
                     movie_poster: chosenMovieDetails.poster,
+                    backdrop: chosenMovieDetails.backdrop,
                     movie_release_year: parseInt(chosenMovieDetails.year),
                     movie_title: chosenMovieDetails.title,
                     ratingGiven: ratingValue / 20,
@@ -158,8 +159,9 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                 className='navBar-create-review-container'
                 onClick={() => setOpen(!open)}
             >
-                <div className='navBar-create-review-icon-container'>
-                    <BsPlusSquare className='ml-[-1px] h-8 w-8 fill-white dark:fill-black navBar:h-5 navBar:w-5 navBar:hover:fill-white' />
+                <div className=' mt-1 justify-center text-center'>
+                    <p className='mb-1 inline text-xs'>Add</p>
+                    <BsPlusSquare className='mx-auto ml-1 mb-1 inline h-4 w-4 fill-white dark:fill-black  navBar:hover:fill-white' />
                 </div>
                 {showTooltip && (
                     <div className='absolute left-[120px] mb-[30px] rounded-md bg-crumble-100 p-2 text-sm'>

@@ -223,6 +223,7 @@ export type QueryReviewsArgs = {
 
 export type Review = {
   __typename?: 'Review';
+  backdrop: Scalars['String'];
   containsSpoilers: Scalars['Boolean'];
   createdAt: Scalars['String'];
   creator: User;
@@ -262,6 +263,7 @@ export type ReviewCommentInput = {
 };
 
 export type ReviewInput = {
+  backdrop: Scalars['String'];
   containsSpoilers: Scalars['Boolean'];
   movieId: Scalars['Float'];
   movie_poster: Scalars['String'];
@@ -318,7 +320,7 @@ export type ErrorFragment = { __typename?: 'FieldError', field: string, message:
 
 export type ReviewCommentSnippetFragment = { __typename?: 'ReviewComment', id: number, parentId?: number | null, creatorId: number, reviewId: number, text: string, score: number, voteStatus?: number | null, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
 
-export type ReviewSnippetFragment = { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
+export type ReviewSnippetFragment = { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
 
 export type UserFragmentFragment = { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null };
 
@@ -440,7 +442,7 @@ export type ReviewQueryVariables = Exact<{
 }>;
 
 
-export type ReviewQuery = { __typename?: 'Query', review?: { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null };
+export type ReviewQuery = { __typename?: 'Query', review?: { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null };
 
 export type ReviewCommentQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -468,7 +470,7 @@ export type ReviewsQueryVariables = Exact<{
 }>;
 
 
-export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type GetUserByUsernameQueryVariables = Exact<{
   username: Scalars['String'];
@@ -508,6 +510,7 @@ export const ReviewSnippetFragmentDoc = gql`
   movieId
   text
   movie_poster
+  backdrop
   movie_title
   movie_release_year
   ratingGiven

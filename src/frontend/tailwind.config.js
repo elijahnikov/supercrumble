@@ -8,7 +8,7 @@ module.exports = {
     theme: {
         extend: {
             screens: {
-                navBar: '1900px',
+                navBar: '1000px',
                 navBarCollapse: '1000px',
                 navBarCollapse2x: '500px',
             },

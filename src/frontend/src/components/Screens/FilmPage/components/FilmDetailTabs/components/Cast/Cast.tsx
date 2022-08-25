@@ -38,7 +38,7 @@ const Cast = ({ cast }: CastProps) => {
                                 {j.name}
                             </div>
                         ))}
-                    {!showedAll ? (
+                    {cast?.length >= amountShowed && !showedAll ? (
                         <div
                             onClick={() => handleShowAll(cast.length, true)}
                             className='mb-2 ml-2 inline-block cursor-pointer rounded-[5px] border-[1px] border-crumble-100 bg-red-600 p-[5px] text-xs hover:bg-red-500'

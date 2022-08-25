@@ -1,7 +1,9 @@
 import Layout from '@/components/Common/Layout/Layout';
 import FilmDetailTabs from '@/components/Screens/FilmPage/components/FilmDetailTabs/FilmDetailTabs';
 import FilmStats from '@/components/Screens/FilmPage/components/FilmStats/FilmStats';
+import RelatedFilms from '@/components/Screens/FilmPage/components/RelatedFilms/RelatedFilms';
 import ReviewSection from '@/components/Screens/FilmPage/components/ReviewSection/ReviewSection';
+import SimilarFilms from '@/components/Screens/FilmPage/components/SimilarFilms/SimilarFilms';
 import TertiaryInfo from '@/components/Screens/FilmPage/components/TertiaryInfo/TertiaryInfo';
 import { useFilmLazyQuery } from '@/generated/graphql';
 import { getFromURL } from '@/utils/url/getFromURL';
@@ -14,8 +16,9 @@ interface FilmPageProps {}
 
 const FilmPage = ({}: FilmPageProps) => {
     const [movieData, setMovieData] = useState<any>({});
-    const [showMoreOverview, setShowMoreOverview] = useState(false);
-    const [fetchLoading, setFetchLoading] = useState(false);
+    const [showMoreOverview, setShowMoreOverview] = useState<boolean>(false);
+    const [fetchLoading, setFetchLoading] = useState<boolean>(false);
+    const [filmId, setFilmId] = useState<string>('');
 
     const router = useRouter();
 
@@ -27,10 +30,6 @@ const FilmPage = ({}: FilmPageProps) => {
 
     const getMovieDetails = async () => {
         setFetchLoading(true);
-        let filmId =
-            typeof router.query.id === 'string'
-                ? getFromURL(router.query.id)
-                : '';
         try {
             if (filmId) {
                 const url = `https://api.themoviedb.org/3/movie/${filmId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&append_to_response=videos,images,credits,alternative_titles,themes`;
@@ -45,9 +44,22 @@ const FilmPage = ({}: FilmPageProps) => {
         }
     };
 
+    const getFilmId = () => {
+        let filmId =
+            typeof router.query.id === 'string'
+                ? getFromURL(router.query.id)
+                : '';
+        setFilmId(filmId);
+    };
+
+    useEffect(() => {
+        setFetchLoading(true);
+        getFilmId();
+    }, []);
+
     useEffect(() => {
         getMovieDetails();
-    }, []);
+    }, [filmId]);
 
     useEffect(() => {
         if (movieData.id) {
@@ -57,6 +69,7 @@ const FilmPage = ({}: FilmPageProps) => {
                 },
             });
         }
+        console.log(movieData);
     }, [movieData]);
 
     if (!movieData || movieData.success === false) {
@@ -82,14 +95,14 @@ const FilmPage = ({}: FilmPageProps) => {
         <Layout showNavBar={true} showSearch={true}>
             <div className='mb-20 flex justify-center'>
                 <div className='pageFrame'>
-                    {fetchLoading && movieData.success === false ? (
+                    {fetchLoading || movieData.success === false ? (
                         <div>loading...</div>
                     ) : (
                         <>
                             <div className='inline-block p-7'>
                                 <div className='float-left'>
                                     <img
-                                        className='mr-5 mb-5 inline aspect-auto h-[300px] rounded-md border-[1px] border-crumble-100 p-1 '
+                                        className='mr-5 mb-5 inline aspect-auto h-[300px] rounded-md border-[1px] border-crumble-100 p-1'
                                         src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
                                     />
                                     <br />
@@ -162,11 +175,23 @@ const FilmPage = ({}: FilmPageProps) => {
                                     />
                                 </div>
                             </div>
+                            <div className='p-10'>
+                                <ReviewSection movieId={movieData?.id} />
+                            </div>
+                            {movieData.belongs_to_collection ? (
+                                <div className='p-10'>
+                                    <RelatedFilms
+                                        collectionId={
+                                            movieData.belongs_to_collection.id
+                                        }
+                                    />
+                                </div>
+                            ) : null}
+                            <div className='p-10'>
+                                <SimilarFilms filmId={filmId} />
+                            </div>
                         </>
                     )}
-                    <div className='p-10'>
-                        <ReviewSection movieId={movieData?.id} />
-                    </div>
                 </div>
             </div>
         </Layout>

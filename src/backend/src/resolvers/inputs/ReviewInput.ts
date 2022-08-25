@@ -1,25 +1,28 @@
-import { InputType, Field } from "type-graphql"
+import { InputType, Field } from "type-graphql";
 
 @InputType()
 export class ReviewInput {
     @Field()
-    movieId: number
+    movieId: number;
 
     @Field()
-    text: string
+    text: string;
 
     @Field()
-    movie_poster: string
+    movie_poster: string;
 
     @Field()
-    movie_title: string
+    backdrop: string;
 
     @Field()
-    movie_release_year: number
+    movie_title: string;
 
     @Field()
-    ratingGiven: number
+    movie_release_year: number;
 
     @Field()
-    containsSpoilers: boolean
+    ratingGiven: number;
+
+    @Field()
+    containsSpoilers: boolean;
 }
