@@ -8,7 +8,7 @@ interface FilmStatsProps {
 
 const FilmStats = ({ extraMovieData }: FilmStatsProps) => {
     return (
-        <div className='mt-10 w-[150px]'>
+        <div className='mt-8 w-[150px]'>
             <div className='float-left mb-3 w-[100%]'>
                 <BsFillEyeFill className='float-left mt-[4px] mr-2 inline h-3 w-3 fill-superRed' />
                 <p className='float-left  text-sm font-bold'>Views</p>
