@@ -10,6 +10,7 @@ fragment ReviewSnippet on Review {
     ratingGiven
     score
     containsSpoilers
+    tags
     createdAt
     updatedAt
     voteStatus

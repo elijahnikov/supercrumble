@@ -10,6 +10,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import InputField from '../Common/InputField/InputField';
 import InputArea from '../Common/InputArea/InputArea';
 import { Rating } from 'react-simple-star-rating';
+import MovieResults from './components/MovieResults/MovieResults';
+import SelectedMovie from './components/SelectedMovie/SelectedMovie';
 
 interface CreateReviewModalProps {}
 
@@ -17,6 +19,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [tags, setTags] = useState<string[]>([]);
     const cancelButtonRef = useRef(null);
 
     const router = useRouter();
@@ -87,6 +90,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
         const response = await createReview({
             variables: {
                 input: {
+                    tags: tags.join(','),
                     containsSpoilers: spoilerChecked,
                     movieId: chosenMovieDetails.id,
                     movie_poster: chosenMovieDetails.poster,
@@ -235,11 +239,12 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                                                                     </p>
                                                                     <div>
                                                                         <InputField
+                                                                            autoFocus
                                                                             value={
                                                                                 movieName
                                                                             }
                                                                             id='movieInput'
-                                                                            className='w-[100%] rounded border-gray-800 bg-crumble-100 py-2 px-3 text-white'
+                                                                            className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
                                                                             name='searchFilms'
                                                                             placeholder='search film...'
                                                                             handleChange={(
@@ -255,201 +260,50 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                                                                 </div>
                                                             ) : null}
                                                             <>
-                                                                <div className='mt-5 grid grid-cols-4 gap-2'>
-                                                                    {movieFetchData
-                                                                        ? movieFetchData
-                                                                              .slice(
-                                                                                  0,
-                                                                                  6
-                                                                              )
-                                                                              .map(
-                                                                                  (
-                                                                                      m
-                                                                                  ) =>
-                                                                                      m.length ===
-                                                                                      0 ? (
-                                                                                          <div>
-                                                                                              Nothing
-                                                                                              found
-                                                                                              :/
-                                                                                          </div>
-                                                                                      ) : (
-                                                                                          <div
-                                                                                              onClick={() =>
-                                                                                                  handleMovieClick(
-                                                                                                      m.id,
-                                                                                                      m.original_title,
-                                                                                                      m.release_date,
-                                                                                                      m.poster_path,
-                                                                                                      m.overview,
-                                                                                                      m.backdrop_path,
-                                                                                                      m.release_date,
-                                                                                                      true
-                                                                                                  )
-                                                                                              }
-                                                                                              key={
-                                                                                                  m.id
-                                                                                              }
-                                                                                              className='mb-2 cursor-pointer rounded-md border-[1px] border-gray-800 p-2 hover:bg-crumble-100'
-                                                                                          >
-                                                                                              {m.poster_path ? (
-                                                                                                  <img
-                                                                                                      className='rounded-md'
-                                                                                                      src={
-                                                                                                          m.poster_path
-                                                                                                              ? `https://image.tmdb.org/t/p/w500${m.poster_path}`
-                                                                                                              : undefined
-                                                                                                      }
-                                                                                                  />
-                                                                                              ) : (
-                                                                                                  <p>
-                                                                                                      ?
-                                                                                                  </p>
-                                                                                              )}
-                                                                                              <div className='mt-2 text-left'>
-                                                                                                  <p className='inline text-sm'>
-                                                                                                      {m
-                                                                                                          .original_title
-                                                                                                          .length >
-                                                                                                      50
-                                                                                                          ? m.original_title.slice(
-                                                                                                                0,
-                                                                                                                50
-                                                                                                            ) +
-                                                                                                            '...'
-                                                                                                          : m.original_title}{' '}
-                                                                                                  </p>
-                                                                                                  <p className='inline text-xs text-superRed'>
-                                                                                                      {m.release_date
-                                                                                                          ? m.release_date.substring(
-                                                                                                                0,
-                                                                                                                4
-                                                                                                            )
-                                                                                                          : null}
-                                                                                                  </p>
-                                                                                              </div>
-                                                                                          </div>
-                                                                                      )
-                                                                              )
-                                                                        : null}
-                                                                </div>
-                                                                {selectedMovieVisible && (
-                                                                    <div>
-                                                                        <div className='flex p-10'>
-                                                                            <img
-                                                                                className='aspet-auto h-[200px] rounded-md'
-                                                                                src={
-                                                                                    chosenMovieDetails.poster
-                                                                                        ? `https://image.tmdb.org/t/p/w500${chosenMovieDetails.poster}`
-                                                                                        : undefined
-                                                                                }
-                                                                            />
-                                                                            <div className='ml-5 text-left'>
-                                                                                <h2 className='text-white'>
-                                                                                    {
-                                                                                        chosenMovieDetails.title
-                                                                                    }
-                                                                                </h2>
-                                                                                <h3 className='text-superRed'>
-                                                                                    {chosenMovieDetails.year.slice(
-                                                                                        0,
-                                                                                        4
-                                                                                    )}
-                                                                                </h3>
-                                                                            </div>
-                                                                            <BsFillXCircleFill
-                                                                                onClick={() =>
-                                                                                    handleCancelClick(
-                                                                                        false
-                                                                                    )
-                                                                                }
-                                                                                className='float-right mt-[8px] ml-2 h-6 w-6 cursor-pointer'
-                                                                            />
-                                                                        </div>
-                                                                        <div>
-                                                                            <div>
-                                                                                <InputArea
-                                                                                    value={
-                                                                                        reviewText
-                                                                                    }
-                                                                                    onChange={(
-                                                                                        e
-                                                                                    ) =>
-                                                                                        setReviewText(
-                                                                                            e
-                                                                                                .target
-                                                                                                .value
-                                                                                        )
-                                                                                    }
-                                                                                    placeholder='Write your thoughts'
-                                                                                />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className='mt-5'>
-                                                                                Rating
-                                                                            </p>
-                                                                        </div>
-                                                                        <div className='w-[140px]'>
-                                                                            <div className='inline'>
-                                                                                <Rating
-                                                                                    allowHalfIcon={
-                                                                                        true
-                                                                                    }
-                                                                                    initialValue={
-                                                                                        0
-                                                                                    }
-                                                                                    size={
-                                                                                        20
-                                                                                    }
-                                                                                    fillColor={
-                                                                                        '#FD4443'
-                                                                                    }
-                                                                                    onClick={
-                                                                                        handleRating
-                                                                                    }
-                                                                                    ratingValue={
-                                                                                        ratingValue
-                                                                                    }
-                                                                                />
-                                                                            </div>
-                                                                            {ratingValue >
-                                                                            0 ? (
-                                                                                <BsFillXCircleFill
-                                                                                    onClick={() =>
-                                                                                        setRatingValue(
-                                                                                            0
-                                                                                        )
-                                                                                    }
-                                                                                    className='float-right mt-[5px] ml-2 h-5 w-5 cursor-pointer'
-                                                                                />
-                                                                            ) : null}
-                                                                        </div>
-                                                                        <div className='mt-5'>
-                                                                            <input
-                                                                                type='checkbox'
-                                                                                value=''
-                                                                                checked={
-                                                                                    spoilerChecked
-                                                                                }
-                                                                                onChange={
-                                                                                    handleSpoiler
-                                                                                }
-                                                                                id='flexCheckDefault'
-                                                                                className='
-                                                                                    spoilerCheckbox form-check-input
-                                                                                '
-                                                                            />
-                                                                            <label
-                                                                                className='form-check-label inline-block'
-                                                                                htmlFor='flexRadioDefault1'
-                                                                            >
-                                                                                Contains
-                                                                                spoilers
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                )}
+                                                                <MovieResults
+                                                                    handleMovieClick={
+                                                                        handleMovieClick
+                                                                    }
+                                                                    movieFetchData={
+                                                                        movieFetchData
+                                                                    }
+                                                                />
+                                                                <SelectedMovie
+                                                                    selectedMovieVisible={
+                                                                        selectedMovieVisible
+                                                                    }
+                                                                    chosenMovieDetails={
+                                                                        chosenMovieDetails
+                                                                    }
+                                                                    handleCancelClick={
+                                                                        handleCancelClick
+                                                                    }
+                                                                    reviewText={
+                                                                        reviewText
+                                                                    }
+                                                                    setReviewText={
+                                                                        setReviewText
+                                                                    }
+                                                                    handleRating={
+                                                                        handleRating
+                                                                    }
+                                                                    ratingValue={
+                                                                        ratingValue
+                                                                    }
+                                                                    spoilerChecked={
+                                                                        spoilerChecked
+                                                                    }
+                                                                    handleSpoiler={
+                                                                        handleSpoiler
+                                                                    }
+                                                                    setRatingValue={
+                                                                        setRatingValue
+                                                                    }
+                                                                    tags={tags}
+                                                                    setTags={
+                                                                        setTags
+                                                                    }
+                                                                />
                                                             </>
                                                         </div>
                                                     </div>

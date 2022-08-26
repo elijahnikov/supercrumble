@@ -52,11 +52,11 @@ const ReviewPage = ({}) => {
                     onClick={executeScroll}
                     className='float-left mt-[-25px] inline-block cursor-pointer'
                 >
-                    <BiComment className='inline mr-3 ml-[90px]' />
-                    <p className='inline mr-1 text-[12px] text-white'>
+                    <BiComment className='mr-3 ml-[90px] inline' />
+                    <p className='mr-1 inline text-[12px] text-white'>
                         {kFormatter(data?.review?.noOfComments)} comments
                     </p>
-                    <BsFillArrowDownCircleFill className='inline float-right ml-[10px] mt-[5px]' />
+                    <BsFillArrowDownCircleFill className='float-right ml-[10px] mt-[5px] inline' />
                 </div>
             </>
         );
@@ -99,7 +99,7 @@ const ReviewPage = ({}) => {
                                             src={data.review.creator.avatar!!}
                                             alt='Profile image'
                                         />
-                                        <p className='inline ml-3 text-sm'>
+                                        <p className='ml-3 inline text-sm'>
                                             Review by{' '}
                                         </p>
                                         <p className='inline text-sm font-bold'>
@@ -113,11 +113,11 @@ const ReviewPage = ({}) => {
                                                 data.review.movie_title.toString()
                                             )}-${data.review.movieId}`}
                                         >
-                                            <h3 className='inline mt-4 cursor-pointer text-white'>
+                                            <h3 className='mt-4 inline cursor-pointer text-white'>
                                                 {data.review.movie_title}{' '}
                                             </h3>
                                         </NextLink>
-                                        <h4 className='inline mt-4 text-superRed'>
+                                        <h4 className='mt-4 inline text-superRed'>
                                             {data.review.movie_release_year}
                                         </h4>
                                         <Rating
@@ -148,7 +148,7 @@ const ReviewPage = ({}) => {
                                     {ScrollDemo()}
                                 </div>
 
-                                <div className='mt-[70px] mb-20'>
+                                <div className='mt-[70px] mb-10'>
                                     {data.review.containsSpoilers && (
                                         <p className='text-sm italic text-gray-500'>
                                             Contains spoilers...
@@ -168,6 +168,20 @@ const ReviewPage = ({}) => {
                                     >
                                         {data.review.text}
                                     </span>
+                                </div>
+                                <div className='mb-20'>
+                                    {data.review.tags
+                                        .split(',')
+                                        .map((tag: string, i: number) => (
+                                            <div
+                                                key={i}
+                                                className='mr-2 inline-block rounded-md bg-gray-800 p-1'
+                                            >
+                                                <p className='text-xs text-gray-400'>
+                                                    {tag}
+                                                </p>
+                                            </div>
+                                        ))}
                                 </div>
                             </div>
                         </div>

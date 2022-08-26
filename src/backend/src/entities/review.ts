@@ -53,6 +53,10 @@ export class Review extends BaseEntity {
     containsSpoilers: boolean;
 
     @Field()
+    @Column()
+    tags?: string;
+
+    @Field()
     @Column({ nullable: true })
     movie_poster: string;
 

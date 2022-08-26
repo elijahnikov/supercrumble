@@ -11,8 +11,8 @@ import {
 } from '@/generated/graphql';
 import { epochToDateTime } from '@/utils/EpochToDateTime';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, MutableRefObject, useEffect, useState } from 'react';
-import { BsFillReplyFill, BsThreeDots } from 'react-icons/bs';
+import { Fragment, MutableRefObject, useState } from 'react';
+import { BsThreeDots } from 'react-icons/bs';
 import ReviewCommentUpvote from './components/ReviewCommentUpvote/ReviewCommentUpvote';
 
 interface ReviewCommentSectionProps {
@@ -38,6 +38,7 @@ const ReviewCommentSection = ({
     const [deleteComment] = useDeleteReviewCommentMutation({
         refetchQueries: [{ query: ReviewCommentsDocument }, 'ReviewComments'],
     });
+
     const {
         data: commentsData,
         loading,

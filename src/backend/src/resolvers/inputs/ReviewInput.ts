@@ -25,4 +25,7 @@ export class ReviewInput {
 
     @Field()
     containsSpoilers: boolean;
+
+    @Field()
+    tags: string;
 }

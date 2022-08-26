@@ -24,22 +24,12 @@ const Layout = ({ children, ...props }: LayoutProps) => {
             {props.showNavBar ? (
                 <div className='z-10'>
                     <MainNavBar userData={data!!} />
-                    <img
-                        // style={{position: "relative",
-                        //       box-shadow: "inset 0 0 10px 10px #000"}}
-                        // style={{
-                        //     // backgroundColor: '#837960',
-                        //     // backgroundImage: `linear-gradient(to bottom, transparent, #837960)`,
-                        //     // backgroundRepeat: 'no-repeat',
-                        //     background:
-                        //         'linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 0, 0, 1), rgba(0, 0, 0, 0))',
-                        // }}
-                        className='test absolute top-0 z-[-1]  object-cover'
-                        // className={`absolute top-0 h-[100vh] w-[100vw] bg-[url('https://image.tmdb.org/t/p/original/${props.backgroundImage}')]`}
-                        // className='absolute top-0 z-[-1] opacity-70'
-                        src={`https://image.tmdb.org/t/p/original/${props.backgroundImage}`}
-                    />
-                    {/* // ></div> */}
+                    {props.backgroundImage && (
+                        <img
+                            className='test absolute top-0 z-[-1] object-cover'
+                            src={`https://image.tmdb.org/t/p/original/${props.backgroundImage}`}
+                        />
+                    )}
                 </div>
             ) : null}
             <div className='layout-container'>
@@ -61,6 +51,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
                 )} */}
                 {children}
             </div>
+            {/* <div className='absolute bottom-[0vh] left-0 text-white'>test</div> */}
         </div>
     );
 };
