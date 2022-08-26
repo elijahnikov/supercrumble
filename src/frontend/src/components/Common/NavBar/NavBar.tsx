@@ -14,7 +14,7 @@ import CreateReviewModal from '@/components/CreateReviewModal/CreateReviewModal'
 import Button from '../Button/Button';
 
 interface MainNavBarProps {
-    userData: MeQuery;
+    userData?: MeQuery;
 }
 
 type MenuType = {
@@ -255,24 +255,29 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                 <div className='absolute top-[50%] m-0 flex translate-y-[-50%]'>
                     <div className='inline'>
                         <img
-                            className='inline pointer-events-none h-12 w-12'
+                            className='pointer-events-none inline h-12 w-12'
                             src='https://i.ibb.co/r4WtSVc/supercrumble800x800.png'
                         />
-                        <p className='text-shadow-md bold inline ml-3'>
+                        <p className='text-shadow-md bold ml-3 inline'>
                             supercrumble
                         </p>
-                        <div className='inline float-right ml-3 mt-1'>
+                        <div className='float-right ml-3 mt-1 inline'>
                             <CreateReviewModal />
                         </div>
                     </div>
                 </div>
                 {/* NAV MENU */}
-                <div className='inline invisible absolute left-[50%] top-[50%] translate-x-[-50%]  translate-y-[-50%] navBar:visible'>
+                <div className='invisible absolute left-[50%] top-[50%] inline translate-x-[-50%]  translate-y-[-50%] navBar:visible'>
                     {navMenu.map((nav) => (
                         // <div className='inline' key={nav.id}>
                         <p
+                            onClick={() => router.push(nav.href)}
                             key={nav.id}
-                            className='text-shadow-md inline ml-10 text-[16px] font-semibold'
+                            className={`text-shadow-md ml-10 inline text-[16px] font-semibold ${
+                                currentPath === nav.href
+                                    ? 'fill-superRed text-superRed'
+                                    : ''
+                            }`}
                         >
                             {nav.title.toLocaleUpperCase()}
                         </p>
@@ -280,8 +285,8 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                     ))}
                 </div>
                 <div className='absolute top-[50%] right-0 mt-0 flex translate-y-[-50%]'>
-                    <p className='text-shadow-md bold inline ml-3 mt-2 mr-5'>
-                        @{userData.me?.username}
+                    <p className='text-shadow-md bold ml-3 mt-2 mr-5 inline'>
+                        @{userData?.me?.username}
                     </p>
                     <Menu
                         as='div'
@@ -312,7 +317,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                             <button
                                                 onClick={() =>
                                                     router.push(
-                                                        `/@${userData.me?.username}`
+                                                        `/@${userData?.me?.username}`
                                                     )
                                                 }
                                                 className={`${

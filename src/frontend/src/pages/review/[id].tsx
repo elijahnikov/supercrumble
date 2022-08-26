@@ -170,18 +170,19 @@ const ReviewPage = ({}) => {
                                     </span>
                                 </div>
                                 <div className='mb-20'>
-                                    {data.review.tags
-                                        .split(',')
-                                        .map((tag: string, i: number) => (
-                                            <div
-                                                key={i}
-                                                className='mr-2 inline-block rounded-md bg-gray-800 p-1'
-                                            >
-                                                <p className='text-xs text-gray-400'>
-                                                    {tag}
-                                                </p>
-                                            </div>
-                                        ))}
+                                    {data.review.tags &&
+                                        data.review.tags
+                                            .split(',')
+                                            .map((tag: string, i: number) => (
+                                                <div
+                                                    key={i}
+                                                    className='mr-2 inline-block rounded-md bg-gray-800 p-1'
+                                                >
+                                                    <p className='text-xs text-gray-400'>
+                                                        {tag}
+                                                    </p>
+                                                </div>
+                                            ))}
                                 </div>
                             </div>
                         </div>
