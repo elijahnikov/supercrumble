@@ -78,7 +78,7 @@ const FilmDetailTabs = ({
     };
 
     return (
-        <div className='w-[580px]'>
+        <div className='w-[700px]'>
             {/* TABS */}
             <div className='mt-[60px]'>
                 {tabMap.map((tab) => (
@@ -89,15 +89,15 @@ const FilmDetailTabs = ({
                         }
                         className={`${
                             tab.active
-                                ? 'border-b-[1px] border-b-superRed text-white'
-                                : 'border-b-[1px] border-b-gray-600 text-superRed'
-                        }   inline cursor-pointer p-2 pr-8 pl-8 text-xs hover:border-b-superRed`}
+                                ? 'border-[1px]  border-superRed text-white'
+                                : 'border-[1px] border-gray-800 text-superRed'
+                        }  inline cursor-pointer p-2 pr-[70px] pl-[70px] text-xs hover:border-b-superRed`}
                     >
                         {tab.label}
                     </div>
                 ))}
             </div>
-            <div className='mb-5 w-[580px]'>
+            <div className='mb-5'>
                 <div className='mt-5'>
                     {currentTabDataName === 'cast' && <Cast cast={cast} />}
                     {currentTabDataName === 'crew' && <Crew crew={crew} />}
