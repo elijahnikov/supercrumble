@@ -12,6 +12,7 @@ import { navMenu, navMenuMini } from '@/utils/maps/NavMenu';
 import { IconType } from 'react-icons/lib';
 import CreateReviewModal from '@/components/CreateReviewModal/CreateReviewModal';
 import Button from '../Button/Button';
+import Link from 'next/link';
 
 interface MainNavBarProps {
     userData?: MeQuery;
@@ -254,13 +255,17 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                 {/* VERTICAL ALIGN DIV */}
                 <div className='absolute top-[50%] m-0 flex translate-y-[-50%]'>
                     <div className='inline'>
-                        <img
-                            className='pointer-events-none inline h-12 w-12'
-                            src='https://i.ibb.co/r4WtSVc/supercrumble800x800.png'
-                        />
-                        <p className='text-shadow-md bold ml-3 inline'>
-                            supercrumble
-                        </p>
+                        <Link href={'/'}>
+                            <img
+                                className=' inline h-12 w-12 cursor-pointer'
+                                src='https://i.ibb.co/r4WtSVc/supercrumble800x800.png'
+                            />
+                        </Link>
+                        <Link href={'/'}>
+                            <p className='text-shadow-md bold ml-3 inline cursor-pointer  hover:text-superRed'>
+                                supercrumble
+                            </p>
+                        </Link>
                         <div className='float-right ml-3 mt-1 inline'>
                             <CreateReviewModal />
                         </div>
@@ -273,7 +278,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                         <p
                             onClick={() => router.push(nav.href)}
                             key={nav.id}
-                            className={`text-shadow-md ml-10 inline text-[16px] font-semibold ${
+                            className={`text-shadow-md ml-10 inline cursor-pointer text-[16px] font-semibold hover:text-superRed ${
                                 currentPath === nav.href
                                     ? 'fill-superRed text-superRed'
                                     : ''

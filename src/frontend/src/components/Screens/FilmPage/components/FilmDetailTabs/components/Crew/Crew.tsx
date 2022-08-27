@@ -25,6 +25,8 @@ const Crew = ({ crew }: CrewProps) => {
 
     return (
         <div className='mt-5 mb-[-30px] w-full p-2'>
+            <br />
+            <h2 className='mt-[20px] mr-2 inline'>Crew</h2>
             <div className=' h-[100%] w-[100%]'>
                 {jobs ? (
                     <>

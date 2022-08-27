@@ -96,7 +96,7 @@ svg.star-svg {
 
     .pageFrame {
         @apply mt-20 mb-20 w-[100%] 
-        overflow-hidden rounded-xl
+     rounded-xl
      navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
     }
 }
@@ -184,6 +184,12 @@ svg.star-svg {
             rgba(255, 255, 255, 1) 0%,
             rgba(255, 255, 255, 0) 60%
         ); /* Chrome10+,Safari5.1+ */
+    }
+
+    .stickDiv {
+        position: -webkit-sticky; /* Safari & IE */
+        position: sticky;
+        top: 0;
     }
 
     .text-shadow-md {

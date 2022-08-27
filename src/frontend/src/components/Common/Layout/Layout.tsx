@@ -20,7 +20,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
     };
 
     return (
-        <div>
+        <div className='h-[100%]'>
             {props.showNavBar ? (
                 <div className='z-10'>
                     <MainNavBar userData={data ? data!! : undefined} />

@@ -160,7 +160,7 @@ const ReviewPage = ({}) => {
                                                 ? !spoilerActive
                                                     ? 'cursor-pointer text-white'
                                                     : 'active-text-red-400 cursor-pointer bg-superRed text-superRed'
-                                                : 'bg-transparent text-white'
+                                                : 'break-words bg-transparent text-white'
                                         }`}
                                         onClick={() =>
                                             setSpoilerActive(!spoilerActive)

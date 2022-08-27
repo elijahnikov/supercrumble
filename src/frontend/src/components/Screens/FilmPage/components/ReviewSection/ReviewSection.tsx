@@ -1,5 +1,6 @@
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
 import { ReviewsQuery, useReviewsQuery } from '@/generated/graphql';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating';
 
@@ -28,6 +29,8 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
         },
     });
 
+    const router = useRouter();
+
     if (!popularReviews) {
         return <div>no reviews</div>;
     }
@@ -37,10 +40,10 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
     }
 
     return (
-        <div>
+        <div className='float-right w-[700px]'>
             {popularReviews.reviews.reviews.length > 0 ? (
                 <>
-                    <div className='border-b-[1px] border-gray-600 p-1'>
+                    <div className=' p-1'>
                         <p className='inline text-xs text-gray-500'>
                             POPULAR REVIEWS
                         </p>
@@ -50,7 +53,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                     </div>
                     <div>
                         {popularReviews.reviews.reviews.map((review) => (
-                            <div className='mb-1 mt-1 rounded-md border-b-[1px] border-gray-800 p-4'>
+                            <div className='mb-3 mt-1 rounded-md border-[1px] border-gray-800 p-4'>
                                 <div className='inline-block'>
                                     <img
                                         src={review.creator.avatar!!}
@@ -58,8 +61,15 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                     />
                                 </div>
                                 <div className='ml-2 inline'>
-                                    <p className='inline text-[13px] text-gray-400'>
-                                        Review by{' '}
+                                    <p
+                                        onClick={() =>
+                                            router.push(
+                                                `/review/${review.referenceId}`
+                                            )
+                                        }
+                                        className='mr-1 inline cursor-pointer text-[13px] text-gray-400 hover:underline'
+                                    >
+                                        Review by
                                     </p>
                                     <p className='inline cursor-pointer text-[13px] font-bold hover:underline'>
                                         {review.creator.username}
@@ -74,8 +84,11 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                         onClick={undefined}
                                         readonly
                                     />
-                                    <p className='ml-[51px] text-sm text-gray-300'>
-                                        {review.text}
+                                    <p className='ml-[51px] w-[600px] break-words text-sm text-gray-300'>
+                                        {review.text.slice(0, 250)}
+                                        {review.text.slice.length > 270
+                                            ? '...'
+                                            : ''}
                                     </p>
                                     <div className='ml-[50px] mt-3'>
                                         <UpvoteButton
@@ -90,10 +103,9 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                 </>
             ) : null}
             <br />
-            <br />
             {recentReviews.reviews.reviews.length > 0 ? (
                 <>
-                    <div className='border-b-[1px] border-gray-600 p-1'>
+                    <div className='p-1'>
                         <p className='inline text-xs text-gray-500'>
                             RECENT REVIEWS
                         </p>
@@ -103,7 +115,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                     </div>
                     <div>
                         {recentReviews.reviews.reviews.map((review) => (
-                            <div className='mb-1 mt-1 rounded-md border-b-[1px] border-gray-800 p-4'>
+                            <div className='mb-3 mt-1 rounded-md border-[1px] border-gray-800 p-4'>
                                 <div className='inline-block'>
                                     <img
                                         src={review.creator.avatar!!}
@@ -111,8 +123,15 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                     />
                                 </div>
                                 <div className='ml-2 inline'>
-                                    <p className='inline text-[13px] text-gray-400'>
-                                        Review by{' '}
+                                    <p
+                                        onClick={() =>
+                                            router.push(
+                                                `/review/${review.referenceId}`
+                                            )
+                                        }
+                                        className='mr-1 inline cursor-pointer text-[13px] text-gray-400 hover:underline'
+                                    >
+                                        Review by
                                     </p>
                                     <p className='inline cursor-pointer text-[13px] font-bold hover:underline'>
                                         {review.creator.username}
@@ -127,8 +146,8 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                         onClick={undefined}
                                         readonly
                                     />
-                                    <p className='ml-[51px] text-sm text-gray-300'>
-                                        {review.text}
+                                    <p className='ml-[51px] break-words text-sm text-gray-300'>
+                                        {review.text.slice(0, 250)}...
                                     </p>
                                     <div className='ml-[50px] mt-3'>
                                         <UpvoteButton

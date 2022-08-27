@@ -12,10 +12,22 @@ import InputArea from '../Common/InputArea/InputArea';
 import { Rating } from 'react-simple-star-rating';
 import MovieResults from './components/MovieResults/MovieResults';
 import SelectedMovie from './components/SelectedMovie/SelectedMovie';
+import Button from '../Common/Button/Button';
 
-interface CreateReviewModalProps {}
+interface CreateReviewModalProps {
+    film?: {
+        id: number;
+        originalTitle: string;
+        releaseDate: string;
+        posterPath: string;
+        overview: string;
+        backdropPath: string;
+        show: boolean;
+    };
+    buttonTitle?: string;
+}
 
-const CreateReviewModal = ({}: CreateReviewModalProps) => {
+const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
@@ -36,6 +48,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
         releaseDate: '',
     });
     const [reviewText, setReviewText] = useState('');
+    const [debounceTime, setDebounceTime] = useState(500);
     const [movieFetchData, setMovieFetchData] = useState<any[]>([]);
     const [selectedMovieVisible, setSelectedMovieVisible] = useState(false);
     const [blockInput, setBlockInput] = useState(false);
@@ -44,6 +57,25 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
 
     const [createReview] = useCreateReviewMutation();
     const [createFilm] = useCreateFilmMutation();
+
+    const handleOpen = () => {
+        setOpen(!open);
+        if (film) {
+            handleMovieClick(
+                film.id,
+                film.originalTitle,
+                film.releaseDate,
+                film.posterPath,
+                film.overview,
+                film.backdropPath,
+                film.releaseDate,
+                true
+            );
+            setDebounceTime(0);
+        } else {
+            setDebounceTime(500);
+        }
+    };
 
     const searchMovie = async () => {
         if (movieName) {
@@ -60,7 +92,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             searchMovie();
-        }, 500);
+        }, debounceTime);
 
         return () => clearTimeout(delayDebounceFn);
     }, [movieName]);
@@ -160,17 +192,16 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
             <div
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
-                className='navBar-create-review-container'
-                onClick={() => setOpen(!open)}
+                className=''
+                // onClick={() => setOpen(!open)}
             >
-                <div className=' mt-1 justify-center text-center'>
-                    <p className='mb-1 inline text-xs'>Add</p>
-                    <BsPlusSquare className='mx-auto ml-1 mb-1 inline h-4 w-4 fill-white dark:fill-black  navBar:hover:fill-white' />
-                </div>
-                {showTooltip && (
-                    <div className='absolute left-[120px] mb-[30px] rounded-md bg-crumble-100 p-2 text-sm'>
-                        Create Review
-                    </div>
+                {buttonTitle ? (
+                    <Button onClick={() => handleOpen()}>{buttonTitle}</Button>
+                ) : (
+                    <Button onClick={() => handleOpen()}>
+                        Add
+                        <BsPlusSquare className='mx-auto ml-1 inline h-4 w-4 fill-white dark:fill-black  navBar:hover:fill-white' />
+                    </Button>
                 )}
             </div>
             <Transition.Root show={open} as={Fragment}>
@@ -191,7 +222,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                     >
                         <div className='fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity' />
                     </Transition.Child>
-                    <div className='fixed inset-0 z-10 overflow-y-auto'>
+                    <div className='fixed inset-0 z-10 '>
                         <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
                             <Transition.Child
                                 as={Fragment}
@@ -206,7 +237,7 @@ const CreateReviewModal = ({}: CreateReviewModalProps) => {
                                     className='
                                         relative
                                         transform
-                                        overflow-hidden
+                                        
                                         rounded-lg
                                         bg-crumble-100
                                         text-left
