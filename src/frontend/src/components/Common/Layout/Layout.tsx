@@ -34,7 +34,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
                 </div>
             ) : null}
             <div className='layout-container'>{children}</div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };
