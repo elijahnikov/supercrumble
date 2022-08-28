@@ -77,7 +77,7 @@ const ReviewPage = ({}) => {
                         <div className='mt-[100px] p-5'>
                             {/* MOVIE POSTER */}
                             <br />
-                            <div className=' float-left w-[25%]'>
+                            <div className='float-left ml-[54px] mr-[-20px] w-[25%]'>
                                 <NextLink
                                     href='/film/[id]'
                                     as={`/film/${formatForURL(

@@ -262,7 +262,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                             />
                         </Link>
                         <Link href={'/'}>
-                            <p className='text-shadow-md bold ml-3 inline cursor-pointer  hover:text-superRed'>
+                            <p className='text-shadow-md bold ml-3 inline cursor-pointer '>
                                 supercrumble
                             </p>
                         </Link>
@@ -278,7 +278,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                         <p
                             onClick={() => router.push(nav.href)}
                             key={nav.id}
-                            className={`text-shadow-md ml-10 inline cursor-pointer text-[16px] font-semibold hover:text-superRed ${
+                            className={`text-shadow-md ml-10 inline cursor-pointer text-[16px] font-semibold ${
                                 currentPath === nav.href
                                     ? 'fill-superRed text-superRed'
                                     : ''

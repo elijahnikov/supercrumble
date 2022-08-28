@@ -40,7 +40,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
     }
 
     return (
-        <div className='float-right w-[700px]'>
+        <div className='float-right mr-[110px] w-[700px]'>
             {popularReviews.reviews.reviews.length > 0 ? (
                 <>
                     <div className=' p-1'>

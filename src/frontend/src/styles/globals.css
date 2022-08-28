@@ -61,11 +61,10 @@ svg.star-svg {
     }
 
     .layout-container {
-        @apply absolute 
-      left-[10vw]  
-      float-left h-[100%] w-[80%] 
-       text-white navBarCollapse:left-[15vw]
-      navBarCollapse:w-[70%];
+        @apply /* */  
+      /* navBarCollapse:w-[70%]; */ 
+       left-[10vw]  mx-auto h-[100%]
+      w-[80%] text-white navBarCollapse:left-[15vw];
     }
 
     .spoilerCheckbox {
@@ -144,7 +143,11 @@ svg.star-svg {
     }
 
     html {
-        @apply bg-crumble-300;
+        @apply m-0 h-[100%] bg-crumble-300 p-0;
+    }
+
+    body {
+        @apply m-0 h-[100%] p-0;
     }
 
     body,

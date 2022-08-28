@@ -41,7 +41,7 @@ const SimilarFilms = ({ filmId }: SimilarFilmsProps) => {
     }
 
     return (
-        <div className='float-right mt-10 mr-5 w-[700px]'>
+        <div className='float-right mt-10 mr-[135px] w-[700px]'>
             <div className='mb-2 pr-7 pl-7'>
                 <p className='inline text-xs text-gray-500'>SIMILAR FILMS</p>
                 <p className='float-right mt-[6px] inline text-xs text-gray-500'>
@@ -51,16 +51,19 @@ const SimilarFilms = ({ filmId }: SimilarFilmsProps) => {
             <div className='text-center'>
                 {similarFilmsData.map((films: SimilarFilmsType) => (
                     <Link
+                        passHref
                         href='/film/[id]'
                         as={`/film/${formatForURL(
                             films.original_title.toString()
                         )}-${films.id}`}
                     >
                         <div className='mt-2 inline cursor-pointer p-2'>
-                            <img
-                                className='inline aspect-auto h-[170px] rounded-md border-[1px] border-crumble-100 p-1'
-                                src={`https://image.tmdb.org/t/p/original${films.poster_path}`}
-                            />
+                            <a target={'_blank'}>
+                                <img
+                                    className='inline aspect-auto h-[170px] rounded-md border-[1px] border-crumble-100 p-1'
+                                    src={`https://image.tmdb.org/t/p/original${films.poster_path}`}
+                                />
+                            </a>
                         </div>
                     </Link>
                 ))}

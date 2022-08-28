@@ -54,7 +54,7 @@ const ReviewCommentSection = ({
     });
 
     return (
-        <div className='float-right mr-[70px] mt-[40px] w-[70%] p-5'>
+        <div className='float-right mr-[160px] mt-[40px] w-[60%] p-5'>
             <div className='mb-10'>
                 <p className='mb-2'>Comments</p>
                 <InputArea
@@ -90,15 +90,15 @@ const ReviewCommentSection = ({
                                 key={d.id}
                                 className='mb-4 rounded-lg border-[1px] border-crumble-100 bg-crumble-200 p-4 text-white'
                             >
-                                <div className='inline mb-5'>
+                                <div className='mb-5 inline'>
                                     <img
                                         className='inline h-[20px] w-[20px] rounded-full object-cover'
                                         src={d.creator.avatar!!}
                                     />
-                                    <p className='inline ml-2 text-sm text-gray-500'>
+                                    <p className='ml-2 inline text-sm text-gray-500'>
                                         {d.creator.username} says,
                                     </p>
-                                    <p className='inline float-right ml-2 mt-2 text-xs text-gray-500'>
+                                    <p className='float-right ml-2 mt-2 inline text-xs text-gray-500'>
                                         {epochToDateTime(d.createdAt)}
                                     </p>
 
@@ -106,12 +106,12 @@ const ReviewCommentSection = ({
                                     <p className='mt-4'>{d.text}</p>
 
                                     <div className='mt-[20px] inline-block'>
-                                        <div className='inline float-left mt-1'>
+                                        <div className='float-left mt-1 inline'>
                                             <ReviewCommentUpvote
                                                 reviewComment={d}
                                             />
                                         </div>
-                                        <p className='inline ml-2 text-sm text-gray-400'>
+                                        <p className='ml-2 inline text-sm text-gray-400'>
                                             {d.score}
                                         </p>
                                         {/* <div className='float-right ml-2 ml-[20px] mt-[2px] inline w-[400px]'>

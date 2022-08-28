@@ -23,7 +23,7 @@ const InputField = ({ icon, size: _, ...props }: InputFieldProps) => {
                 </div>
             )}
             <input
-                className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-gray-700'
+                className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
                 {...props}
                 type={props.type}
                 spellCheck={false}

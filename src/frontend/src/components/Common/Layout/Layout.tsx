@@ -1,5 +1,6 @@
 import { useMeQuery } from '@/generated/graphql';
 import { useState } from 'react';
+import Footer from '../Footer/Footer';
 import MainNavBar from '../NavBar/NavBar';
 
 interface LayoutProps {
@@ -20,7 +21,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
     };
 
     return (
-        <div className='h-[100%]'>
+        <div className='h-[100% m-0 min-h-[100%] p-0'>
             {props.showNavBar ? (
                 <div className='z-10'>
                     <MainNavBar userData={data ? data!! : undefined} />
@@ -33,6 +34,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
                 </div>
             ) : null}
             <div className='layout-container'>{children}</div>
+            <Footer />
         </div>
     );
 };
