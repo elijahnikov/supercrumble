@@ -1,6 +1,6 @@
 import Button from '@/components/Common/Button/Button';
 import Layout from '@/components/Common/Layout/Layout';
-import CreateListModal from '@/components/CreateListModal/CreateListModal';
+import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
 import { LISTS_BACKGROUND_IMAGE } from '@/utils/consts';
 import { withApollo } from '@/utils/withApollo';
 import { useRouter } from 'next/router';

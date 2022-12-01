@@ -10,7 +10,7 @@ import { BsFillBellFill, BsFillGearFill, BsPersonFill } from 'react-icons/bs';
 import { BiMenu } from 'react-icons/bi';
 import { navMenu, navMenuMini } from '@/utils/maps/NavMenu';
 import { IconType } from 'react-icons/lib';
-import CreateReviewModal from '@/components/CreateReviewModal/CreateReviewModal';
+import CreateReviewModal from '@/components/Common/CreateReviewModal/CreateReviewModal';
 import Button from '../Button/Button';
 import Link from 'next/link';
 

@@ -1,6 +1,6 @@
 import Button from '@/components/Common/Button/Button';
 import Layout from '@/components/Common/Layout/Layout';
-import CreateReviewModal from '@/components/CreateReviewModal/CreateReviewModal';
+import CreateReviewModal from '@/components/Common/CreateReviewModal/CreateReviewModal';
 import FilmActions from '@/components/Screens/FilmPage/components/FilmActions/FilmActions';
 import FilmDetailTabs from '@/components/Screens/FilmPage/components/FilmDetailTabs/FilmDetailTabs';
 import FilmStats from '@/components/Screens/FilmPage/components/FilmStats/FilmStats';

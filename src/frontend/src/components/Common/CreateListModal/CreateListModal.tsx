@@ -7,10 +7,10 @@ import { useRouter } from 'next/router';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { BsFillXCircleFill, BsPlusSquare } from 'react-icons/bs';
 import { Dialog, Transition } from '@headlessui/react';
-import InputField from '../Common/InputField/InputField';
-import InputArea from '../Common/InputArea/InputArea';
+import InputField from '../InputField/InputField';
+import InputArea from '../InputArea/InputArea';
 import { Rating } from 'react-simple-star-rating';
-import Button from '../Common/Button/Button';
+import Button from '../Button/Button';
 import Tags from './components/Tags/Tags';
 import MovieResults from './components/MovieResults/MovieResults';
 
