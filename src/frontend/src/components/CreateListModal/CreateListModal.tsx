@@ -30,6 +30,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
     const [listName, setListName] = useState('');
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [debounceTime, setDebounceTime] = useState(500);
     const [tags, setTags] = useState<string[]>([]);
     const cancelButtonRef = useRef(null);
 
@@ -96,6 +97,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
     const handleMovieNameChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
+        setDebounceTime(500);
         setMovieName(event.target.value);
     };
 
@@ -139,9 +141,8 @@ const CreateListModal = ({}: CreateListModalProps) => {
                 },
             ]);
         }
-
-        // setMovieName('');
-        // setSelectedMovieVisible(true);
+        setMovieName('');
+        setDebounceTime(0);
     };
 
     const removeMovie = (id: number) => {
@@ -151,7 +152,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             searchMovie();
-        }, 500);
+        }, debounceTime);
 
         return () => clearTimeout(delayDebounceFn);
     }, [movieName]);
@@ -288,7 +289,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                                     tags={tags}
                                                                 />
                                                             </div>
-
                                                             <div className='float-right w-[50%]'>
                                                                 <div className='h-[153px] w-[350px]'>
                                                                     <p className='mb-2 text-sm font-semibold text-superRed'>
@@ -358,6 +358,28 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                             }
                                                             type='text'
                                                         />
+                                                        {chosenMovies &&
+                                                            chosenMovies.map(
+                                                                (movie) => (
+                                                                    <div
+                                                                        key={
+                                                                            movie.id
+                                                                        }
+                                                                    >
+                                                                        <p
+                                                                            onClick={() =>
+                                                                                removeMovie(
+                                                                                    movie.id
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                movie.title
+                                                                            }
+                                                                        </p>
+                                                                    </div>
+                                                                )
+                                                            )}
                                                         <MovieResults
                                                             handleMovieClick={
                                                                 addMovie

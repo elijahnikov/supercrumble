@@ -1,4 +1,4 @@
-import { Films } from "../entities/films";
+import { Films } from "../../entities/film/films";
 import {
     Arg,
     Ctx,
@@ -8,12 +8,13 @@ import {
     Resolver,
     UseMiddleware,
 } from "type-graphql";
-import { isAuth } from "../middleware/isAuth";
-import { MyContext } from "../types";
-import { FilmInput } from "./inputs/FilmInput";
+import { isAuth } from "../../middleware/isAuth";
+import { MyContext } from "../../types";
+import { FilmInput } from "../inputs/FilmInput";
 
 @Resolver()
 export class FilmsResolver {
+    //insert new film into table when user reviews, used to store metadata about film
     @Mutation(() => Films, { nullable: true })
     @UseMiddleware(isAuth)
     async createFilm(
@@ -36,6 +37,7 @@ export class FilmsResolver {
         }).save();
     }
 
+    //get specific film by id
     @Query(() => Films, { nullable: true })
     film(
         @Arg("movieId", () => Int) movieId: number

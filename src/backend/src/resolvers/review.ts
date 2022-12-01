@@ -18,7 +18,8 @@ import { getConnection } from "typeorm";
 import { Upvote } from "../entities/upvote";
 import { User } from "../entities/user";
 import { ReviewInput } from "./inputs/ReviewInput";
-import { Films } from "../entities/films";
+import { Films } from "../entities/film/films";
+import { FilmTags } from "../entities/film/filmTags";
 
 //detect whether there is no more data to paginate through
 @ObjectType()
@@ -145,14 +146,6 @@ export class ReviewResolver {
             replacements.push(new Date(parseInt(cursor)));
         }
 
-        // const posts = await getConnection().query(`
-        //     select p.*
-        //     from post p
-        //     ${cursor ? `where p."createdt" < $2` : ''}
-        //     order by p."createdAt" DESC
-        //     limit $1
-        // `, replacements)
-
         const qb = getConnection()
             .getRepository(Review)
             .createQueryBuilder("rv")
@@ -169,7 +162,6 @@ export class ReviewResolver {
         if (movieId) {
             qb.andWhere('rv."movieId" = :movieId', { movieId: movieId });
         }
-        // qb.andWhere('pst. "createdAt" < :start_at', { start_at: '2020-04-05  10:41:30.746877' })
 
         const reviews = await qb.getMany();
         return {
@@ -178,7 +170,6 @@ export class ReviewResolver {
         };
     }
 
-    //CRUD
     //get specific post
     @Query(() => Review, { nullable: true })
     review(@Arg("id", () => String) id: string): Promise<Review | undefined> {
@@ -195,6 +186,35 @@ export class ReviewResolver {
         //if user is not logged in return null
         if (!req.session.userId) {
             return null;
+        }
+
+        if (input.tags) {
+            const tags = input.tags.split(",");
+            tags.forEach(async (tag) => {
+                const tagCheck = FilmTags.findOne({
+                    where: { text: tag },
+                });
+                if (await tagCheck) {
+                    await getConnection()
+                        .createQueryBuilder()
+                        .update(FilmTags)
+                        .set({
+                            count: () => '"count" + 1',
+                        })
+                        .where("text = :tag", { tag: tag })
+                        .execute();
+                } else {
+                    await getConnection().transaction(async (tm) => {
+                        await tm.query(
+                            `
+                                insert into film_tags ("text", "count")
+                                values ($1, $2)
+                            `,
+                            [tag, 1]
+                        );
+                    });
+                }
+            });
         }
 
         await getConnection()

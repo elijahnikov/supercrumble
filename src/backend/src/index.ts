@@ -21,8 +21,10 @@ import { ReviewComment } from "./entities/reviewComment";
 import { ReviewCommentResolver } from "./resolvers/reviewComment";
 import { ReviewCommentUpvote } from "./entities/reviewCommentUpvote";
 import { createReviewCommentUpvoteLoader } from "./utils/createReviewCommentUpvoteLoader";
-import { FilmsResolver } from "./resolvers/films";
-import { Films } from "./entities/films";
+import { FilmsResolver } from "./resolvers/film/films";
+import { Films } from "./entities/film/films";
+import { FilmTags } from "./entities/film/filmTags";
+import { FilmTagsResolver } from "./resolvers/film/filmTags";
 
 const main = async () => {
     const conn = await createConnection({
@@ -38,6 +40,7 @@ const main = async () => {
             ReviewComment,
             ReviewCommentUpvote,
             Films,
+            FilmTags,
         ],
     });
     await conn.runMigrations();
@@ -76,6 +79,7 @@ const main = async () => {
                 UserResolver,
                 ReviewCommentResolver,
                 FilmsResolver,
+                FilmTagsResolver,
             ],
             validate: false,
         }),

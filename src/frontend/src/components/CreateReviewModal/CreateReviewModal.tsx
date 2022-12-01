@@ -222,8 +222,8 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
                     >
                         <div className='fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity' />
                     </Transition.Child>
-                    <div className='fixed inset-0 z-10 '>
-                        <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
+                    <div className=' fixed inset-0 z-10 '>
+                        <div className=' flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
                             <Transition.Child
                                 as={Fragment}
                                 enter='ease-out duration-300'
@@ -249,7 +249,7 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
                                         sm:max-w-2xl
                                     '
                                 >
-                                    <div className='bg-crumble-100 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
+                                    <div className=' bg-crumble-100 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
                                         <div className='mb-10 sm:flex sm:items-start'>
                                             <div className='mt-3 w-full text-center sm:mt-0 sm:text-left'>
                                                 <Dialog.Title
