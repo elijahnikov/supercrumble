@@ -42,6 +42,8 @@ const CreateListModal = ({}: CreateListModalProps) => {
     const [movieFetchData, setMovieFetchData] = useState<any[]>([]);
     const [selectedMovieVisible, setSelectedMovieVisible] = useState(false);
 
+    const [createFilm] = useCreateFilmMutation();
+
     const handleOpen = () => {
         setOpen(!open);
     };
@@ -56,42 +58,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
         } else {
             setMovieFetchData([]);
         }
-    };
-
-    const handleCreateReview = async () => {
-        // setLoading(true);
-        // const filmResponse = await createFilm({
-        //     variables: {
-        //         input: {
-        //             movieId: chosenMovieDetails.id,
-        //             movieTitle: chosenMovieDetails.title,
-        //             overview: chosenMovieDetails.overview,
-        //             posterPath: chosenMovieDetails.poster,
-        //             backdropPath: chosenMovieDetails.backdrop,
-        //             releaseDate: chosenMovieDetails.releaseDate,
-        //         },
-        //     },
-        // });
-        // const response = await createReview({
-        //     variables: {
-        //         input: {
-        //             tags: tags.join(','),
-        //             containsSpoilers: spoilerChecked,
-        //             movieId: chosenMovieDetails.id,
-        //             movie_poster: chosenMovieDetails.poster,
-        //             backdrop: chosenMovieDetails.backdrop,
-        //             movie_release_year: parseInt(chosenMovieDetails.year),
-        //             movie_title: chosenMovieDetails.title,
-        //             ratingGiven: ratingValue / 20,
-        //             text: reviewText,
-        //         },
-        //     },
-        // });
-        // if (filmResponse.errors) {
-        //     console.log(filmResponse.errors);
-        // }
-        // setLoading(false);
-        // router.push(`/review/${response.data?.createReview.referenceId}`);
     };
 
     const handleMovieNameChange = (
@@ -113,17 +79,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
         movieReleaseDate: string,
         show: boolean
     ) => {
-        // setBlockInput(show);
-        // setMovieFetchData([]);
-        // setChosenMovieDetails({
-        //     id: movieId,
-        //     title: movieTitle,
-        //     year: movieYear,
-        //     poster: moviePoster,
-        //     overview: movieOverview,
-        //     backdrop: movieBackdrop,
-        //     releaseDate: movieReleaseDate,
-        // });
         let duplicateCheck = chosenMovies.find((movie) => {
             return movie.id === movieId;
         });
@@ -147,6 +102,12 @@ const CreateListModal = ({}: CreateListModalProps) => {
 
     const removeMovie = (id: number) => {
         setChosenMovies(chosenMovies.filter((movie) => movie.id !== id));
+    };
+
+    const createList = async () => {
+        if (chosenMovies.length > 0) {
+            let response;
+        }
     };
 
     useEffect(() => {
@@ -230,8 +191,8 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                         <button
                                                             type='button'
                                                             className='handleCreateReview'
-                                                            onClick={
-                                                                handleCreateReview
+                                                            onClick={() =>
+                                                                createList()
                                                             }
                                                         >
                                                             Create
