@@ -1,13 +1,14 @@
 import { Field, ObjectType } from "type-graphql";
 import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm";
+import { FilmList } from "./filmList/filmList";
 import { Review } from "./review";
 import { ReviewComment } from "./reviewComment";
 import { ReviewCommentUpvote } from "./reviewCommentUpvote";
@@ -17,73 +18,76 @@ import { Upvote } from "./upvote";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id!: number;
+    @Field()
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-  @Field()
-  @Column({ unique: true })
-  username!: string;
+    @Field()
+    @Column({ unique: true })
+    username!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  displayName: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    displayName: string;
 
-  @Field()
-  @Column({ unique: true })
-  email!: string;
+    @Field()
+    @Column({ unique: true })
+    email!: string;
 
-  @Column()
-  password!: string;
+    @Column()
+    password!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  avatar: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    avatar: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  bio: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    bio: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  bioLink: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    bioLink: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "int" })
-  totalFilmsWatched: number;
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    totalFilmsWatched: number;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, type: "int" })
-  totalHoursWatched: number;
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    totalHoursWatched: number;
 
-  @OneToMany(() => Review, (review) => review.creator)
-  reviews: Review[];
+    @OneToMany(() => Review, (review) => review.creator)
+    reviews: Review[];
 
-  @OneToMany(() => Upvote, (upvote) => upvote.user)
-  upvotes: Upvote[];
+    @OneToMany(() => FilmList, (filmList) => filmList.creator)
+    lists: FilmList[];
 
-  @OneToMany(
-    () => ReviewCommentUpvote,
-    (reviewCommentUpvote) => reviewCommentUpvote.user
-  )
-  reviewCommentUpvotes: ReviewCommentUpvote[];
+    @OneToMany(() => Upvote, (upvote) => upvote.user)
+    upvotes: Upvote[];
 
-  @OneToMany(() => ReviewComment, (reviewComment) => reviewComment.creator)
-  reviewComments: ReviewComment[];
+    @OneToMany(
+        () => ReviewCommentUpvote,
+        (reviewCommentUpvote) => reviewCommentUpvote.user
+    )
+    reviewCommentUpvotes: ReviewCommentUpvote[];
 
-  @Field(() => String)
-  @CreateDateColumn()
-  createdAt: Date;
+    @OneToMany(() => ReviewComment, (reviewComment) => reviewComment.creator)
+    reviewComments: ReviewComment[];
 
-  @Field(() => String)
-  @UpdateDateColumn()
-  updatedAt: Date;
+    @Field(() => String)
+    @CreateDateColumn()
+    createdAt: Date;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  usernameChangeDate: Date;
+    @Field(() => String)
+    @UpdateDateColumn()
+    updatedAt: Date;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  onboarded: boolean;
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
+    usernameChangeDate: Date;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    onboarded: boolean;
 }

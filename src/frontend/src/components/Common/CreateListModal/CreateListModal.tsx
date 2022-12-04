@@ -13,6 +13,7 @@ import { Rating } from 'react-simple-star-rating';
 import Button from '../Button/Button';
 import Tags from './components/Tags/Tags';
 import MovieResults from './components/MovieResults/MovieResults';
+import ChosenMovies from './components/ChosenMovies/ChosenMovies';
 
 interface CreateListModalProps {}
 
@@ -49,14 +50,16 @@ const CreateListModal = ({}: CreateListModalProps) => {
     };
 
     const searchMovie = async () => {
+        setLoading(true);
         if (movieName) {
             const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${movieName}`;
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
             setMovieFetchData(data.results);
+            setLoading(false);
         } else {
             setMovieFetchData([]);
+            setLoading(false);
         }
     };
 
@@ -66,8 +69,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
         setDebounceTime(500);
         setMovieName(event.target.value);
     };
-
-    const handleCancelClick = (show: boolean) => {};
 
     const addMovie = (
         movieId: number,
@@ -106,7 +107,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
 
     const createList = async () => {
         if (chosenMovies.length > 0) {
-            let response;
+            let filmResponse = await createFilm({});
         }
     };
 
@@ -117,10 +118,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
 
         return () => clearTimeout(delayDebounceFn);
     }, [movieName]);
-
-    useEffect(() => {
-        console.log(chosenMovies);
-    }, [chosenMovies]);
 
     return (
         <>
@@ -201,10 +198,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                             type='button'
                                                             className='cancelCreateReview'
                                                             onClick={() => {
-                                                                setOpen(false),
-                                                                    handleCancelClick(
-                                                                        false
-                                                                    );
+                                                                setOpen(false);
                                                             }}
                                                             ref={
                                                                 cancelButtonRef
@@ -258,45 +252,6 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                                     <InputArea />
                                                                 </div>
                                                             </div>
-
-                                                            <>
-                                                                {/*<SelectedMovie
-                                                                    selectedMovieVisible={
-                                                                        selectedMovieVisible
-                                                                    }
-                                                                    chosenMovieDetails={
-                                                                        chosenMovieDetails
-                                                                    }
-                                                                    handleCancelClick={
-                                                                        handleCancelClick
-                                                                    }
-                                                                    reviewText={
-                                                                        reviewText
-                                                                    }
-                                                                    setReviewText={
-                                                                        setReviewText
-                                                                    }
-                                                                    handleRating={
-                                                                        handleRating
-                                                                    }
-                                                                    ratingValue={
-                                                                        ratingValue
-                                                                    }
-                                                                    spoilerChecked={
-                                                                        spoilerChecked
-                                                                    }
-                                                                    handleSpoiler={
-                                                                        handleSpoiler
-                                                                    }
-                                                                    setRatingValue={
-                                                                        setRatingValue
-                                                                    }
-                                                                    tags={tags}
-                                                                    setTags={
-                                                                        setTags
-                                                                    }
-                                                                /> */}
-                                                            </>
                                                         </div>
                                                     </div>
                                                     <div className='ml-8 pr-8'>
@@ -319,29 +274,8 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                             }
                                                             type='text'
                                                         />
-                                                        {chosenMovies &&
-                                                            chosenMovies.map(
-                                                                (movie) => (
-                                                                    <div
-                                                                        key={
-                                                                            movie.id
-                                                                        }
-                                                                    >
-                                                                        <p
-                                                                            onClick={() =>
-                                                                                removeMovie(
-                                                                                    movie.id
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                movie.title
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                )
-                                                            )}
                                                         <MovieResults
+                                                            loading={loading}
                                                             handleMovieClick={
                                                                 addMovie
                                                             }
@@ -349,6 +283,16 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                                 movieFetchData
                                                             }
                                                         />
+                                                        {chosenMovies && (
+                                                            <ChosenMovies
+                                                                chosenMovies={
+                                                                    chosenMovies
+                                                                }
+                                                                handleRemoveMovie={
+                                                                    removeMovie
+                                                                }
+                                                            />
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

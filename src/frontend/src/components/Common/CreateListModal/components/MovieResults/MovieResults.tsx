@@ -1,14 +1,17 @@
 interface MovieResultsProps {
     movieFetchData: any[];
     handleMovieClick: Function;
+    loading: boolean;
 }
 
 const MovieResults = ({
     movieFetchData,
     handleMovieClick,
+    loading,
 }: MovieResultsProps) => {
     return (
-        <div className='mt-5 grid w-[600px] grid-cols-5 gap-2'>
+        <div className='mt-5 grid w-[800px] grid-cols-6 gap-2'>
+            {loading && <p className='text-superRed'>loading...</p>}
             {movieFetchData
                 ? movieFetchData.slice(0, 6).map((m) =>
                       m.length === 0 ? (

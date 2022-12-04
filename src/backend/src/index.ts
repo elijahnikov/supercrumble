@@ -11,20 +11,14 @@ import connectRedis from "connect-redis";
 import { COOKIE_NAME, prod } from "./constants";
 import cors from "cors";
 import { createConnection } from "typeorm";
-import { Review } from "./entities/review";
-import { User } from "./entities/user";
 import path from "path";
-import { Upvote } from "./entities/upvote";
-import { createUserLoader } from "./utils/createUserLoader";
-import { createUpvoteLoader } from "./utils/createUpvoteLoader";
-import { ReviewComment } from "./entities/reviewComment";
+import { createUserLoader } from "./utils/loaders/createUserLoader";
+import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
 import { ReviewCommentResolver } from "./resolvers/reviewComment";
-import { ReviewCommentUpvote } from "./entities/reviewCommentUpvote";
-import { createReviewCommentUpvoteLoader } from "./utils/createReviewCommentUpvoteLoader";
+import { createReviewCommentUpvoteLoader } from "./utils/loaders/createReviewCommentUpvoteLoader";
 import { FilmsResolver } from "./resolvers/film/films";
-import { Films } from "./entities/film/films";
-import { FilmTags } from "./entities/film/filmTags";
 import { FilmTagsResolver } from "./resolvers/film/filmTags";
+import entities from "./utils/serverSetup/entitiesExport";
 
 const main = async () => {
     const conn = await createConnection({
@@ -33,15 +27,7 @@ const main = async () => {
         logging: false,
         synchronize: true,
         migrations: [path.join(__dirname, "./migrations/*")],
-        entities: [
-            Review,
-            User,
-            Upvote,
-            ReviewComment,
-            ReviewCommentUpvote,
-            Films,
-            FilmTags,
-        ],
+        entities,
     });
     await conn.runMigrations();
     const app = express();

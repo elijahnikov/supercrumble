@@ -1,16 +1,3 @@
-mutation CreateFilm($input: FilmInput!) {
-    createFilm(input: $input) {
-        id
-        movieId
-        movieTitle
-        overview
-        posterPath
-        backdropPath
-        releaseDate
-        watchCount
-        listCount
-        likeCount
-        createdAt
-        updatedAt
-    }
+mutation CreateFilm($input: [FilmInput!]!) {
+    createFilm(input: $input)
 }

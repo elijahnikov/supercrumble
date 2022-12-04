@@ -1,15 +1,19 @@
-import {Request, Response} from 'express';
-import { Session, SessionData } from 'express-session';
-import { Redis } from 'ioredis';
-import { createReviewCommentUpvoteLoader } from './utils/createReviewCommentUpvoteLoader';
-import { createUpvoteLoader } from './utils/createUpvoteLoader';
-import { createUserLoader } from './utils/createUserLoader';
+import { Request, Response } from "express";
+import { Session, SessionData } from "express-session";
+import { Redis } from "ioredis";
+import { createReviewCommentUpvoteLoader } from "./utils/loaders/createReviewCommentUpvoteLoader";
+import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
+import { createUserLoader } from "./utils/loaders/createUserLoader";
 
 export type MyContext = {
-    req: Request & {session: Session & Partial<SessionData>&{userId?: number}};
+    req: Request & {
+        session: Session & Partial<SessionData> & { userId?: number };
+    };
     res: Response;
     redis: Redis;
-    userLoader: ReturnType<typeof createUserLoader>
-    upvoteLoader: ReturnType<typeof createUpvoteLoader>
-    reviewCommentUpvoteLoader: ReturnType<typeof createReviewCommentUpvoteLoader>
-}
+    userLoader: ReturnType<typeof createUserLoader>;
+    upvoteLoader: ReturnType<typeof createUpvoteLoader>;
+    reviewCommentUpvoteLoader: ReturnType<
+        typeof createReviewCommentUpvoteLoader
+    >;
+};

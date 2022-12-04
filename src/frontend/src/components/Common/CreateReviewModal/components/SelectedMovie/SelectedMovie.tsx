@@ -5,11 +5,11 @@ import { Rating } from 'react-simple-star-rating';
 import Tags from './components/Tags/Tags';
 
 type ChosenMovieDetailsType = {
-    id: number;
-    title: string;
+    movieId: number;
+    movieTitle: string;
     year: string;
-    poster: string;
-    backdrop: string;
+    posterPath: string;
+    backdropPath: string;
     overview: string;
     releaseDate: string;
 };
@@ -51,14 +51,14 @@ const SelectedMovie = ({
                         <img
                             className='aspet-auto h-[200px] rounded-md'
                             src={
-                                chosenMovieDetails.poster
-                                    ? `https://image.tmdb.org/t/p/w500${chosenMovieDetails.poster}`
+                                chosenMovieDetails.posterPath
+                                    ? `https://image.tmdb.org/t/p/w500${chosenMovieDetails.posterPath}`
                                     : undefined
                             }
                         />
                         <div className='ml-5 text-left'>
                             <h2 className='text-white'>
-                                {chosenMovieDetails.title}
+                                {chosenMovieDetails.movieTitle}
                             </h2>
                             <h3 className='text-superRed'>
                                 {chosenMovieDetails.year.slice(0, 4)}

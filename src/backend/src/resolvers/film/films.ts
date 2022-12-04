@@ -11,30 +11,41 @@ import {
 import { isAuth } from "../../middleware/isAuth";
 import { MyContext } from "../../types";
 import { FilmInput } from "../inputs/FilmInput";
+import { getConnection } from "typeorm";
 
-@Resolver()
+@Resolver(Films)
 export class FilmsResolver {
     //insert new film into table when user reviews, used to store metadata about film
-    @Mutation(() => Films, { nullable: true })
+    @Mutation(() => Boolean, { nullable: true })
     @UseMiddleware(isAuth)
     async createFilm(
-        @Arg("input") input: FilmInput,
+        @Arg("input", () => [FilmInput]) input: FilmInput[],
         @Ctx() { req }: MyContext
-    ): Promise<Films | null> {
+    ): Promise<boolean | null> {
         if (!req.session.userId) {
             return null;
         }
-        const check = await Films.findOne({
-            where: { movieId: input.movieId },
+        const check = await Films.find({
+            where: input,
         });
 
-        if (check) {
+        if (check.length > 0) {
             return null;
         }
 
-        return Films.create({
-            ...input,
-        }).save();
+        try {
+            await getConnection()
+                .createQueryBuilder()
+                .insert()
+                .into(Films)
+                .values(input)
+                .returning("*")
+                .execute();
+        } catch (err) {
+            console.log(err);
+        }
+
+        return true;
     }
 
     //get specific film by id

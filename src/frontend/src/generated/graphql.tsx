@@ -30,6 +30,15 @@ export type FilmInput = {
   releaseDate: Scalars['String'];
 };
 
+export type FilmTags = {
+  __typename?: 'FilmTags';
+  count?: Maybe<Scalars['Float']>;
+  createdAt: Scalars['String'];
+  id: Scalars['Float'];
+  text: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type Films = {
   __typename?: 'Films';
   backdropPath: Scalars['String'];
@@ -49,7 +58,7 @@ export type Films = {
 export type Mutation = {
   __typename?: 'Mutation';
   changeUsername?: Maybe<UserResponse>;
-  createFilm?: Maybe<Films>;
+  createFilm?: Maybe<Scalars['Boolean']>;
   createReview: Review;
   createReviewComment: ReviewComment;
   deleteReview: Scalars['Boolean'];
@@ -73,7 +82,7 @@ export type MutationChangeUsernameArgs = {
 
 
 export type MutationCreateFilmArgs = {
-  input: FilmInput;
+  input: Array<FilmInput>;
 };
 
 
@@ -176,6 +185,7 @@ export type Query = {
   reviewComment?: Maybe<ReviewComment>;
   reviewComments: PaginatedReviewComments;
   reviews: PaginatedReviews;
+  tags?: Maybe<FilmTags>;
 };
 
 
@@ -219,6 +229,11 @@ export type QueryReviewsArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
 };
 
 export type Review = {
@@ -352,11 +367,11 @@ export type ReviewCommentVoteMutationVariables = Exact<{
 export type ReviewCommentVoteMutation = { __typename?: 'Mutation', reviewCommentVote: boolean };
 
 export type CreateFilmMutationVariables = Exact<{
-  input: FilmInput;
+  input: Array<FilmInput> | FilmInput;
 }>;
 
 
-export type CreateFilmMutation = { __typename?: 'Mutation', createFilm?: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } | null };
+export type CreateFilmMutation = { __typename?: 'Mutation', createFilm?: boolean | null };
 
 export type FilmQueryVariables = Exact<{
   movieId: Scalars['Int'];
@@ -674,21 +689,8 @@ export type ReviewCommentVoteMutationHookResult = ReturnType<typeof useReviewCom
 export type ReviewCommentVoteMutationResult = Apollo.MutationResult<ReviewCommentVoteMutation>;
 export type ReviewCommentVoteMutationOptions = Apollo.BaseMutationOptions<ReviewCommentVoteMutation, ReviewCommentVoteMutationVariables>;
 export const CreateFilmDocument = gql`
-    mutation CreateFilm($input: FilmInput!) {
-  createFilm(input: $input) {
-    id
-    movieId
-    movieTitle
-    overview
-    posterPath
-    backdropPath
-    releaseDate
-    watchCount
-    listCount
-    likeCount
-    createdAt
-    updatedAt
-  }
+    mutation CreateFilm($input: [FilmInput!]!) {
+  createFilm(input: $input)
 }
     `;
 export type CreateFilmMutationFn = Apollo.MutationFunction<CreateFilmMutation, CreateFilmMutationVariables>;

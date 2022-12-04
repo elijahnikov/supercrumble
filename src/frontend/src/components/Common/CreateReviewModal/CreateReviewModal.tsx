@@ -39,11 +39,11 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
 
     const [movieName, setMovieName] = useState('');
     const [chosenMovieDetails, setChosenMovieDetails] = useState({
-        id: 0,
-        title: '',
+        movieId: 0,
+        movieTitle: '',
         year: '',
-        poster: '',
-        backdrop: '',
+        posterPath: '',
+        backdropPath: '',
         overview: '',
         releaseDate: '',
     });
@@ -110,11 +110,11 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
         const filmResponse = await createFilm({
             variables: {
                 input: {
-                    movieId: chosenMovieDetails.id,
-                    movieTitle: chosenMovieDetails.title,
+                    movieId: chosenMovieDetails.movieId,
+                    movieTitle: chosenMovieDetails.movieTitle,
                     overview: chosenMovieDetails.overview,
-                    posterPath: chosenMovieDetails.poster,
-                    backdropPath: chosenMovieDetails.backdrop,
+                    posterPath: chosenMovieDetails.posterPath,
+                    backdropPath: chosenMovieDetails.backdropPath,
                     releaseDate: chosenMovieDetails.releaseDate,
                 },
             },
@@ -124,11 +124,11 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
                 input: {
                     tags: tags.join(','),
                     containsSpoilers: spoilerChecked,
-                    movieId: chosenMovieDetails.id,
-                    movie_poster: chosenMovieDetails.poster,
-                    backdrop: chosenMovieDetails.backdrop,
+                    movieId: chosenMovieDetails.movieId,
+                    movie_poster: chosenMovieDetails.posterPath,
+                    backdrop: chosenMovieDetails.backdropPath,
                     movie_release_year: parseInt(chosenMovieDetails.year),
-                    movie_title: chosenMovieDetails.title,
+                    movie_title: chosenMovieDetails.movieTitle,
                     ratingGiven: ratingValue / 20,
                     text: reviewText,
                 },
@@ -149,11 +149,11 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
 
     const handleCancelClick = (show: boolean) => {
         setChosenMovieDetails({
-            id: 0,
-            title: '',
+            movieId: 0,
+            movieTitle: '',
             year: '',
-            poster: '',
-            backdrop: '',
+            posterPath: '',
+            backdropPath: '',
             overview: '',
             releaseDate: '',
         });
@@ -175,12 +175,12 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
         setBlockInput(show);
         setMovieFetchData([]);
         setChosenMovieDetails({
-            id: movieId,
-            title: movieTitle,
+            movieId: movieId,
+            movieTitle: movieTitle,
             year: movieYear,
-            poster: moviePoster,
+            posterPath: moviePoster,
             overview: movieOverview,
-            backdrop: movieBackdrop,
+            backdropPath: movieBackdrop,
             releaseDate: movieReleaseDate,
         });
         setMovieName('');
