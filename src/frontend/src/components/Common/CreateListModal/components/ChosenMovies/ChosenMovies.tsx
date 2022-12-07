@@ -6,42 +6,40 @@ interface ChosenMoviesProps {
 }
 
 type ChosenMovie = {
-    id: number;
-    title: string;
-    year: string;
-    poster: string;
-    backdrop: string;
+    movieId: number;
+    movieTitle: string;
+    posterPath: string;
+    backdropPath: string;
     overview: string;
     releaseDate: string;
 };
-
 const ChosenMovies = ({
     chosenMovies,
     handleRemoveMovie,
 }: ChosenMoviesProps) => {
     return (
-        <div className=' ml-2'>
+        <div className='fixed ml-2 h-[250px] w-[85%] overflow-x-hidden rounded-lg bg-crumble-200 pb-6 pr-10 pl-10 pt-4'>
             {chosenMovies.map((movie) => (
-                <div className='mt-1 inline-block w-[100%]' key={movie.id}>
-                    {movie.poster ? (
+                <div className='mt-1 inline-block w-[100%]' key={movie.movieId}>
+                    {movie.posterPath ? (
                         <img
                             className='mt-1 inline w-10 rounded-md'
                             src={
-                                movie.poster
-                                    ? `https://image.tmdb.org/t/p/w500${movie.poster}`
+                                movie.posterPath
+                                    ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
                                     : undefined
                             }
                         />
                     ) : (
                         <p>?</p>
                     )}
-                    <p className='ml-4 inline'>{movie.title}</p>
-                    <p className='ml-3 inline text-superRed'>
+                    <p className='ml-4 inline'>{movie.movieTitle}</p>
+                    <p className='ml-3 inline text-sm text-superRed'>
                         {movie.releaseDate.slice(0, 4)}
                     </p>
                     <div
                         className='float-right mt-7 w-[20px] cursor-pointer'
-                        onClick={() => handleRemoveMovie(movie.id)}
+                        onClick={() => handleRemoveMovie(movie.movieId)}
                     >
                         <BsX className='h-[20px] w-[20px] text-superRed' />
                     </div>

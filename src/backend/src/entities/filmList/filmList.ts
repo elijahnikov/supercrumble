@@ -32,7 +32,7 @@ export class FilmList extends BaseEntity {
     tags?: string;
 
     @OneToMany(() => FilmListEntries, (filmListEntries) => filmListEntries.list)
-    entry: FilmListEntries[];
+    entries: FilmListEntries[];
 
     @Field()
     @Column()

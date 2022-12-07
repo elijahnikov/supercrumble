@@ -1,24 +1,36 @@
+// Server
 import express from "express";
-import "dotenv-safe/config";
-import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { ReviewResolver } from "./resolvers/review";
-import { UserResolver } from "./resolvers/user";
 import Redis from "ioredis";
 import session from "express-session";
 import connectRedis from "connect-redis";
-import { COOKIE_NAME, prod } from "./constants";
 import cors from "cors";
 import { createConnection } from "typeorm";
+
+// Utils/Constants
 import path from "path";
-import { createUserLoader } from "./utils/loaders/createUserLoader";
-import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
-import { ReviewCommentResolver } from "./resolvers/reviewComment";
+import { COOKIE_NAME, prod } from "./constants";
+import "dotenv-safe/config";
+import "reflect-metadata";
+
+// Entities
+import entities from "./utils/serverSetup/entitiesExport";
+
+// Loaders
+import { createFilmLoader } from "./utils/loaders/createFilmLoader";
 import { createReviewCommentUpvoteLoader } from "./utils/loaders/createReviewCommentUpvoteLoader";
+import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
+import { createUserLoader } from "./utils/loaders/createUserLoader";
+
+// Resolvers
+import { ReviewResolver } from "./resolvers/review";
+import { UserResolver } from "./resolvers/user";
+import { ReviewCommentResolver } from "./resolvers/reviewComment";
 import { FilmsResolver } from "./resolvers/film/films";
 import { FilmTagsResolver } from "./resolvers/film/filmTags";
-import entities from "./utils/serverSetup/entitiesExport";
+import { FilmListResolver } from "./resolvers/filmList/filmList";
+import { FilmListEntriesResolver } from "./resolvers/filmList/filmListEntries";
 
 const main = async () => {
     const conn = await createConnection({
@@ -66,6 +78,8 @@ const main = async () => {
                 ReviewCommentResolver,
                 FilmsResolver,
                 FilmTagsResolver,
+                FilmListResolver,
+                FilmListEntriesResolver,
             ],
             validate: false,
         }),
@@ -76,6 +90,7 @@ const main = async () => {
             userLoader: createUserLoader(),
             upvoteLoader: createUpvoteLoader(),
             reviewCommentUpvoteLoader: createReviewCommentUpvoteLoader(),
+            filmLoader: createFilmLoader(),
         }),
         playground: true,
         introspection: true,

@@ -1,10 +1,11 @@
 import {
+    useCreateFilmListMutation,
     useCreateFilmMutation,
     useCreateReviewMutation,
 } from '@/generated/graphql';
 import { isAuthHook } from '@/utils/isAuthHook';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { BsFillXCircleFill, BsPlusSquare } from 'react-icons/bs';
 import { Dialog, Transition } from '@headlessui/react';
 import InputField from '../InputField/InputField';
@@ -18,32 +19,33 @@ import ChosenMovies from './components/ChosenMovies/ChosenMovies';
 interface CreateListModalProps {}
 
 type ChosenMovie = {
-    id: number;
-    title: string;
-    year: string;
-    poster: string;
-    backdrop: string;
+    movieId: number;
+    movieTitle: string;
+    posterPath: string;
+    backdropPath: string;
     overview: string;
     releaseDate: string;
 };
 
 const CreateListModal = ({}: CreateListModalProps) => {
     const [listName, setListName] = useState('');
+    const [listDescription, setListDescription] = useState('');
+    const [movieName, setMovieName] = useState('');
+    const [chosenMovies, setChosenMovies] = useState<ChosenMovie[]>([]);
+    const [movieFetchData, setMovieFetchData] = useState<any[]>([]);
+    const [selectedMovieVisible, setSelectedMovieVisible] = useState(false);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [debounceTime, setDebounceTime] = useState(500);
     const [tags, setTags] = useState<string[]>([]);
+
     const cancelButtonRef = useRef(null);
 
     const router = useRouter();
     isAuthHook();
 
-    const [movieName, setMovieName] = useState('');
-    const [chosenMovies, setChosenMovies] = useState<ChosenMovie[]>([]);
-    const [movieFetchData, setMovieFetchData] = useState<any[]>([]);
-    const [selectedMovieVisible, setSelectedMovieVisible] = useState(false);
-
     const [createFilm] = useCreateFilmMutation();
+    const [createFilmList] = useCreateFilmListMutation();
 
     const handleOpen = () => {
         setOpen(!open);
@@ -81,18 +83,17 @@ const CreateListModal = ({}: CreateListModalProps) => {
         show: boolean
     ) => {
         let duplicateCheck = chosenMovies.find((movie) => {
-            return movie.id === movieId;
+            return movie.movieId === movieId;
         });
         if (!duplicateCheck) {
             setChosenMovies([
                 ...chosenMovies,
                 {
-                    id: movieId,
-                    title: movieTitle,
-                    year: movieYear,
-                    poster: moviePoster,
+                    movieId: movieId,
+                    movieTitle: movieTitle,
+                    posterPath: moviePoster,
                     overview: movieOverview,
-                    backdrop: movieBackdrop,
+                    backdropPath: movieBackdrop,
                     releaseDate: movieReleaseDate,
                 },
             ]);
@@ -102,12 +103,30 @@ const CreateListModal = ({}: CreateListModalProps) => {
     };
 
     const removeMovie = (id: number) => {
-        setChosenMovies(chosenMovies.filter((movie) => movie.id !== id));
+        setChosenMovies(chosenMovies.filter((movie) => movie.movieId !== id));
     };
 
     const createList = async () => {
         if (chosenMovies.length > 0) {
-            let filmResponse = await createFilm({});
+            let filmIds = chosenMovies.map((movie) => movie.movieId);
+            let listResponse = await createFilmList({
+                variables: {
+                    input: {
+                        title: listName,
+                        description: listDescription,
+                        tags: tags.join(','),
+                    },
+                    filmIds,
+                },
+            });
+            await createFilm({
+                variables: {
+                    input: chosenMovies,
+                },
+            });
+            router.push(
+                `/list/${listResponse.data?.createFilmList?.filmList?.id}`
+            );
         }
     };
 
@@ -249,7 +268,23 @@ const CreateListModal = ({}: CreateListModalProps) => {
                                                                     <p className='mb-2 text-sm font-semibold text-superRed'>
                                                                         Description
                                                                     </p>
-                                                                    <InputArea />
+                                                                    <InputArea
+                                                                        value={
+                                                                            listDescription
+                                                                        }
+                                                                        id='listDescription'
+                                                                        name='listDescription'
+                                                                        placeholder=''
+                                                                        onChange={(
+                                                                            e: React.ChangeEvent<HTMLTextAreaElement>
+                                                                        ) =>
+                                                                            setListDescription(
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
+                                                                        }
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -3,14 +3,14 @@ import * as React from 'react';
 import { IconType } from 'react-icons/lib';
 
 enum InputAreaVariant {
-    'primary'
+    'primary',
 }
 
 type InputAreaProps = React.ComponentPropsWithRef<'textarea'> & {
     isDarkBg?: boolean;
     placeholder?: string;
     variant?: keyof typeof InputAreaVariant;
-}
+};
 
 const InputArea = React.forwardRef<HTMLTextAreaElement, InputAreaProps>(
     (
@@ -18,14 +18,14 @@ const InputArea = React.forwardRef<HTMLTextAreaElement, InputAreaProps>(
             children,
             className,
             disabled: inputDisabled,
-            variant = "primary",
+            variant = 'primary',
             isDarkBg = false,
             placeholder,
             ...rest
         },
         ref
     ) => {
-        const disabled = inputDisabled
+        const disabled = inputDisabled;
 
         return (
             <textarea
@@ -33,14 +33,14 @@ const InputArea = React.forwardRef<HTMLTextAreaElement, InputAreaProps>(
                 disabled={disabled}
                 placeholder={placeholder}
                 className={clxsm(
-                    'rounded h-full border-gray-800 bg-crumble-200 w-full py-2 px-3 text-white'
+                    'h-full w-full rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
                 )}
                 {...rest}
             >
                 {children}
             </textarea>
-        )
+        );
     }
-)
+);
 
 export default InputArea;

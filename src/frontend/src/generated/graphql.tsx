@@ -15,6 +15,13 @@ export type Scalars = {
   Float: number;
 };
 
+export type BatchedListResponse = {
+  __typename?: 'BatchedListResponse';
+  filmList?: Maybe<FilmList>;
+  filmListEntries: Array<FilmListEntries>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -30,6 +37,44 @@ export type FilmInput = {
   releaseDate: Scalars['String'];
 };
 
+export type FilmList = {
+  __typename?: 'FilmList';
+  createdAt: Scalars['String'];
+  creator: User;
+  creatorId: Scalars['Float'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Float'];
+  tags: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
+export type FilmListEntries = {
+  __typename?: 'FilmListEntries';
+  createdAt: Scalars['String'];
+  film: Films;
+  filmId: Scalars['Float'];
+  id: Scalars['Float'];
+  listId: Scalars['Float'];
+  updatedAt: Scalars['String'];
+};
+
+export type FilmListEntriesInput = {
+  filmId: Scalars['Float'];
+  listId: Scalars['Float'];
+};
+
+export type FilmListInput = {
+  description: Scalars['String'];
+  tags: Scalars['String'];
+  title: Scalars['String'];
+};
+
+export type FilmListResponse = {
+  __typename?: 'FilmListResponse';
+  filmList?: Maybe<FilmList>;
+};
+
 export type FilmTags = {
   __typename?: 'FilmTags';
   count?: Maybe<Scalars['Float']>;
@@ -43,7 +88,6 @@ export type Films = {
   __typename?: 'Films';
   backdropPath: Scalars['String'];
   createdAt: Scalars['String'];
-  id: Scalars['Float'];
   likeCount: Scalars['Float'];
   listCount: Scalars['Float'];
   movieId: Scalars['Float'];
@@ -58,7 +102,9 @@ export type Films = {
 export type Mutation = {
   __typename?: 'Mutation';
   changeUsername?: Maybe<UserResponse>;
+  createEntries?: Maybe<Scalars['Boolean']>;
   createFilm?: Maybe<Scalars['Boolean']>;
+  createFilmList: FilmListResponse;
   createReview: Review;
   createReviewComment: ReviewComment;
   deleteReview: Scalars['Boolean'];
@@ -81,8 +127,19 @@ export type MutationChangeUsernameArgs = {
 };
 
 
+export type MutationCreateEntriesArgs = {
+  input: Array<FilmListEntriesInput>;
+};
+
+
 export type MutationCreateFilmArgs = {
   input: Array<FilmInput>;
+};
+
+
+export type MutationCreateFilmListArgs = {
+  filmIds: Array<Scalars['Int']>;
+  input: FilmListInput;
 };
 
 
@@ -163,6 +220,12 @@ export type NewUsernameInput = {
   newUsername: Scalars['String'];
 };
 
+export type PaginatedFilmListEntries = {
+  __typename?: 'PaginatedFilmListEntries';
+  filmListEntries: Array<FilmListEntries>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type PaginatedReviewComments = {
   __typename?: 'PaginatedReviewComments';
   hasMore: Scalars['Boolean'];
@@ -178,6 +241,8 @@ export type PaginatedReviews = {
 export type Query = {
   __typename?: 'Query';
   film?: Maybe<Films>;
+  filmList?: Maybe<BatchedListResponse>;
+  filmListEntries: PaginatedFilmListEntries;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
@@ -191,6 +256,20 @@ export type Query = {
 
 export type QueryFilmArgs = {
   movieId: Scalars['Int'];
+};
+
+
+export type QueryFilmListArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryFilmListEntriesArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  listId: Scalars['Int'];
 };
 
 
@@ -378,7 +457,15 @@ export type FilmQueryVariables = Exact<{
 }>;
 
 
-export type FilmQuery = { __typename?: 'Query', film?: { __typename?: 'Films', id: number, movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } | null };
+export type FilmQuery = { __typename?: 'Query', film?: { __typename?: 'Films', movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, listCount: number, likeCount: number, createdAt: string, updatedAt: string } | null };
+
+export type CreateFilmListMutationVariables = Exact<{
+  input: FilmListInput;
+  filmIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+
+export type CreateFilmListMutation = { __typename?: 'Mutation', createFilmList: { __typename?: 'FilmListResponse', filmList?: { __typename?: 'FilmList', id: number, title: string, description?: string | null, tags: string, creatorId: number, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null } };
 
 export type CreateReviewMutationVariables = Exact<{
   input: ReviewInput;
@@ -453,6 +540,15 @@ export type SettingsChangePasswordMutationVariables = Exact<{
 
 
 export type SettingsChangePasswordMutation = { __typename?: 'Mutation', settingsChangePassword: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+
+export type FilmListQueryVariables = Exact<{
+  id: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type FilmListQuery = { __typename?: 'Query', filmList?: { __typename?: 'BatchedListResponse', hasMore: boolean, filmList?: { __typename?: 'FilmList', id: number, title: string, description?: string | null, tags: string, creatorId: number, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null, filmListEntries: Array<{ __typename?: 'FilmListEntries', id: number, filmId: number, listId: number, createdAt: string, updatedAt: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, overview: string, posterPath: string, backdropPath: string, releaseDate: string, watchCount: number, likeCount: number, listCount: number } }> } | null };
 
 export type ReviewQueryVariables = Exact<{
   id: Scalars['String'];
@@ -722,7 +818,6 @@ export type CreateFilmMutationOptions = Apollo.BaseMutationOptions<CreateFilmMut
 export const FilmDocument = gql`
     query Film($movieId: Int!) {
   film(movieId: $movieId) {
-    id
     movieId
     movieTitle
     overview
@@ -765,6 +860,54 @@ export function useFilmLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmQ
 export type FilmQueryHookResult = ReturnType<typeof useFilmQuery>;
 export type FilmLazyQueryHookResult = ReturnType<typeof useFilmLazyQuery>;
 export type FilmQueryResult = Apollo.QueryResult<FilmQuery, FilmQueryVariables>;
+export const CreateFilmListDocument = gql`
+    mutation CreateFilmList($input: FilmListInput!, $filmIds: [Int!]!) {
+  createFilmList(input: $input, filmIds: $filmIds) {
+    filmList {
+      id
+      title
+      description
+      tags
+      creator {
+        id
+        username
+        displayName
+        avatar
+      }
+      creatorId
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+export type CreateFilmListMutationFn = Apollo.MutationFunction<CreateFilmListMutation, CreateFilmListMutationVariables>;
+
+/**
+ * __useCreateFilmListMutation__
+ *
+ * To run a mutation, you first call `useCreateFilmListMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFilmListMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFilmListMutation, { data, loading, error }] = useCreateFilmListMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      filmIds: // value for 'filmIds'
+ *   },
+ * });
+ */
+export function useCreateFilmListMutation(baseOptions?: Apollo.MutationHookOptions<CreateFilmListMutation, CreateFilmListMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateFilmListMutation, CreateFilmListMutationVariables>(CreateFilmListDocument, options);
+      }
+export type CreateFilmListMutationHookResult = ReturnType<typeof useCreateFilmListMutation>;
+export type CreateFilmListMutationResult = Apollo.MutationResult<CreateFilmListMutation>;
+export type CreateFilmListMutationOptions = Apollo.BaseMutationOptions<CreateFilmListMutation, CreateFilmListMutationVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: ReviewInput!) {
   createReview(input: $input) {
@@ -1106,6 +1249,76 @@ export function useSettingsChangePasswordMutation(baseOptions?: Apollo.MutationH
 export type SettingsChangePasswordMutationHookResult = ReturnType<typeof useSettingsChangePasswordMutation>;
 export type SettingsChangePasswordMutationResult = Apollo.MutationResult<SettingsChangePasswordMutation>;
 export type SettingsChangePasswordMutationOptions = Apollo.BaseMutationOptions<SettingsChangePasswordMutation, SettingsChangePasswordMutationVariables>;
+export const FilmListDocument = gql`
+    query FilmList($id: Int!, $cursor: String, $limit: Int) {
+  filmList(id: $id, cursor: $cursor, limit: $limit) {
+    filmList {
+      id
+      title
+      description
+      tags
+      creatorId
+      createdAt
+      updatedAt
+      creator {
+        id
+        username
+        displayName
+        avatar
+      }
+    }
+    filmListEntries {
+      id
+      filmId
+      listId
+      createdAt
+      updatedAt
+      film {
+        movieId
+        movieTitle
+        overview
+        posterPath
+        backdropPath
+        releaseDate
+        watchCount
+        likeCount
+        listCount
+      }
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useFilmListQuery__
+ *
+ * To run a query within a React component, call `useFilmListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmListQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      cursor: // value for 'cursor'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useFilmListQuery(baseOptions: Apollo.QueryHookOptions<FilmListQuery, FilmListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmListQuery, FilmListQueryVariables>(FilmListDocument, options);
+      }
+export function useFilmListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmListQuery, FilmListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmListQuery, FilmListQueryVariables>(FilmListDocument, options);
+        }
+export type FilmListQueryHookResult = ReturnType<typeof useFilmListQuery>;
+export type FilmListLazyQueryHookResult = ReturnType<typeof useFilmListLazyQuery>;
+export type FilmListQueryResult = Apollo.QueryResult<FilmListQuery, FilmListQueryVariables>;
 export const ReviewDocument = gql`
     query Review($id: String!) {
   review(id: $id) {

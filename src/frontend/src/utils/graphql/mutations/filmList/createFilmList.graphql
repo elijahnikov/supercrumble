@@ -1,0 +1,19 @@
+mutation CreateFilmList($input: FilmListInput!, $filmIds: [Int!]!) {
+    createFilmList(input: $input, filmIds: $filmIds) {
+        filmList {
+            id
+            title
+            description
+            tags
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+            creatorId
+            createdAt
+            updatedAt
+        }
+    }
+}

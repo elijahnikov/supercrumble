@@ -1,0 +1,38 @@
+query FilmList($id: Int!, $cursor: String, $limit: Int) {
+    filmList(id: $id, cursor: $cursor, limit: $limit) {
+        filmList {
+            id
+            title
+            description
+            tags
+            creatorId
+            createdAt
+            updatedAt
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+        filmListEntries {
+            id
+            filmId
+            listId
+            createdAt
+            updatedAt
+            film {
+                movieId
+                movieTitle
+                overview
+                posterPath
+                backdropPath
+                releaseDate
+                watchCount
+                likeCount
+                listCount
+            }
+        }
+        hasMore
+    }
+}

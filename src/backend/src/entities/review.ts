@@ -40,7 +40,7 @@ export class Review extends BaseEntity {
     @Column()
     creatorId: number;
 
-    @Field()
+    @Field(() => User)
     @ManyToOne(() => User, (user) => user.reviews)
     creator: User;
 

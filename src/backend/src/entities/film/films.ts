@@ -4,19 +4,22 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    PrimaryGeneratedColumn,
+    OneToMany,
+    OneToOne,
+    PrimaryColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { FilmListEntries } from "../filmList/filmListEntries";
 
 @ObjectType()
 @Entity()
 export class Films extends BaseEntity {
-    @Field()
-    @PrimaryGeneratedColumn()
-    id!: number;
+    // @Field()
+    // @PrimaryGeneratedColumn()
+    // id!: number;
 
     @Field()
-    @Column()
+    @PrimaryColumn()
     movieId!: number;
 
     @Field()
@@ -58,4 +61,7 @@ export class Films extends BaseEntity {
     @Field(() => String)
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToMany(() => FilmListEntries, (filmListEntry) => filmListEntry.film)
+    listEntry: FilmListEntries;
 }

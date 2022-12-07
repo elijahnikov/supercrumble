@@ -25,25 +25,9 @@ export class FilmsResolver {
         if (!req.session.userId) {
             return null;
         }
-        const check = await Films.find({
-            where: input,
-        });
+        const filmsRepo = getConnection().getRepository(Films);
 
-        if (check.length > 0) {
-            return null;
-        }
-
-        try {
-            await getConnection()
-                .createQueryBuilder()
-                .insert()
-                .into(Films)
-                .values(input)
-                .returning("*")
-                .execute();
-        } catch (err) {
-            console.log(err);
-        }
+        await filmsRepo.save(input);
 
         return true;
     }

@@ -1,6 +1,5 @@
 query Film($movieId: Int!) {
     film(movieId: $movieId) {
-        id
         movieId
         movieTitle
         overview
