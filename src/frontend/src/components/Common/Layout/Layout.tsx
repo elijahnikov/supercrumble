@@ -27,7 +27,7 @@ const Layout = ({ children, ...props }: LayoutProps) => {
                     <MainNavBar userData={data ? data!! : undefined} />
                     {props.backgroundImage && (
                         <img
-                            className='test absolute top-0 z-[-1] object-cover'
+                            className='bigImage absolute top-0 z-[-1] object-cover'
                             src={`https://image.tmdb.org/t/p/original/${props.backgroundImage}`}
                         />
                     )}

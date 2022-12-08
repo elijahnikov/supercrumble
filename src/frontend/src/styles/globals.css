@@ -98,6 +98,11 @@ svg.star-svg {
      rounded-xl
      navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
     }
+
+    .smallerPageFrame {
+        @apply mt-20 mb-20 w-[50%]
+        rounded-xl navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
+    }
 }
 
 @layer base {
@@ -171,7 +176,7 @@ svg.star-svg {
         @apply min-h-[calc(100vh-56px)];
     }
 
-    .test {
+    .bigImage {
         /* -webkit-mask-image: -webkit-gradient(
             linear,
             left top,

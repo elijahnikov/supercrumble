@@ -1,5 +1,5 @@
 import { getReviewIntId } from './getReviewIntId';
-import { useReviewQuery } from '../generated/graphql';
+import { useReviewQuery } from '../../../generated/graphql';
 
 export const getReviewFromURL = () => {
     const intId = getReviewIntId();

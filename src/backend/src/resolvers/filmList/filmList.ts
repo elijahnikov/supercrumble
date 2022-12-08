@@ -19,7 +19,6 @@ import { getConnection } from "typeorm";
 import { FilmListInput } from "../inputs/FilmListInput";
 import { User } from "../../entities/user";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
-import { Films } from "../../entities/film/films";
 
 @ObjectType()
 class FilmListResponse {
@@ -41,26 +40,10 @@ class BatchedListResponse {
 
 @Resolver(FilmList)
 export class FilmListResolver {
-    // @FieldResolver(() => FilmListEntries)
-    // entries(
-    //     @Root() filmList: FilmList,
-    //     @Ctx() { filmListEntriesLoader }: MyContext
-    // ) {
-    //     return filmListEntriesLoader.load(filmList.id);
-    // }
-
     @FieldResolver(() => User)
     creator(@Root() filmList: FilmList, @Ctx() { userLoader }: MyContext) {
         return userLoader.load(filmList.creatorId);
     }
-
-    // @FieldResolver(() => Films)
-    // film(
-    //     @Root() filmListEntries: FilmListEntries,
-    //     @Ctx() { filmLoader }: MyContext
-    // ) {
-    //     return filmLoader.load(filmListEntries.filmId);
-    // }
 
     @Mutation(() => FilmListResponse)
     @UseMiddleware(isAuth)
@@ -143,7 +126,7 @@ export class FilmListResolver {
         const filmListQuery = dataSource
             .getRepository(FilmList)
             .createQueryBuilder("fl")
-            .where('fl."id" = :id', { id: id });
+            .where('fl."id" = :id', { id });
 
         const entryQuery = dataSource
             .getRepository(FilmListEntries)

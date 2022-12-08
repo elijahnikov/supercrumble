@@ -3,7 +3,7 @@ import ReviewCommentSection from '@/components/Screens/ReviewPage/ReviewCommentS
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
 import { useMeQuery } from '@/generated/graphql';
 import { epochToDate } from '@/utils/EpochToDate';
-import { getReviewFromURL } from '@/utils/getReviewFromURL';
+import { getReviewFromURL } from '@/utils/getFromURL/review/getReviewFromURL';
 import { withApollo } from '@/utils/withApollo';
 import { useEffect, useRef, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
@@ -12,6 +12,7 @@ import { formatForURL } from '@/utils/url/formatForURL';
 import { kFormatter } from '@/utils/kFormatter';
 import { BiComment } from 'react-icons/bi';
 import { BsFillArrowDownCircleFill } from 'react-icons/bs';
+import Tags from '@/components/Common/Tags/Tags';
 
 interface ReviewPageProps {}
 
@@ -99,10 +100,10 @@ const ReviewPage = ({}) => {
                                             src={data.review.creator.avatar!!}
                                             alt='Profile image'
                                         />
-                                        <p className='ml-3 inline text-sm'>
+                                        <p className='ml-3 inline '>
                                             Review by{' '}
                                         </p>
-                                        <p className='inline text-sm font-bold'>
+                                        <p className='inline font-bold'>
                                             {data.review.creator.username}
                                         </p>
                                     </div>
@@ -134,7 +135,7 @@ const ReviewPage = ({}) => {
                                         />
                                     </div>
                                     <div>
-                                        <p className='inline text-xs text-slate-400'>
+                                        <p className=''>
                                             Watched on{' '}
                                             {epochToDate(data.review.createdAt)}
                                         </p>
@@ -170,19 +171,9 @@ const ReviewPage = ({}) => {
                                     </span>
                                 </div>
                                 <div className='mb-20'>
-                                    {data.review.tags &&
-                                        data.review.tags
-                                            .split(',')
-                                            .map((tag: string, i: number) => (
-                                                <div
-                                                    key={i}
-                                                    className='mr-2 inline-block rounded-md bg-gray-800 p-1'
-                                                >
-                                                    <p className='text-xs text-gray-400'>
-                                                        {tag}
-                                                    </p>
-                                                </div>
-                                            ))}
+                                    {data.review.tags && (
+                                        <Tags tags={data.review.tags} />
+                                    )}
                                 </div>
                             </div>
                         </div>
