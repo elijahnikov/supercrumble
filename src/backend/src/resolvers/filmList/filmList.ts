@@ -17,7 +17,7 @@ import {
 } from "type-graphql";
 import { getConnection } from "typeorm";
 import { FilmListInput } from "../inputs/FilmListInput";
-import { User } from "../../entities/user";
+import { User } from "../../entities/user/user";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
 import { FilmListUpvote } from "../../entities/filmList/filmListUpvote";
 import { nanoid } from "nanoid";

@@ -8,13 +8,13 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm";
-import { FilmList } from "./filmList/filmList";
-import { FilmListComment } from "./filmList/filmListComment";
-import { FilmListUpvote } from "./filmList/filmListUpvote";
-import { Review } from "./review";
-import { ReviewComment } from "./reviewComment";
-import { ReviewCommentUpvote } from "./reviewCommentUpvote";
-import { Upvote } from "./upvote";
+import { FilmList } from "../filmList/filmList";
+import { FilmListComment } from "../filmList/filmListComment";
+import { FilmListUpvote } from "../filmList/filmListUpvote";
+import { Review } from "../review/review";
+import { ReviewComment } from "../review/reviewComment";
+import { ReviewCommentUpvote } from "../review/reviewCommentUpvote";
+import { Upvote } from "../review/upvote";
 
 //User table in db
 @ObjectType()

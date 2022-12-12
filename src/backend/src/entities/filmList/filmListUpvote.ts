@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { User } from "../user";
+import { User } from "../user/user";
 import { FilmList } from "./filmList";
 
 @Entity()

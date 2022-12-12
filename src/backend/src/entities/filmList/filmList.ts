@@ -9,7 +9,7 @@ import {
     PrimaryColumn,
     UpdateDateColumn,
 } from "typeorm";
-import { User } from "../user";
+import { User } from "../user/user";
 import { FilmListComment } from "./filmListComment";
 import { FilmListEntries } from "./filmListEntries";
 import { FilmListUpvote } from "./filmListUpvote";

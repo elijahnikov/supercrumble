@@ -11,7 +11,7 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 import { Upvote } from "./upvote";
-import { User } from "./user";
+import { User } from "../user/user";
 import { nanoid } from "nanoid";
 import { ReviewComment } from "./reviewComment";
 

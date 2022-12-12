@@ -1,4 +1,4 @@
-import { User } from "../entities/user";
+import { User } from "../entities/user/user";
 import { MyContext } from "../types";
 import {
     Arg,

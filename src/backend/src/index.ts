@@ -24,9 +24,9 @@ import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
 import { createUserLoader } from "./utils/loaders/createUserLoader";
 
 // Resolvers
-import { ReviewResolver } from "./resolvers/review";
+import { ReviewResolver } from "./resolvers/review/review";
 import { UserResolver } from "./resolvers/user";
-import { ReviewCommentResolver } from "./resolvers/reviewComment";
+import { ReviewCommentResolver } from "./resolvers/review/reviewComment";
 import { FilmsResolver } from "./resolvers/film/films";
 import { FilmTagsResolver } from "./resolvers/film/filmTags";
 import { FilmListResolver } from "./resolvers/filmList/filmList";

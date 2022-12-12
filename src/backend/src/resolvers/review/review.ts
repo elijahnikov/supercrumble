@@ -1,4 +1,4 @@
-import { Review } from "../entities/review";
+import { Review } from "../../entities/review/review";
 import {
     Arg,
     Ctx,
@@ -13,13 +13,13 @@ import {
     UseMiddleware,
 } from "type-graphql";
 import { MyContext } from "src/types";
-import { isAuth } from "../middleware/isAuth";
+import { isAuth } from "../../middleware/isAuth";
 import { getConnection } from "typeorm";
-import { Upvote } from "../entities/upvote";
-import { User } from "../entities/user";
-import { ReviewInput } from "./inputs/ReviewInput";
-import { Films } from "../entities/film/films";
-import { FilmTags } from "../entities/film/filmTags";
+import { Upvote } from "../../entities/review/upvote";
+import { User } from "../../entities/user/user";
+import { ReviewInput } from "../inputs/ReviewInput";
+import { Films } from "../../entities/film/films";
+import { FilmTags } from "../../entities/film/filmTags";
 
 //detect whether there is no more data to paginate through
 @ObjectType()

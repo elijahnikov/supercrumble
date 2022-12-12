@@ -1,5 +1,5 @@
 import { FilmListComment } from "../../entities/filmList/filmListComment";
-import { User } from "../../entities/user";
+import { User } from "../../entities/user/user";
 import {
     Arg,
     Ctx,
@@ -13,7 +13,7 @@ import {
     Root,
     UseMiddleware,
 } from "type-graphql";
-import { ReviewComment } from "../../entities/reviewComment";
+import { ReviewComment } from "../../entities/review/reviewComment";
 import { MyContext } from "../../types";
 import { isAuth } from "../../middleware/isAuth";
 import { FilmListCommentInput } from "../inputs/FilmListCommentInput";
