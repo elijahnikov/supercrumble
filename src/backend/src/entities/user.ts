@@ -9,6 +9,8 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 import { FilmList } from "./filmList/filmList";
+import { FilmListComment } from "./filmList/filmListComment";
+import { FilmListUpvote } from "./filmList/filmListUpvote";
 import { Review } from "./review";
 import { ReviewComment } from "./reviewComment";
 import { ReviewCommentUpvote } from "./reviewCommentUpvote";
@@ -57,24 +59,6 @@ export class User extends BaseEntity {
     @Column({ nullable: true, type: "int" })
     totalHoursWatched: number;
 
-    @OneToMany(() => Review, (review) => review.creator)
-    reviews: Review[];
-
-    @OneToMany(() => FilmList, (filmList) => filmList.creator)
-    lists: FilmList[];
-
-    @OneToMany(() => Upvote, (upvote) => upvote.user)
-    upvotes: Upvote[];
-
-    @OneToMany(
-        () => ReviewCommentUpvote,
-        (reviewCommentUpvote) => reviewCommentUpvote.user
-    )
-    reviewCommentUpvotes: ReviewCommentUpvote[];
-
-    @OneToMany(() => ReviewComment, (reviewComment) => reviewComment.creator)
-    reviewComments: ReviewComment[];
-
     @Field(() => String)
     @CreateDateColumn()
     createdAt: Date;
@@ -90,4 +74,35 @@ export class User extends BaseEntity {
     @Field({ nullable: true })
     @Column({ nullable: true })
     onboarded: boolean;
+
+    //FILM LIST RELATIONSHIP___________________________________
+    //_________________________________________________________
+    @OneToMany(() => FilmList, (filmList) => filmList.creator)
+    lists: FilmList[];
+
+    @OneToMany(() => FilmListUpvote, (filmListUpvote) => filmListUpvote.user)
+    filmListUpvotes: FilmListUpvote[];
+
+    @OneToMany(
+        () => FilmListComment,
+        (filmListComment) => filmListComment.creator
+    )
+    filmListComments: FilmListComment[];
+
+    //REVIEW RELATIONSHIP_______________________________________
+    //__________________________________________________________
+    @OneToMany(() => Review, (review) => review.creator)
+    reviews: Review[];
+
+    @OneToMany(() => Upvote, (upvote) => upvote.user)
+    upvotes: Upvote[];
+
+    @OneToMany(
+        () => ReviewCommentUpvote,
+        (reviewCommentUpvote) => reviewCommentUpvote.user
+    )
+    reviewCommentUpvotes: ReviewCommentUpvote[];
+
+    @OneToMany(() => ReviewComment, (reviewComment) => reviewComment.creator)
+    reviewComments: ReviewComment[];
 }

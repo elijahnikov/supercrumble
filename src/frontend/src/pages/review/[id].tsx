@@ -1,18 +1,26 @@
+import { useEffect, useRef, useState } from 'react';
+
+// GraphQL
+import { useMeQuery } from '@/generated/graphql';
+
+// Components
+import Tags from '@/components/Common/Tags/Tags';
 import Layout from '@/components/Common/Layout/Layout';
 import ReviewCommentSection from '@/components/Screens/ReviewPage/ReviewCommentSection/ReviewCommentSection';
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
-import { useMeQuery } from '@/generated/graphql';
-import { epochToDate } from '@/utils/EpochToDate';
-import { getReviewFromURL } from '@/utils/getFromURL/review/getReviewFromURL';
-import { withApollo } from '@/utils/withApollo';
-import { useEffect, useRef, useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
-import NextLink from 'next/link';
-import { formatForURL } from '@/utils/url/formatForURL';
-import { kFormatter } from '@/utils/kFormatter';
+
+// Icons
 import { BiComment } from 'react-icons/bi';
 import { BsFillArrowDownCircleFill } from 'react-icons/bs';
-import Tags from '@/components/Common/Tags/Tags';
+import { Rating } from 'react-simple-star-rating';
+
+// Utils
+import { formatForURL } from '@/utils/url/formatForURL';
+import { kFormatter } from '@/utils/kFormatter';
+import NextLink from 'next/link';
+import { withApollo } from '@/utils/withApollo';
+import { getReviewFromURL } from '@/utils/getFromURL/review/getReviewFromURL';
+import { epochToDate } from '@/utils/EpochToDate';
 
 interface ReviewPageProps {}
 

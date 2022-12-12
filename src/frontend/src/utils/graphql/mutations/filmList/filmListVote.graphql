@@ -1,0 +1,3 @@
+mutation FilmListVote($value: Int!, $filmListId: String!) {
+    filmListVote(value: $value, filmListId: $filmListId)
+}

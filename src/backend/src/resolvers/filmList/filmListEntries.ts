@@ -17,6 +17,7 @@ import {
 import { getConnection } from "typeorm";
 import { FilmListEntriesInput } from "../inputs/FilmListEntriesInput";
 import { Films } from "../../entities/film/films";
+import { FilmList } from "../../entities/filmList/filmList";
 
 @ObjectType()
 class PaginatedFilmListEntries {
@@ -93,5 +94,52 @@ export class FilmListEntriesResolver {
             filmListEntries: filmListEntries.slice(0, maxLimit),
             hasMore: filmListEntries.length === maxLimitPlusOne,
         };
+    }
+
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async deleteFilmListEntry(
+        @Arg("id", () => Int) id: number,
+        @Arg("filmListId", () => String) filmListId: number
+    ): Promise<boolean> {
+        const filmList = await FilmList.findOne({ where: { id: filmListId } });
+        const filmListEntry = await FilmListEntries.findOne({
+            where: { id: id },
+        });
+
+        if (!filmList || !filmListEntry) {
+            return false;
+        }
+
+        await FilmListEntries.delete({ id, listId: filmList.id });
+
+        return true;
+    }
+
+    @Mutation(() => Boolean, { nullable: true })
+    @UseMiddleware(isAuth)
+    async addEntryToFilmList(
+        @Arg("listId", () => String) listId: string,
+        @Arg("filmId", () => Int) filmId: number,
+        @Ctx() { req }: MyContext
+    ): Promise<boolean | null> {
+        if (!req.session.userId) {
+            return null;
+        }
+
+        let filmListEntry = await FilmListEntries.findOne({
+            where: { filmId, listId },
+        });
+
+        if (filmListEntry) {
+            return false;
+        }
+
+        await FilmListEntries.create({
+            filmId,
+            listId,
+        }).save();
+
+        return true;
     }
 }

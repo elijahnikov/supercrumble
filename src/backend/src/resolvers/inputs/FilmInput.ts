@@ -8,14 +8,14 @@ export class FilmInput {
     @Field()
     movieTitle!: string;
 
-    @Field()
-    overview!: string;
+    @Field({ nullable: true })
+    overview: string;
 
-    @Field()
-    posterPath!: string;
+    @Field({ nullable: true })
+    posterPath: string;
 
-    @Field()
-    backdropPath!: string;
+    @Field({ nullable: true })
+    backdropPath: string;
 
     @Field()
     releaseDate!: string;

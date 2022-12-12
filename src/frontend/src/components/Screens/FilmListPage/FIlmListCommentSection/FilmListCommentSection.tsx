@@ -1,42 +1,38 @@
+import { Fragment, MutableRefObject, useState } from 'react';
+
+// GraphQL
+import {
+    FilmListCommentsDocument,
+    FilmListSnippetFragment,
+    MeQuery,
+    useCreateFilmListCommentMutation,
+    useFilmListCommentsQuery,
+} from '@/generated/graphql';
 import Button from '@/components/Common/Button/Button';
 import InputArea from '@/components/Common/InputArea/InputArea';
-import {
-    MeQuery,
-    ReviewCommentsDocument,
-    ReviewCommentsQuery,
-    ReviewSnippetFragment,
-    useCreateReviewCommentMutation,
-    useDeleteReviewCommentMutation,
-    useReviewCommentsQuery,
-} from '@/generated/graphql';
 import { epochToDateTime } from '@/utils/EpochToDateTime';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, MutableRefObject, useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
-import ReviewCommentUpvote from './components/ReviewCommentUpvote/ReviewCommentUpvote';
+import ReviewCommentUpvote from '../../ReviewPage/ReviewCommentSection/components/ReviewCommentUpvote/ReviewCommentUpvote';
+import { FilmListType } from '../FilmListUpvoteButton/types';
 
-interface ReviewCommentSectionProps {
+interface FilmListCommentSectionProps {
     user: MeQuery;
-    review: ReviewSnippetFragment;
-    parentId?: number;
+    filmList: FilmListType;
     scrollToRef?: MutableRefObject<any>;
 }
 
-const ReviewCommentSection = ({
+const FilmListCommentSection = ({
     scrollToRef,
     user,
-    review,
-    parentId,
-}: ReviewCommentSectionProps) => {
+    filmList,
+}: FilmListCommentSectionProps) => {
     const [commentText, setCommentText] = useState('');
-    const [originalCommentData, setOriginalCommentData] = useState({});
-    const [formattedCommentData, setFormattedCommentData] =
-        useState<ReviewCommentsQuery | null>(null);
-    const [createComment] = useCreateReviewCommentMutation({
-        refetchQueries: [{ query: ReviewCommentsDocument }, 'ReviewComments'],
-    });
-    const [deleteComment] = useDeleteReviewCommentMutation({
-        refetchQueries: [{ query: ReviewCommentsDocument }, 'ReviewComments'],
+    const [createComment] = useCreateFilmListCommentMutation({
+        refetchQueries: [
+            { query: FilmListCommentsDocument },
+            'FilmListComments',
+        ],
     });
 
     const {
@@ -45,23 +41,23 @@ const ReviewCommentSection = ({
         error,
         fetchMore,
         variables,
-    } = useReviewCommentsQuery({
+    } = useFilmListCommentsQuery({
         variables: {
-            reviewId: review.id,
+            filmListId: filmList!!.filmList!!.id,
             limit: 10,
             cursor: null as null | string,
         },
     });
 
     return (
-        <div className='float-right mr-[160px] mt-[40px] w-[60%] p-5'>
+        <div className='mt-[40px] w-[620px] p-5'>
             <div className='mb-10'>
                 <p className='mb-2'>Comments</p>
                 <InputArea
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder={`Reply as ${user?.me?.username}`}
-                    className='h-[100px]'
+                    className='h-[100px] w-[100%]'
                 />
                 <Button
                     className='float-right h-7 text-sm'
@@ -70,9 +66,8 @@ const ReviewCommentSection = ({
                             createComment({
                                 variables: {
                                     input: {
-                                        reviewId: review.id,
+                                        filmListId: filmList!!.filmList!!.id,
                                         text: commentText,
-                                        parentId: null,
                                     },
                                 },
                             });
@@ -83,38 +78,35 @@ const ReviewCommentSection = ({
                     Post
                 </Button>
                 <div className='relative mt-[70px]' ref={scrollToRef}>
-                    {commentsData?.reviewComments.reviewComments
-                        .filter((obj) => {
-                            return !obj.parentId;
-                        })
-                        .map((d) => (
+                    {commentsData?.filmListComments.filmListComments.map(
+                        (comment) => (
                             <div
-                                key={d.id}
+                                key={comment.id}
                                 className='mb-4 rounded-lg border-[1px] border-crumble-100 bg-crumble-200 p-4 text-white'
                             >
                                 <div className='mb-5 inline'>
                                     <img
                                         className='inline h-[20px] w-[20px] rounded-full object-cover'
-                                        src={d.creator.avatar!!}
+                                        src={comment.creator.avatar!!}
                                     />
                                     <p className='ml-2 inline text-sm text-gray-500'>
-                                        {d.creator.username} says,
+                                        {comment.creator.username} says,
                                     </p>
                                     <p className='float-right ml-2 mt-2 inline text-xs text-gray-500'>
-                                        {epochToDateTime(d.createdAt)}
+                                        {epochToDateTime(comment.createdAt)}
                                     </p>
 
                                     <br />
-                                    <p className='mt-4'>{d.text}</p>
+                                    <p className='mt-4'>{comment.text}</p>
 
                                     <div className='mt-[20px] inline-block'>
                                         <div className='float-left mt-1 inline'>
-                                            <ReviewCommentUpvote
-                                                reviewComment={d}
-                                            />
+                                            {/* <ReviewCommentUpvote
+                                                reviewComment={comment}
+                                            /> */}
                                         </div>
                                         <p className='ml-2 inline text-sm text-gray-400'>
-                                            {d.score}
+                                            {comment.score}
                                         </p>
                                         {/* <div className='float-right ml-2 ml-[20px] mt-[2px] inline w-[400px]'>
                                             <ReviewCommentReply
@@ -145,21 +137,22 @@ const ReviewCommentSection = ({
                                             <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md bg-crumble-100 ring-1 ring-black ring-opacity-5 focus:outline-none'>
                                                 <div className='px-1 py-1 '>
                                                     {user.me?.id ===
-                                                        d.creator.id && (
+                                                        comment.creator.id && (
                                                         <Menu.Item>
                                                             {({ active }) => (
                                                                 <button
-                                                                    onClick={() =>
-                                                                        deleteComment(
-                                                                            {
-                                                                                variables:
-                                                                                    {
-                                                                                        id: d.id,
-                                                                                        reviewId:
-                                                                                            review.id,
-                                                                                    },
-                                                                            }
-                                                                        )
+                                                                    onClick={
+                                                                        () => {}
+                                                                        // deleteComment(
+                                                                        //     {
+                                                                        //         variables:
+                                                                        //             {
+                                                                        //                 id: d.id,
+                                                                        //                 reviewId:
+                                                                        //                     review.id,
+                                                                        //             },
+                                                                        //     }
+                                                                        // )
                                                                     }
                                                                     className={`${
                                                                         active
@@ -173,7 +166,7 @@ const ReviewCommentSection = ({
                                                         </Menu.Item>
                                                     )}
                                                     {user.me?.id !==
-                                                        d.creator.id && (
+                                                        comment.creator.id && (
                                                         <Menu.Item>
                                                             {({ active }) => (
                                                                 <button
@@ -194,8 +187,9 @@ const ReviewCommentSection = ({
                                     </Menu>
                                 </div>
                             </div>
-                        ))}
-                    {commentsData && commentsData.reviewComments.hasMore ? (
+                        )
+                    )}
+                    {commentsData && commentsData.filmListComments.hasMore ? (
                         <div className='flex'>
                             <Button
                                 className='mx-auto mt-2'
@@ -203,10 +197,11 @@ const ReviewCommentSection = ({
                                     fetchMore({
                                         variables: {
                                             limit: variables?.limit,
-                                            cursor: commentsData.reviewComments
-                                                .reviewComments[
-                                                commentsData.reviewComments
-                                                    .reviewComments.length - 1
+                                            cursor: commentsData
+                                                .filmListComments
+                                                .filmListComments[
+                                                commentsData.filmListComments
+                                                    .filmListComments.length - 1
                                             ].createdAt,
                                         },
                                     });
@@ -223,4 +218,4 @@ const ReviewCommentSection = ({
     );
 };
 
-export default ReviewCommentSection;
+export default FilmListCommentSection;

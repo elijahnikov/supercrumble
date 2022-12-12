@@ -8,6 +8,8 @@ import { ReviewComment } from "../../entities/reviewComment";
 import { ReviewCommentUpvote } from "../../entities/reviewCommentUpvote";
 import { Upvote } from "../../entities/upvote";
 import { User } from "../../entities/user";
+import { FilmListUpvote } from "../../entities/filmList/filmListUpvote";
+import { FilmListComment } from "../../entities/filmList/filmListComment";
 
 export default [
     //User
@@ -27,4 +29,6 @@ export default [
     FilmList,
     FilmListEntries,
     FilmListTags,
+    FilmListUpvote,
+    FilmListComment,
 ];

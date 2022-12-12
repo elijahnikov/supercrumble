@@ -1,0 +1,3 @@
+mutation AddEntryToFilmList($listId: String!, $filmId: Int!) {
+    addEntryToFilmList(filmId: $filmId, listId: $listId)
+}

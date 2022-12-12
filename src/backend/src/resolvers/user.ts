@@ -153,7 +153,6 @@ export class UserResolver {
     }
 
     @Mutation(() => UserResponse)
-    @UseMiddleware(isAuth)
     async editUserDetails(
         @Arg("input") input: UserDetailsInput,
         @Ctx() { req }: MyContext

@@ -5,7 +5,6 @@ import {
     CreateDateColumn,
     Entity,
     OneToMany,
-    OneToOne,
     PrimaryColumn,
     UpdateDateColumn,
 } from "typeorm";
@@ -14,10 +13,6 @@ import { FilmListEntries } from "../filmList/filmListEntries";
 @ObjectType()
 @Entity()
 export class Films extends BaseEntity {
-    // @Field()
-    // @PrimaryGeneratedColumn()
-    // id!: number;
-
     @Field()
     @PrimaryColumn()
     movieId!: number;
@@ -26,17 +21,17 @@ export class Films extends BaseEntity {
     @Column()
     movieTitle!: string;
 
-    @Field()
-    @Column()
-    overview!: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    overview: string;
 
-    @Field()
-    @Column()
-    posterPath!: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    posterPath: string;
 
-    @Field()
-    @Column()
-    backdropPath!: string;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    backdropPath: string;
 
     @Field()
     @Column()

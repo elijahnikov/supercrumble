@@ -1,12 +1,12 @@
 import { useFilmListQuery } from '@/generated/graphql';
-import { getListIntId } from './getListIntId';
+import { getListIntId } from './getListId';
 
 export const getListFromURL = () => {
-    const intId = getListIntId();
+    const id = getListIntId();
     return useFilmListQuery({
-        skip: intId === '',
+        skip: id === '',
         variables: {
-            id: parseInt(intId),
+            id,
             limit: 10,
         },
     });

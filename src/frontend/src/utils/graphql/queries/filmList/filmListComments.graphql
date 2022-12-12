@@ -1,0 +1,31 @@
+query FilmListComments(
+    $filmListId: String!
+    $limit: Int!
+    $cursor: String
+    $order: String
+) {
+    filmListComments(
+        filmListId: $filmListId
+        limit: $limit
+        cursor: $cursor
+        order: $order
+    ) {
+        filmListComments {
+            id
+            creatorId
+            filmListId
+            text
+            score
+            voteStatus
+            createdAt
+            updatedAt
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+        hasMore
+    }
+}

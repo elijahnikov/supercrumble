@@ -71,13 +71,9 @@ const FilmPage = ({}: FilmPageProps) => {
                 },
             });
         }
-        console.log(movieData);
     }, [movieData]);
 
     const onScroll = (e: any) => {
-        console.log('scrollTop: ', e.currentTarget.scrollTop);
-        console.log('offsetHeight: ', e.currentTarget.offsetHeight);
-        console.log('tet');
         if (imageRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = imageRef.current;
             if (scrollTop + clientHeight === scrollHeight) {

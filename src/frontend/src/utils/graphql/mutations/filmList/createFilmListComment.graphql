@@ -1,0 +1,18 @@
+mutation CreateFilmListComment($input: FilmListCommentInput!) {
+    createFilmListComment(input: $input) {
+        id
+        creatorId
+        filmListId
+        text
+        score
+        voteStatus
+        createdAt
+        updatedAt
+        creator {
+            id
+            username
+            displayName
+            avatar
+        }
+    }
+}

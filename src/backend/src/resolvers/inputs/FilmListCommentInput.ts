@@ -1,10 +1,10 @@
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class FilmListEntriesInput {
+export class FilmListCommentInput {
     @Field()
-    listId!: string;
+    filmListId: string;
 
     @Field()
-    filmId!: number;
+    text: string;
 }

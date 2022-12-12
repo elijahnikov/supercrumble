@@ -25,7 +25,7 @@ export class FilmListEntries extends BaseEntity {
 
     @Field()
     @Column()
-    listId: number;
+    listId: string;
 
     @ManyToOne(() => FilmList, (filmList) => filmList.entries)
     list: FilmList;

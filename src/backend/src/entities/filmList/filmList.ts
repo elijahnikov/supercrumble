@@ -6,18 +6,20 @@ import {
     Entity,
     ManyToOne,
     OneToMany,
-    PrimaryGeneratedColumn,
+    PrimaryColumn,
     UpdateDateColumn,
 } from "typeorm";
 import { User } from "../user";
+import { FilmListComment } from "./filmListComment";
 import { FilmListEntries } from "./filmListEntries";
+import { FilmListUpvote } from "./filmListUpvote";
 
 @ObjectType()
 @Entity()
 export class FilmList extends BaseEntity {
     @Field()
-    @PrimaryGeneratedColumn()
-    id!: number;
+    @PrimaryColumn({ type: "varchar" })
+    id!: string;
 
     @Field()
     @Column()
@@ -31,6 +33,10 @@ export class FilmList extends BaseEntity {
     @Column()
     tags?: string;
 
+    @Field()
+    @Column({ type: "int", default: 0 })
+    score!: number;
+
     @OneToMany(() => FilmListEntries, (filmListEntries) => filmListEntries.list)
     entries: FilmListEntries[];
 
@@ -41,6 +47,22 @@ export class FilmList extends BaseEntity {
     @Field(() => User)
     @ManyToOne(() => User, (user) => user.lists)
     creator: User;
+
+    @OneToMany(
+        () => FilmListUpvote,
+        (filmListUpvote) => filmListUpvote.filmList
+    )
+    filmListUpvotes: FilmListUpvote[];
+
+    @OneToMany(
+        () => FilmListComment,
+        (filmListComment) => filmListComment.filmList
+    )
+    filmListComments: FilmListComment[];
+
+    @Field()
+    @Column({ type: "int", default: 0 })
+    noOfComments!: number;
 
     @Field(() => String)
     @CreateDateColumn()

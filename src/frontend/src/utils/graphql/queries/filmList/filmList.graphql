@@ -1,10 +1,13 @@
-query FilmList($id: Int!, $cursor: String, $limit: Int) {
+query FilmList($id: String!, $cursor: String, $limit: Int) {
     filmList(id: $id, cursor: $cursor, limit: $limit) {
         filmList {
             id
             title
             description
             tags
+            voteStatus
+            score
+            noOfComments
             creatorId
             createdAt
             updatedAt

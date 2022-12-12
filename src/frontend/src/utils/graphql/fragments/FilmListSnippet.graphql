@@ -1,0 +1,17 @@
+fragment FilmListSnippet on FilmList {
+    id
+    title
+    description
+    tags
+    creatorId
+    createdAt
+    updatedAt
+    voteStatus
+    score
+    creator {
+        id
+        username
+        displayName
+        avatar
+    }
+}

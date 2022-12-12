@@ -19,6 +19,8 @@ import { getConnection } from "typeorm";
 import { FilmListInput } from "../inputs/FilmListInput";
 import { User } from "../../entities/user";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
+import { FilmListUpvote } from "../../entities/filmList/filmListUpvote";
+import { nanoid } from "nanoid";
 
 @ObjectType()
 class FilmListResponse {
@@ -43,6 +45,78 @@ export class FilmListResolver {
     @FieldResolver(() => User)
     creator(@Root() filmList: FilmList, @Ctx() { userLoader }: MyContext) {
         return userLoader.load(filmList.creatorId);
+    }
+
+    @FieldResolver(() => Int, { nullable: true })
+    async voteStatus(
+        @Root() filmList: FilmList,
+        @Ctx() { filmListUpvoteLoader, req }: MyContext
+    ) {
+        if (!req.session.userId) {
+            return null;
+        }
+
+        const upvote = await filmListUpvoteLoader.load({
+            filmListId: filmList.id,
+            userId: req.session.userId,
+        });
+
+        return upvote ? upvote.value : null;
+    }
+
+    @Mutation(() => Boolean)
+    @UseMiddleware(isAuth)
+    async filmListVote(
+        @Arg("filmListId", () => String) filmListId: string,
+        @Arg("value", () => Int) value: number,
+        @Ctx() { req }: MyContext
+    ) {
+        const { userId } = req.session;
+
+        const upvote = await FilmListUpvote.findOne({
+            where: { filmListId, userId },
+        });
+
+        if (upvote) {
+            await getConnection().transaction(async (tm) => {
+                await tm.query(
+                    `
+                    delete from film_list_upvote
+                    where "filmListId" = $1 and "userId" = $2
+                    `,
+                    [filmListId, userId]
+                );
+
+                await tm.query(
+                    `
+                    update film_list
+                    set score = score - 1
+                    where id = $1
+                    `,
+                    [filmListId]
+                );
+            });
+        } else if (!upvote) {
+            await getConnection().transaction(async (tm) => {
+                await tm.query(
+                    `
+                    insert into film_list_upvote ("userId", "filmListId", value)
+                    values ($1, $2, $3)
+                    `,
+                    [userId, filmListId, value]
+                );
+
+                await tm.query(
+                    `
+                    update film_list
+                    set score = score + 1
+                    where id = $1
+                    `,
+                    [filmListId]
+                );
+            });
+        }
+        return true;
     }
 
     @Mutation(() => FilmListResponse)
@@ -85,17 +159,23 @@ export class FilmListResolver {
             });
         }
 
+        let uniqueId = nanoid(10);
+
         let insert = await getConnection()
             .createQueryBuilder()
             .insert()
             .into(FilmList)
-            .values({ creatorId: req.session.userId, ...input })
+            .values({
+                id: uniqueId,
+                creatorId: req.session.userId,
+                ...input,
+            })
             .returning("*")
             .execute();
         let listId = insert.raw[0].id;
         let filmList = insert.raw[0];
 
-        let filmListEntriesArr: { listId: number; filmId: number }[] = [];
+        let filmListEntriesArr: { listId: string; filmId: number }[] = [];
         filmIds.map((film) => {
             filmListEntriesArr.push({ listId, filmId: film });
         });
@@ -114,7 +194,7 @@ export class FilmListResolver {
 
     @Query(() => BatchedListResponse, { nullable: true })
     async filmList(
-        @Arg("id", () => Int) id: number,
+        @Arg("id", () => String) id: string,
         @Arg("limit", () => Int, { nullable: true }) limit: number,
         @Arg("cursor", () => String, { nullable: true }) cursor: string
     ): Promise<BatchedListResponse> {
@@ -147,5 +227,27 @@ export class FilmListResolver {
             filmListEntries: filmListEntries.slice(0, maxLimit),
             hasMore: filmListEntries.length === maxLimitPlusOne,
         };
+    }
+
+    @Mutation(() => Boolean, { nullable: true })
+    @UseMiddleware(isAuth)
+    async updateFilmList(
+        @Arg("id", () => String) id: string,
+        @Arg("title") title: string,
+        @Arg("description") description: string,
+        @Ctx() { req }: MyContext
+    ): Promise<Boolean | null> {
+        await getConnection()
+            .createQueryBuilder()
+            .update(FilmList)
+            .set({ title, description })
+            .where('id = :id and "creatorId" = :creatorId', {
+                id,
+                creatorId: req.session.userId,
+            })
+            .returning("*")
+            .execute();
+
+        return true;
     }
 }

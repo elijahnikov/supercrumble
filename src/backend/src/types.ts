@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Session, SessionData } from "express-session";
 import { Redis } from "ioredis";
+import { createFilmListUpvoteLoader } from "./utils/loaders/createFilmListUpvoteLoader";
 import { createFilmLoader } from "./utils/loaders/createFilmLoader";
 import { createReviewCommentUpvoteLoader } from "./utils/loaders/createReviewCommentUpvoteLoader";
 import { createUpvoteLoader } from "./utils/loaders/createUpvoteLoader";
@@ -18,4 +19,5 @@ export type MyContext = {
         typeof createReviewCommentUpvoteLoader
     >;
     filmLoader: ReturnType<typeof createFilmLoader>;
+    filmListUpvoteLoader: ReturnType<typeof createFilmListUpvoteLoader>;
 };

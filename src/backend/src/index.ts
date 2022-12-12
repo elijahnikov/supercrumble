@@ -31,6 +31,8 @@ import { FilmsResolver } from "./resolvers/film/films";
 import { FilmTagsResolver } from "./resolvers/film/filmTags";
 import { FilmListResolver } from "./resolvers/filmList/filmList";
 import { FilmListEntriesResolver } from "./resolvers/filmList/filmListEntries";
+import { createFilmListUpvoteLoader } from "./utils/loaders/createFilmListUpvoteLoader";
+import { FilmListCommentResolver } from "./resolvers/filmList/filmListComment";
 
 const main = async () => {
     const conn = await createConnection({
@@ -80,6 +82,7 @@ const main = async () => {
                 FilmTagsResolver,
                 FilmListResolver,
                 FilmListEntriesResolver,
+                FilmListCommentResolver,
             ],
             validate: false,
         }),
@@ -91,6 +94,7 @@ const main = async () => {
             upvoteLoader: createUpvoteLoader(),
             reviewCommentUpvoteLoader: createReviewCommentUpvoteLoader(),
             filmLoader: createFilmLoader(),
+            filmListUpvoteLoader: createFilmListUpvoteLoader(),
         }),
         playground: true,
         introspection: true,

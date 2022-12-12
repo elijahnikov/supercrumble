@@ -1,0 +1,3 @@
+mutation DeleteFilmListEntry($filmListId: String!, $id: Int!) {
+    deleteFilmListEntry(filmListId: $filmListId, id: $id)
+}
