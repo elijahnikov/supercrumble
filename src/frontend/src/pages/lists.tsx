@@ -1,9 +1,14 @@
-import Button from '@/components/Common/Button/Button';
-import Layout from '@/components/Common/Layout/Layout';
-import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
+// Utils
 import { LISTS_BACKGROUND_IMAGE } from '@/utils/consts';
 import { withApollo } from '@/utils/withApollo';
+
+// Router
 import { useRouter } from 'next/router';
+
+// Components
+import PopularFilmLists from '@/components/Screens/FilmListPage/PopularFilmLists/PopularFilmLists';
+import Layout from '@/components/Common/Layout/Layout';
+import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
 
 interface ListsPageProps {}
 
@@ -22,6 +27,9 @@ const ListsPage = ({}: ListsPageProps) => {
                         Your place to organise <br /> what you want to see most.
                     </h1>
                     <CreateListModal />
+                    <div className='z-[-1]'>
+                        <PopularFilmLists />
+                    </div>
                 </div>
             </div>
         </Layout>

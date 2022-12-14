@@ -151,7 +151,7 @@ const CreateListModal = ({}: CreateListModalProps) => {
             <Transition.Root show={open} as={Fragment}>
                 <Dialog
                     as='div'
-                    className='overflow-y-initial  relative z-20'
+                    className='overflow-y-initial  relative z-50'
                     initialFocus={cancelButtonRef}
                     onClose={setOpen}
                 >

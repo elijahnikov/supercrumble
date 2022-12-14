@@ -288,6 +288,13 @@ export type PaginatedFilmListEntries = {
   hasMore: Scalars['Boolean'];
 };
 
+export type PaginatedFilmLists = {
+  __typename?: 'PaginatedFilmLists';
+  entries: Array<FilmListEntries>;
+  filmLists: Array<FilmList>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type PaginatedReviewComments = {
   __typename?: 'PaginatedReviewComments';
   hasMore: Scalars['Boolean'];
@@ -306,6 +313,7 @@ export type Query = {
   filmList?: Maybe<BatchedListResponse>;
   filmListComments: PaginatedFilmListComments;
   filmListEntries: PaginatedFilmListEntries;
+  filmLists: PaginatedFilmLists;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
@@ -341,6 +349,15 @@ export type QueryFilmListEntriesArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
   listId: Scalars['Int'];
+};
+
+
+export type QueryFilmListsArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  dateLimit?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -672,6 +689,17 @@ export type FilmListCommentsQueryVariables = Exact<{
 
 
 export type FilmListCommentsQuery = { __typename?: 'Query', filmListComments: { __typename?: 'PaginatedFilmListComments', hasMore: boolean, filmListComments: Array<{ __typename?: 'FilmListComment', id: number, creatorId: number, filmListId: string, text: string, score: number, voteStatus?: number | null, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+
+export type FilmListsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  dateLimit?: InputMaybe<Scalars['String']>;
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, noOfComments: number, title: string, score: number, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }>, entries: Array<{ __typename?: 'FilmListEntries', id: number, listId: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, posterPath?: string | null } }> } };
 
 export type ReviewQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1698,6 +1726,73 @@ export function useFilmListCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type FilmListCommentsQueryHookResult = ReturnType<typeof useFilmListCommentsQuery>;
 export type FilmListCommentsLazyQueryHookResult = ReturnType<typeof useFilmListCommentsLazyQuery>;
 export type FilmListCommentsQueryResult = Apollo.QueryResult<FilmListCommentsQuery, FilmListCommentsQueryVariables>;
+export const FilmListsDocument = gql`
+    query FilmLists($orderBy: String, $orderDir: String, $limit: Int, $dateLimit: String, $cursor: String) {
+  filmLists(
+    orderBy: $orderBy
+    orderDir: $orderDir
+    limit: $limit
+    dateLimit: $dateLimit
+    cursor: $cursor
+  ) {
+    filmLists {
+      id
+      noOfComments
+      title
+      score
+      creatorId
+      creator {
+        id
+        username
+        displayName
+        avatar
+      }
+    }
+    entries {
+      id
+      listId
+      film {
+        movieId
+        movieTitle
+        posterPath
+      }
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useFilmListsQuery__
+ *
+ * To run a query within a React component, call `useFilmListsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmListsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmListsQuery({
+ *   variables: {
+ *      orderBy: // value for 'orderBy'
+ *      orderDir: // value for 'orderDir'
+ *      limit: // value for 'limit'
+ *      dateLimit: // value for 'dateLimit'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useFilmListsQuery(baseOptions?: Apollo.QueryHookOptions<FilmListsQuery, FilmListsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmListsQuery, FilmListsQueryVariables>(FilmListsDocument, options);
+      }
+export function useFilmListsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmListsQuery, FilmListsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmListsQuery, FilmListsQueryVariables>(FilmListsDocument, options);
+        }
+export type FilmListsQueryHookResult = ReturnType<typeof useFilmListsQuery>;
+export type FilmListsLazyQueryHookResult = ReturnType<typeof useFilmListsLazyQuery>;
+export type FilmListsQueryResult = Apollo.QueryResult<FilmListsQuery, FilmListsQueryVariables>;
 export const ReviewDocument = gql`
     query Review($id: String!) {
   review(id: $id) {

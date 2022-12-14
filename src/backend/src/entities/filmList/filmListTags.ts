@@ -19,8 +19,8 @@ export class FilmListTags extends BaseEntity {
     @Column()
     text!: string;
 
-    @Field({ defaultValue: 0 })
-    @Column({ default: 0 })
+    @Field({ defaultValue: 1 })
+    @Column({ default: 1 })
     count!: number;
 
     @Field(() => String)

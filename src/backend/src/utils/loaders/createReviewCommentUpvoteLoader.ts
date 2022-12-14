@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import { ReviewCommentUpvote } from "../../entities/reviewCommentUpvote";
+import { ReviewCommentUpvote } from "../../entities/review/reviewCommentUpvote";
 
 export const createReviewCommentUpvoteLoader = () =>
     new DataLoader<

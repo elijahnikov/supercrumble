@@ -1,0 +1,39 @@
+query FilmLists(
+    $orderBy: String
+    $orderDir: String
+    $limit: Int
+    $dateLimit: String
+    $cursor: String
+) {
+    filmLists(
+        orderBy: $orderBy
+        orderDir: $orderDir
+        limit: $limit
+        dateLimit: $dateLimit
+        cursor: $cursor
+    ) {
+        filmLists {
+            id
+            noOfComments
+            title
+            score
+            creatorId
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+        entries {
+            id
+            listId
+            film {
+                movieId
+                movieTitle
+                posterPath
+            }
+        }
+        hasMore
+    }
+}

@@ -1,55 +1,66 @@
 import { Field, Int, ObjectType } from "type-graphql";
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm";
 import { Review } from "./review";
 import { ReviewCommentUpvote } from "./reviewCommentUpvote";
-import { User } from "./user";
+import { User } from "../user/user";
 
 //Review Comment table
 @ObjectType()
 @Entity()
-export class ReviewComment extends BaseEntity{
-  @Field()
-  @PrimaryGeneratedColumn()
-  id!: number;
+export class ReviewComment extends BaseEntity {
+    @Field()
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-  @Field({nullable: true})
-  @Column({nullable: true})
-  parentId: number;
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    parentId: number;
 
-  @Field()
-  @Column()
-  creatorId: number;
-  
-  @Field()
-  @Column()
-  reviewId: number;
+    @Field()
+    @Column()
+    creatorId: number;
 
-  @ManyToOne(() => User, user => user.reviewComments)
-  creator: User;
+    @Field()
+    @Column()
+    reviewId: number;
 
-  @ManyToOne(() => Review, review => review.reviewComments)
-  review: Review;
+    @ManyToOne(() => User, (user) => user.reviewComments)
+    creator: User;
 
-  @Field()
-  @Column()
-  text!: string;
+    @ManyToOne(() => Review, (review) => review.reviewComments)
+    review: Review;
 
-  @Field()
-  @Column({type: "int", default: 0})
-  score!: number;
+    @Field()
+    @Column()
+    text!: string;
 
-  @Field(() => Int, {nullable: true})
-  voteStatus: number | null;//1 or -1 or null
+    @Field()
+    @Column({ type: "int", default: 0 })
+    score!: number;
 
-  @OneToMany(() => ReviewCommentUpvote, reviewCommentUpvote => reviewCommentUpvote.reviewComment)
-  upvotes: ReviewCommentUpvote[];
+    @Field(() => Int, { nullable: true })
+    voteStatus: number | null; //1 or -1 or null
 
-  @Field(() => String)
-  @CreateDateColumn()
-  createdAt: Date;
+    @OneToMany(
+        () => ReviewCommentUpvote,
+        (reviewCommentUpvote) => reviewCommentUpvote.reviewComment
+    )
+    upvotes: ReviewCommentUpvote[];
 
-  @Field(() => String)
-  @UpdateDateColumn()
-  updatedAt: Date;
+    @Field(() => String)
+    @CreateDateColumn()
+    createdAt: Date;
 
+    @Field(() => String)
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

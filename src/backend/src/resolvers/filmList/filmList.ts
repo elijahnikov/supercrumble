@@ -40,6 +40,18 @@ class BatchedListResponse {
     hasMore: boolean;
 }
 
+@ObjectType()
+class PaginatedFilmLists {
+    @Field(() => [FilmList])
+    filmLists: FilmList[];
+
+    @Field(() => [FilmListEntries])
+    entries: FilmListEntries[];
+
+    @Field()
+    hasMore: boolean;
+}
+
 @Resolver(FilmList)
 export class FilmListResolver {
     @FieldResolver(() => User)
@@ -132,11 +144,14 @@ export class FilmListResolver {
 
         if (input.tags) {
             const tags = input.tags.split(",");
+            console.table(tags);
             tags.forEach(async (tag) => {
-                const tagCheck = FilmListTags.findOne({
+                console.log(tag);
+                const tagCheck = await FilmListTags.findOne({
                     where: { text: tag },
                 });
-                if (await tagCheck) {
+                console.log(tagCheck);
+                if (tagCheck) {
                     await getConnection()
                         .createQueryBuilder()
                         .update(FilmListTags)
@@ -146,15 +161,9 @@ export class FilmListResolver {
                         .where("text = :tag", { tag: tag })
                         .execute();
                 } else {
-                    await getConnection().transaction(async (tm) => {
-                        await tm.query(
-                            `
-                                insert into film_tags ("text", "count")
-                                values ($1, $2)
-                            `,
-                            [tag, 1]
-                        );
-                    });
+                    FilmListTags.create({
+                        text: tag,
+                    }).save();
                 }
             });
         }
@@ -226,6 +235,50 @@ export class FilmListResolver {
             filmList,
             filmListEntries: filmListEntries.slice(0, maxLimit),
             hasMore: filmListEntries.length === maxLimitPlusOne,
+        };
+    }
+
+    @Query(() => PaginatedFilmLists)
+    async filmLists(
+        @Arg("limit", () => Int, { nullable: true }) limit: number,
+        @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
+        @Arg("orderBy", () => String, { defaultValue: "score", nullable: true })
+        orderBy: string | null,
+        @Arg("orderDir", () => String, { defaultValue: "DESC", nullable: true })
+        orderDir: "DESC" | "ASC",
+        @Arg("dateLimit", () => String, { nullable: true })
+        dateLimit: string | null
+    ): Promise<PaginatedFilmLists> {
+        const maxLimit = Math.min(50, limit);
+        const maxLimitPlusOne = maxLimit + 1;
+
+        const lists = getConnection()
+            .getRepository(FilmList)
+            .createQueryBuilder("fl")
+            .orderBy(`fl."${orderBy}"`, orderDir)
+            .take(maxLimitPlusOne);
+        if (cursor) {
+            lists.where('fl. "createdAt" < :cursor', {
+                cursor: new Date(parseInt(cursor)),
+            });
+        }
+        if (dateLimit) {
+            lists.andWhere('fl. "createdAt" > :dateLimit', {
+                dateLimit: new Date(dateLimit),
+            });
+        }
+        const listsResults = await lists.getMany();
+
+        const entries = getConnection()
+            .getRepository(FilmListEntries)
+            .createQueryBuilder("fle");
+
+        const entriesResults = await entries.getMany();
+
+        return {
+            filmLists: listsResults.slice(0, maxLimit),
+            entries: entriesResults,
+            hasMore: listsResults.length === maxLimitPlusOne,
         };
     }
 

@@ -1,10 +1,10 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { ReviewComment } from "./reviewComment";
-import { User } from "./user";
+import { User } from "../user/user";
 
 @Entity()
 export class ReviewCommentUpvote extends BaseEntity {
-    @Column({type: 'int', nullable: true})
+    @Column({ type: "int", nullable: true })
     value: number;
 
     @PrimaryColumn()
@@ -17,7 +17,7 @@ export class ReviewCommentUpvote extends BaseEntity {
     user: User;
 
     @ManyToOne(() => ReviewComment, (reviewComment) => reviewComment.upvotes, {
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
     })
     reviewComment: ReviewComment;
 }
