@@ -24,18 +24,18 @@ const ListsPage = ({}: ListsPageProps) => {
         >
             <div className='mb-20 flex justify-center'>
                 <div className='pageFrame h-[100vh] text-center'>
-                    <h1 className='mt-20'>
+                    <h1 className='mt-10'>
                         Your place to organise <br /> what you want to see most.
                     </h1>
                     <CreateListModal />
-                    <div className='z-[-1]'>
+                    <div className='z-[-1] mt-[-40px]'>
                         <PopularFilmLists />
                     </div>
-                    <div className='mt-20'>
-                        <div className='float-left h-[10vh] w-[80%]'>
+                    <div className='mt-20 w-[69vw]'>
+                        <div className='float-left h-[10vh] w-[80%] bg-red-400'>
                             <p>test</p>
                         </div>
-                        <div className='float-right h-[10vh] w-[20%] '>
+                        <div className='float-right h-[10vh] w-[20%] bg-blue-400 '>
                             <PopularTags />
                         </div>
                     </div>

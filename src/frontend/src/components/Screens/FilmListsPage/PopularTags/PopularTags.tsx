@@ -17,7 +17,7 @@ const PopularTags = ({}: PopularTagsProps) => {
 
     return (
         <div className=''>
-            <div className='ml-2 h-[3vh] w-[68vw]'>
+            <div className='ml-2 h-[3vh]'>
                 <h4 className='float-left'>Popular Tags</h4>
             </div>
             <div className='clear-both ml-2 mt-2 text-left'>

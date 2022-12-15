@@ -13,6 +13,7 @@ import { Rating } from 'react-simple-star-rating';
 import MovieResults from './components/MovieResults/MovieResults';
 import SelectedMovie from './components/SelectedMovie/SelectedMovie';
 import Button from '../Button/Button';
+import { BiCommentDetail } from 'react-icons/bi';
 
 interface CreateReviewModalProps {
     film?: {
@@ -24,10 +25,10 @@ interface CreateReviewModalProps {
         backdropPath: string;
         show: boolean;
     };
-    buttonTitle?: string;
+    fromMenu?: boolean;
 }
 
-const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
+const CreateReviewModal = ({ film, fromMenu }: CreateReviewModalProps) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
@@ -189,25 +190,27 @@ const CreateReviewModal = ({ film, buttonTitle }: CreateReviewModalProps) => {
 
     return (
         <>
-            <div
-                onMouseEnter={() => setShowTooltip(true)}
-                onMouseLeave={() => setShowTooltip(false)}
-                className=''
-                // onClick={() => setOpen(!open)}
-            >
-                {buttonTitle ? (
-                    <Button onClick={() => handleOpen()}>{buttonTitle}</Button>
+            <div>
+                {fromMenu ? (
+                    <button
+                        onClick={() => {
+                            handleOpen();
+                        }}
+                        className={`group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-200`}
+                    >
+                        <BiCommentDetail className={`mr-2 `} />
+                        Review
+                    </button>
                 ) : (
-                    <Button onClick={() => handleOpen()}>
-                        Add
-                        <BsPlusSquare className='mx-auto ml-1 inline h-4 w-4 fill-white dark:fill-black  navBar:hover:fill-white' />
+                    <Button className='mt-8' onClick={() => handleOpen()}>
+                        Create a new review
                     </Button>
                 )}
             </div>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog
                     as='div'
-                    className='relative z-20'
+                    className='relative z-50'
                     initialFocus={cancelButtonRef}
                     onClose={setOpen}
                 >

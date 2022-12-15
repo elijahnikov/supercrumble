@@ -6,7 +6,7 @@ import {
 import { isAuthHook } from '@/utils/isAuthHook';
 import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { BsFillXCircleFill, BsPlusSquare } from 'react-icons/bs';
+import { BsCardList, BsFillXCircleFill, BsPlusSquare } from 'react-icons/bs';
 import { Dialog, Transition } from '@headlessui/react';
 import InputField from '../InputField/InputField';
 import InputArea from '../InputArea/InputArea';
@@ -16,7 +16,9 @@ import Tags from './components/Tags/Tags';
 import MovieResults from './components/MovieResults/MovieResults';
 import ChosenMovies from './components/ChosenMovies/ChosenMovies';
 
-interface CreateListModalProps {}
+interface CreateListModalProps {
+    fromMenu?: boolean;
+}
 
 type ChosenMovie = {
     movieId: number;
@@ -27,7 +29,7 @@ type ChosenMovie = {
     releaseDate: string;
 };
 
-const CreateListModal = ({}: CreateListModalProps) => {
+const CreateListModal = ({ fromMenu }: CreateListModalProps) => {
     const [listName, setListName] = useState('');
     const [listDescription, setListDescription] = useState('');
     const [movieName, setMovieName] = useState('');
@@ -140,13 +142,22 @@ const CreateListModal = ({}: CreateListModalProps) => {
 
     return (
         <>
-            <div
-                className=''
-                // onClick={() => setOpen(!open)}
-            >
-                <Button className='mt-8' onClick={() => handleOpen()}>
-                    Create a new list
-                </Button>
+            <div>
+                {fromMenu ? (
+                    <button
+                        onClick={() => {
+                            handleOpen();
+                        }}
+                        className={`group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-200`}
+                    >
+                        <BsCardList className={`mr-2 `} />
+                        List
+                    </button>
+                ) : (
+                    <Button className='mt-8' onClick={() => handleOpen()}>
+                        Create a new list
+                    </Button>
+                )}
             </div>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog
