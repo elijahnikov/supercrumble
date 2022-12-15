@@ -6,9 +6,10 @@ import { withApollo } from '@/utils/withApollo';
 import { useRouter } from 'next/router';
 
 // Components
-import PopularFilmLists from '@/components/Screens/FilmListPage/PopularFilmLists/PopularFilmLists';
+import PopularFilmLists from '@/components/Screens/FilmListsPage/PopularFilmLists/PopularFilmLists';
 import Layout from '@/components/Common/Layout/Layout';
 import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
+import PopularTags from '@/components/Screens/FilmListsPage/PopularTags/PopularTags';
 
 interface ListsPageProps {}
 
@@ -29,6 +30,14 @@ const ListsPage = ({}: ListsPageProps) => {
                     <CreateListModal />
                     <div className='z-[-1]'>
                         <PopularFilmLists />
+                    </div>
+                    <div className='mt-20'>
+                        <div className='float-left h-[10vh] w-[80%]'>
+                            <p>test</p>
+                        </div>
+                        <div className='float-right h-[10vh] w-[20%] '>
+                            <PopularTags />
+                        </div>
                     </div>
                 </div>
             </div>

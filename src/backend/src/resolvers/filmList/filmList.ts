@@ -52,6 +52,15 @@ class PaginatedFilmLists {
     hasMore: boolean;
 }
 
+@ObjectType()
+class PaginatedFilmListTags {
+    @Field(() => [FilmListTags])
+    filmListTags: FilmListTags[];
+
+    @Field()
+    hasMore: boolean;
+}
+
 @Resolver(FilmList)
 export class FilmListResolver {
     @FieldResolver(() => User)
@@ -239,6 +248,7 @@ export class FilmListResolver {
     }
 
     @Query(() => PaginatedFilmLists)
+    @UseMiddleware(isAuth)
     async filmLists(
         @Arg("limit", () => Int, { nullable: true }) limit: number,
         @Arg("cursor", () => String, { nullable: true }) cursor: string | null,
@@ -279,6 +289,34 @@ export class FilmListResolver {
             filmLists: listsResults.slice(0, maxLimit),
             entries: entriesResults,
             hasMore: listsResults.length === maxLimitPlusOne,
+        };
+    }
+
+    @Query(() => PaginatedFilmListTags)
+    @UseMiddleware(isAuth)
+    async filmListTags(
+        @Arg("limit", () => Int, { nullable: true }) limit: number,
+        @Arg("cursor", () => String, { nullable: true }) cursor: string | null
+    ): Promise<PaginatedFilmListTags> {
+        const maxLimit = Math.min(50, limit);
+        const maxLimitPlusOne = maxLimit + 1;
+
+        const tags = getConnection()
+            .getRepository(FilmListTags)
+            .createQueryBuilder("flt")
+            .orderBy('flt."count"', "DESC")
+            .take(maxLimitPlusOne);
+        if (cursor) {
+            tags.where('flt. "createdAt" < :cursor', {
+                cursor: new Date(parseInt(cursor)),
+            });
+        }
+
+        const filmListTagsResults = await tags.getMany();
+
+        return {
+            filmListTags: filmListTagsResults.slice(0, maxLimit),
+            hasMore: filmListTagsResults.length === maxLimitPlusOne,
         };
     }
 

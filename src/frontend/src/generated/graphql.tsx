@@ -96,6 +96,15 @@ export type FilmListResponse = {
   filmList?: Maybe<FilmList>;
 };
 
+export type FilmListTags = {
+  __typename?: 'FilmListTags';
+  count?: Maybe<Scalars['Float']>;
+  createdAt: Scalars['String'];
+  id: Scalars['Float'];
+  text: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type FilmTags = {
   __typename?: 'FilmTags';
   count?: Maybe<Scalars['Float']>;
@@ -288,6 +297,12 @@ export type PaginatedFilmListEntries = {
   hasMore: Scalars['Boolean'];
 };
 
+export type PaginatedFilmListTags = {
+  __typename?: 'PaginatedFilmListTags';
+  filmListTags: Array<FilmListTags>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type PaginatedFilmLists = {
   __typename?: 'PaginatedFilmLists';
   entries: Array<FilmListEntries>;
@@ -313,6 +328,7 @@ export type Query = {
   filmList?: Maybe<BatchedListResponse>;
   filmListComments: PaginatedFilmListComments;
   filmListEntries: PaginatedFilmListEntries;
+  filmListTags: PaginatedFilmListTags;
   filmLists: PaginatedFilmLists;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
@@ -349,6 +365,12 @@ export type QueryFilmListEntriesArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
   listId: Scalars['Int'];
+};
+
+
+export type QueryFilmListTagsArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -700,6 +722,14 @@ export type FilmListsQueryVariables = Exact<{
 
 
 export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, noOfComments: number, title: string, score: number, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }>, entries: Array<{ __typename?: 'FilmListEntries', id: number, listId: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, posterPath?: string | null } }> } };
+
+export type FilmListTagsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type FilmListTagsQuery = { __typename?: 'Query', filmListTags: { __typename?: 'PaginatedFilmListTags', hasMore: boolean, filmListTags: Array<{ __typename?: 'FilmListTags', id: number, text: string, count?: number | null, createdAt: string, updatedAt: string }> } };
 
 export type ReviewQueryVariables = Exact<{
   id: Scalars['String'];
@@ -1793,6 +1823,49 @@ export function useFilmListsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type FilmListsQueryHookResult = ReturnType<typeof useFilmListsQuery>;
 export type FilmListsLazyQueryHookResult = ReturnType<typeof useFilmListsLazyQuery>;
 export type FilmListsQueryResult = Apollo.QueryResult<FilmListsQuery, FilmListsQueryVariables>;
+export const FilmListTagsDocument = gql`
+    query FilmListTags($limit: Int, $cursor: String) {
+  filmListTags(limit: $limit, cursor: $cursor) {
+    filmListTags {
+      id
+      text
+      count
+      createdAt
+      updatedAt
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useFilmListTagsQuery__
+ *
+ * To run a query within a React component, call `useFilmListTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmListTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmListTagsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useFilmListTagsQuery(baseOptions?: Apollo.QueryHookOptions<FilmListTagsQuery, FilmListTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmListTagsQuery, FilmListTagsQueryVariables>(FilmListTagsDocument, options);
+      }
+export function useFilmListTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmListTagsQuery, FilmListTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmListTagsQuery, FilmListTagsQueryVariables>(FilmListTagsDocument, options);
+        }
+export type FilmListTagsQueryHookResult = ReturnType<typeof useFilmListTagsQuery>;
+export type FilmListTagsLazyQueryHookResult = ReturnType<typeof useFilmListTagsLazyQuery>;
+export type FilmListTagsQueryResult = Apollo.QueryResult<FilmListTagsQuery, FilmListTagsQueryVariables>;
 export const ReviewDocument = gql`
     query Review($id: String!) {
   review(id: $id) {

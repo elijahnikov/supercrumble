@@ -5,7 +5,11 @@ import { FilmListDataType, FilmListEntryType } from './types';
 
 // GraphQL
 import { useFilmListsQuery } from '@/generated/graphql';
+
+// Router
 import { useRouter } from 'next/router';
+
+// Icons
 import { BsFillHeartFill } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
 

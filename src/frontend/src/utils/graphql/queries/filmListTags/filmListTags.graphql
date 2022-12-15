@@ -1,0 +1,12 @@
+query FilmListTags($limit: Int, $cursor: String) {
+    filmListTags(limit: $limit, cursor: $cursor) {
+        filmListTags {
+            id
+            text
+            count
+            createdAt
+            updatedAt
+        }
+        hasMore
+    }
+}
