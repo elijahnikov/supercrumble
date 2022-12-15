@@ -141,7 +141,6 @@ const FilmPage = ({}: FilmPageProps) => {
                                                     movieData.backdrop_path,
                                                 show: true,
                                             }}
-                                            buttonTitle={'Create Review'}
                                         />
                                         <div className='mt-5'>
                                             <FilmActions />

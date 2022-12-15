@@ -1,10 +1,10 @@
-import clxsm from "@/lib/clsxm";
-import React from "react";
-import { ImSpinner2 } from 'react-icons/im'
+import clxsm from '@/lib/clsxm';
+import React from 'react';
+import { ImSpinner2 } from 'react-icons/im';
 
 enum ButtonVariant {
     'primary',
-    'secondary'
+    'secondary',
 }
 
 type ButtonProps = {
@@ -45,8 +45,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                             'border-none',
                             'text-center',
                             'hover:bg-red-400 hover:text-white',
-                            'disabled:bg-red-400 disabled:hover:bg-red-400'
-                        ]
+                            'disabled:bg-red-400 disabled:hover:bg-red-400',
+                        ],
                     ],
                     [
                         variant === 'secondary' && [
@@ -54,37 +54,39 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                             'border-none',
                             'text-center',
                             'hover:bg-gray-600 hover:text-white',
-                            'disabled:bg-gray-600 disabled:hover:bg-gray-600'
-                        ]
+                            'disabled:bg-gray-600 disabled:hover:bg-gray-600',
+                        ],
                     ],
                     'disabled:cursor-not-allowed',
-                    isLoading && 
+                    isLoading &&
                         'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
                     className
                 )}
                 {...rest}
             >
                 {isLoading && (
-                    <div className={clxsm(
-                        'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-                        {
-                            'text-white': ['gray.800', 'dark'].includes(
-                                variant
-                            ),
-                            'text-black': ['light'].includes(variant),
-                            'text-primary-500': [
-                                'outline',
-                                'ghost',
-                            ].includes(variant)
-                        }
-                    )}>
-                        <ImSpinner2 className='animate-spin'/>
+                    <div
+                        className={clxsm(
+                            'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+                            {
+                                'text-white': ['gray.800', 'dark'].includes(
+                                    variant
+                                ),
+                                'text-black': ['light'].includes(variant),
+                                'text-primary-500': [
+                                    'outline',
+                                    'ghost',
+                                ].includes(variant),
+                            }
+                        )}
+                    >
+                        <ImSpinner2 className='animate-spin' />
                     </div>
                 )}
                 {children}
             </button>
-        )
+        );
     }
-)
+);
 
 export default Button;
