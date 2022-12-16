@@ -63,7 +63,7 @@ svg.star-svg {
     .layout-container {
         @apply /* */  
       /* navBarCollapse:w-[70%]; */ 
-       left-[10vw]  mx-auto h-[100%]
+       left-[10vw]  mx-auto h-[100vh]
       w-[80%] text-white navBarCollapse:left-[15vw];
     }
 

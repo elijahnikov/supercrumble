@@ -16,6 +16,7 @@ query FilmLists(
             id
             noOfComments
             title
+            description
             score
             creatorId
             creator {

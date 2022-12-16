@@ -1,15 +1,10 @@
+import { Fragment } from 'react';
+
+// Utils
 import clxsm from '@/lib/clsxm';
 import { Menu, Transition } from '@headlessui/react';
-import router from 'next/router';
-import { Fragment } from 'react';
-import { BiCommentDetail } from 'react-icons/bi';
-import {
-    BsPersonFill,
-    BsFillGearFill,
-    BsPlusSquare,
-    BsCardList,
-} from 'react-icons/bs';
-import Button from '../../Button/Button';
+
+// Components
 import CreateListModal from '../../CreateListModal/CreateListModal';
 import CreateReviewModal from '../../CreateReviewModal/CreateReviewModal';
 

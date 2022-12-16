@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 // Icons
 import { BsFillHeartFill } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
+import { formatFilmListData } from '@/utils/formatFilmListData';
 
 interface PopularFilmListsProps {}
 
@@ -26,21 +27,8 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
 
     const [filmListData, setFilmListData] = useState<FilmListDataType[]>([]);
 
-    const formatFilmListData = (data: any) => {
-        let tempData = JSON.parse(JSON.stringify(data));
-        tempData.filmLists.map((list: any) => {
-            let listId = list.id;
-            let entries = tempData.entries.filter(
-                (x: any) => x.listId === listId
-            );
-            list['entries'] = entries;
-        });
-        delete tempData['entries'];
-        setFilmListData(tempData.filmLists);
-    };
-
     useEffect(() => {
-        formatFilmListData(data?.filmLists);
+        setFilmListData(formatFilmListData(data?.filmLists));
     }, [data]);
 
     return (
@@ -52,14 +40,14 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
                     {/* SECTION TITLES */}
                     <div className='ml-6 h-[3vh] w-[68vw]'>
                         <h4 className='float-left'>Popular This Week</h4>
-                        <h5 className='float-right mt-1'>MORE</h5>
+                        {/* <h5 className='float-right mt-1'>MORE</h5> */}
                     </div>
 
                     {/* LISTS */}
                     <div className='mt-[2px] flex'>
                         {filmListData &&
-                            filmListData.map((list: FilmListDataType) => (
-                                <div className='grid grid-cols-4 gap-0'>
+                            filmListData.map((list: FilmListDataType, j) => (
+                                <div key={j} className='grid grid-cols-4 gap-0'>
                                     {/* <p>{list.title}</p> */}
 
                                     <div className='w-[17.9vw] p-4'>
@@ -74,11 +62,11 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
                                                     entry: FilmListEntryType,
                                                     i
                                                 ) => {
+                                                    console.log('i', i);
                                                     let index =
-                                                        (list.entries.length -
-                                                            i -
-                                                            1) *
+                                                        list.entries.length *
                                                         10;
+                                                    console.log('index', index);
                                                     return (
                                                         <img
                                                             key={i}

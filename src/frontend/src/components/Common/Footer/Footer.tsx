@@ -5,7 +5,12 @@ interface FooterProps {}
 
 const Footer = ({}: FooterProps) => {
     return (
-        <div className='relative z-10 clear-both mt-[-3] h-[150px] border-t-[1px] border-crumble-100 bg-crumble-300 text-white'>
+        <div
+            className='z-10 clear-both mt-[-3] 
+                        block h-[150px] border-t-[1px] 
+                        border-crumble-100 bg-crumble-300 
+                        text-white'
+        >
             <div className='absolute top-[50%] ml-10 flex translate-y-[-50%]'>
                 <div className='inline'>
                     <Link href={'/'}>

@@ -10,6 +10,7 @@ import PopularFilmLists from '@/components/Screens/FilmListsPage/PopularFilmList
 import Layout from '@/components/Common/Layout/Layout';
 import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
 import PopularTags from '@/components/Screens/FilmListsPage/PopularTags/PopularTags';
+import MostRecentFilmLists from '@/components/Screens/FilmListsPage/MostRecentFilmLists/MostRecentFilmLists';
 
 interface ListsPageProps {}
 
@@ -32,10 +33,10 @@ const ListsPage = ({}: ListsPageProps) => {
                         <PopularFilmLists />
                     </div>
                     <div className='mt-20 w-[69vw]'>
-                        <div className='float-left h-[10vh] w-[80%] bg-red-400'>
-                            <p>test</p>
+                        <div className='float-left h-[10vh] w-[80%]'>
+                            <MostRecentFilmLists />
                         </div>
-                        <div className='float-right h-[10vh] w-[20%] bg-blue-400 '>
+                        <div className='float-right h-[10vh] w-[20%]'>
                             <PopularTags />
                         </div>
                     </div>

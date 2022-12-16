@@ -1,23 +1,22 @@
-import { useApolloClient } from '@apollo/client';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 
-import { MeQuery, useLogoutMutation, useMeQuery } from '@/generated/graphql';
-import { isServer } from '@/utils/isServer';
+// GraphQL
+import { MeQuery, useLogoutMutation } from '@/generated/graphql';
+
+// Utils
+import { navMenu } from '@/utils/maps/NavMenu';
+import { useApolloClient } from '@apollo/client';
 import { Menu, Transition } from '@headlessui/react';
-import {
-    BsFillBellFill,
-    BsFillGearFill,
-    BsPersonFill,
-    BsPlusSquare,
-} from 'react-icons/bs';
-import { BiMenu } from 'react-icons/bi';
-import { navMenu, navMenuMini } from '@/utils/maps/NavMenu';
+
+// Icons
 import { IconType } from 'react-icons/lib';
-import CreateReviewModal from '@/components/Common/CreateReviewModal/CreateReviewModal';
-import Button from '../Button/Button';
+import { BsFillGearFill, BsPersonFill } from 'react-icons/bs';
+
+// Router
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+// Components
 import AddModalMenu from './AddModalMenu/AddModalMenu';
 
 interface MainNavBarProps {

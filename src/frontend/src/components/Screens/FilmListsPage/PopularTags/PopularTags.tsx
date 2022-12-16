@@ -10,7 +10,7 @@ const PopularTags = ({}: PopularTagsProps) => {
     const router = useRouter();
     const { data, loading, error } = useFilmListTagsQuery({
         variables: {
-            limit: 20,
+            limit: 40,
             cursor: null as null | string,
         },
     });
@@ -22,12 +22,12 @@ const PopularTags = ({}: PopularTagsProps) => {
             </div>
             <div className='clear-both ml-2 mt-2 text-left'>
                 {data?.filmListTags.filmListTags.map((tag) => (
-                    <div
+                    <span
                         key={tag.id}
-                        className='mr-2 mt-2 inline-block rounded-md bg-gray-800 p-1'
+                        className='mb-2 ml-2 inline-block cursor-pointer rounded-[5px] border-t-[1px] border-gray-800 bg-crumble-100 p-[5px] text-xs hover:bg-gray-800'
                     >
-                        <p className='text-xs text-gray-400'>{tag.text}</p>
-                    </div>
+                        {tag.text}
+                    </span>
                 ))}
             </div>
         </div>

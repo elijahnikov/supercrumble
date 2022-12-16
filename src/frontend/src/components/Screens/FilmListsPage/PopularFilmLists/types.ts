@@ -21,6 +21,7 @@ export type FilmListDataType = {
     id: string;
     score: number;
     noOfComments: number;
+    description: string;
     title: string;
     __typename: string;
 };

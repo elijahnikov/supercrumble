@@ -78,7 +78,8 @@ const ListPage = ({}: ListPageProps) => {
                 >
                     <BiComment className='mr-3 ml-[90px] inline' />
                     <p className='mr-1 inline text-[12px] text-white'>
-                        {kFormatter(data?.filmList?.filmList?.noOfComments)}
+                        {data?.filmList?.filmList?.noOfComments &&
+                            kFormatter(data?.filmList?.filmList?.noOfComments)}
                     </p>
                     <BsFillArrowDownCircleFill className='float-right ml-[10px] mt-[5px] inline' />
                 </div>

@@ -37,23 +37,37 @@ const FilmList = ({
             {filmListEntries?.map((entry) => (
                 <div
                     key={entry.id}
-                    className='relative
-                    mb-2
+                    className='relative mb-2
                     cursor-pointer
-                    rounded-md'
+                    rounded-md
+                    '
                 >
                     {entry.film.posterPath ? (
-                        <img
-                            onClick={() => onPosterClick(entry)}
-                            className={`m-2 block h-[226px] w-[140px] rounded-md ${
-                                editing ? 'opacity-40' : ''
-                            }`}
-                            src={
-                                entry.film.posterPath
-                                    ? `https://image.tmdb.org/t/p/w500${entry.film.posterPath}`
-                                    : undefined
-                            }
-                        />
+                        <>
+                            <NextLink
+                                href='/film/[id]'
+                                as={`/film/${formatForURL(
+                                    entry.film.movieTitle.toString()
+                                )}-${entry.film.movieId}`}
+                            >
+                                <div
+                                    className='absolute h-[226px] w-[140px] 
+                                    rounded-md hover:border-[3px]
+                                  hover:border-superRed'
+                                />
+                                <img
+                                    onClick={() => onPosterClick(entry)}
+                                    className={` block h-[226px] w-[140px] rounded-md hover:bg-sky-700 ${
+                                        editing ? 'opacity-40' : ''
+                                    }`}
+                                    src={
+                                        entry.film.posterPath
+                                            ? `https://image.tmdb.org/t/p/w500${entry.film.posterPath}`
+                                            : undefined
+                                    }
+                                />
+                            </NextLink>
+                        </>
                     ) : (
                         <p>?</p>
                     )}

@@ -721,7 +721,7 @@ export type FilmListsQueryVariables = Exact<{
 }>;
 
 
-export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, noOfComments: number, title: string, score: number, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }>, entries: Array<{ __typename?: 'FilmListEntries', id: number, listId: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, posterPath?: string | null } }> } };
+export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, noOfComments: number, title: string, description?: string | null, score: number, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }>, entries: Array<{ __typename?: 'FilmListEntries', id: number, listId: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, posterPath?: string | null } }> } };
 
 export type FilmListTagsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -1769,6 +1769,7 @@ export const FilmListsDocument = gql`
       id
       noOfComments
       title
+      description
       score
       creatorId
       creator {

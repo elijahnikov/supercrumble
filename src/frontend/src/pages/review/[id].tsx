@@ -63,7 +63,9 @@ const ReviewPage = ({}) => {
                 >
                     <BiComment className='mr-3 ml-[90px] inline' />
                     <p className='mr-1 inline text-[12px] text-white'>
-                        {kFormatter(data?.review?.noOfComments)} comments
+                        {data.review?.noOfComments &&
+                            kFormatter(data?.review?.noOfComments)}{' '}
+                        comments
                     </p>
                     <BsFillArrowDownCircleFill className='float-right ml-[10px] mt-[5px] inline' />
                 </div>
