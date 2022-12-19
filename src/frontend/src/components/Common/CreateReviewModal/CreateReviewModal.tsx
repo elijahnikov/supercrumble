@@ -26,10 +26,17 @@ interface CreateReviewModalProps {
         show: boolean;
     };
     fromMenu?: boolean;
+    open: boolean;
+    setOpen: (value: boolean) => void;
 }
 
-const CreateReviewModal = ({ film, fromMenu }: CreateReviewModalProps) => {
-    const [open, setOpen] = useState(false);
+const CreateReviewModal = ({
+    open,
+    setOpen,
+    film,
+    fromMenu,
+}: CreateReviewModalProps) => {
+    // const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
@@ -191,17 +198,7 @@ const CreateReviewModal = ({ film, fromMenu }: CreateReviewModalProps) => {
     return (
         <>
             <div>
-                {fromMenu ? (
-                    <button
-                        onClick={() => {
-                            handleOpen();
-                        }}
-                        className={`group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-200`}
-                    >
-                        <BiCommentDetail className={`mr-2 `} />
-                        Review
-                    </button>
-                ) : (
+                {!fromMenu && (
                     <Button className='mt-8' onClick={() => handleOpen()}>
                         Create a new review
                     </Button>

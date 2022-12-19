@@ -45,18 +45,6 @@ class PaginatedFilmLists {
     @Field(() => [FilmList])
     filmLists: FilmList[];
 
-    @Field(() => [FilmListEntries])
-    entries: FilmListEntries[];
-
-    @Field()
-    hasMore: boolean;
-}
-
-@ObjectType()
-class PaginatedFilmListTags {
-    @Field(() => [FilmListTags])
-    filmListTags: FilmListTags[];
-
     @Field()
     hasMore: boolean;
 }
@@ -257,7 +245,8 @@ export class FilmListResolver {
         @Arg("orderDir", () => String, { defaultValue: "DESC", nullable: true })
         orderDir: "DESC" | "ASC",
         @Arg("dateLimit", () => String, { nullable: true })
-        dateLimit: string | null
+        dateLimit: string | null,
+        @Arg("tag", () => String, { nullable: true }) tag: string | null
     ): Promise<PaginatedFilmLists> {
         const maxLimit = Math.min(50, limit);
         const maxLimitPlusOne = maxLimit + 1;
@@ -277,46 +266,14 @@ export class FilmListResolver {
                 dateLimit: new Date(dateLimit),
             });
         }
+        // if (tag) {
+        //     lists.andWhere()
+        // }
         const listsResults = await lists.getMany();
-
-        const entries = getConnection()
-            .getRepository(FilmListEntries)
-            .createQueryBuilder("fle");
-
-        const entriesResults = await entries.getMany();
 
         return {
             filmLists: listsResults.slice(0, maxLimit),
-            entries: entriesResults,
             hasMore: listsResults.length === maxLimitPlusOne,
-        };
-    }
-
-    @Query(() => PaginatedFilmListTags)
-    @UseMiddleware(isAuth)
-    async filmListTags(
-        @Arg("limit", () => Int, { nullable: true }) limit: number,
-        @Arg("cursor", () => String, { nullable: true }) cursor: string | null
-    ): Promise<PaginatedFilmListTags> {
-        const maxLimit = Math.min(50, limit);
-        const maxLimitPlusOne = maxLimit + 1;
-
-        const tags = getConnection()
-            .getRepository(FilmListTags)
-            .createQueryBuilder("flt")
-            .orderBy('flt."count"', "DESC")
-            .take(maxLimitPlusOne);
-        if (cursor) {
-            tags.where('flt. "createdAt" < :cursor', {
-                cursor: new Date(parseInt(cursor)),
-            });
-        }
-
-        const filmListTagsResults = await tags.getMany();
-
-        return {
-            filmListTags: filmListTagsResults.slice(0, maxLimit),
-            hasMore: filmListTagsResults.length === maxLimitPlusOne,
         };
     }
 

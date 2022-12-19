@@ -37,6 +37,26 @@ export class FilmList extends BaseEntity {
     @Column({ type: "int", default: 0 })
     score!: number;
 
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    filmOnePosterPath?: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    filmTwoPosterPath?: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    filmThreePosterPath?: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    filmFourPosterPath?: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
+    filmFivePosterPath?: string;
+
     @OneToMany(() => FilmListEntries, (filmListEntries) => filmListEntries.list)
     entries: FilmListEntries[];
 

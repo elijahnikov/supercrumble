@@ -1,5 +1,6 @@
 // Router
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 
 // GraphQL
 import { useFilmListTagsQuery } from '@/generated/graphql';
@@ -22,12 +23,21 @@ const PopularTags = ({}: PopularTagsProps) => {
             </div>
             <div className='clear-both ml-2 mt-2 text-left'>
                 {data?.filmListTags.filmListTags.map((tag) => (
-                    <span
-                        key={tag.id}
-                        className='mb-2 ml-2 inline-block cursor-pointer rounded-[5px] border-t-[1px] border-gray-800 bg-crumble-100 p-[5px] text-xs hover:bg-gray-800'
+                    <NextLink
+                        href='tag/[id]/list'
+                        as={`/tag/${tag.text.trim()}/list`}
                     >
-                        {tag.text}
-                    </span>
+                        <span
+                            key={tag.id}
+                            className='mb-2 ml-2 inline-block 
+                        cursor-pointer rounded-[5px] 
+                        border-t-[1px] border-gray-800 
+                        bg-crumble-100 p-[5px] text-xs 
+                        hover:bg-gray-800'
+                        >
+                            {tag.text}
+                        </span>
+                    </NextLink>
                 ))}
             </div>
         </div>

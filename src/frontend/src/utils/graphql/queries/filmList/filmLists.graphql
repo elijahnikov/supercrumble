@@ -14,25 +14,20 @@ query FilmLists(
     ) {
         filmLists {
             id
-            noOfComments
             title
-            description
             score
+            noOfComments
+            filmOnePosterPath
+            filmTwoPosterPath
+            filmThreePosterPath
+            filmFourPosterPath
+            filmFivePosterPath
             creatorId
             creator {
                 id
                 username
                 displayName
                 avatar
-            }
-        }
-        entries {
-            id
-            listId
-            film {
-                movieId
-                movieTitle
-                posterPath
             }
         }
         hasMore

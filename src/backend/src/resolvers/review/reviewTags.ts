@@ -1,22 +1,22 @@
-import { FilmTags } from "../../entities/film/filmTags";
+import { ReviewTags } from "../../entities/review/reviewTags";
 import { Arg, Field, Int, ObjectType, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 
 @ObjectType()
 class GetFilmTags {
-    @Field(() => [FilmTags])
-    tags: FilmTags[];
+    @Field(() => [ReviewTags])
+    tags: ReviewTags[];
 }
 
 @Resolver()
-export class FilmTagsResolver {
+export class ReviewTagsResolver {
     //get film tags
-    @Query(() => FilmTags, { nullable: true })
+    @Query(() => ReviewTags, { nullable: true })
     async tags(
         @Arg("limit", () => Int, { nullable: true }) limit: number
     ): Promise<GetFilmTags> {
         const qb = getConnection()
-            .getRepository(FilmTags)
+            .getRepository(ReviewTags)
             .createQueryBuilder("ft")
             .orderBy('rv."count"', "DESC")
             .take(limit);

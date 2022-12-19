@@ -10,7 +10,7 @@ import {
 
 @ObjectType()
 @Entity()
-export class FilmTags extends BaseEntity {
+export class ReviewTags extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
     id!: number;

@@ -1,6 +1,6 @@
 import { FilmListTags } from "../../entities/filmList/filmListTags";
 import { Films } from "../../entities/film/films";
-import { FilmTags } from "../../entities/film/filmTags";
+import { ReviewTags } from "../../entities/review/reviewTags";
 import { FilmList } from "../../entities/filmList/filmList";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
 import { Review } from "../../entities/review/review";
@@ -20,10 +20,10 @@ export default [
     Upvote,
     ReviewComment,
     ReviewCommentUpvote,
+    ReviewTags,
 
     //Films
     Films,
-    FilmTags,
 
     //FilmList
     FilmList,

@@ -18,6 +18,8 @@ import ChosenMovies from './components/ChosenMovies/ChosenMovies';
 
 interface CreateListModalProps {
     fromMenu?: boolean;
+    open: boolean;
+    setOpen: (value: boolean) => void;
 }
 
 type ChosenMovie = {
@@ -29,14 +31,14 @@ type ChosenMovie = {
     releaseDate: string;
 };
 
-const CreateListModal = ({ fromMenu }: CreateListModalProps) => {
+const CreateListModal = ({ open, setOpen, fromMenu }: CreateListModalProps) => {
     const [listName, setListName] = useState('');
     const [listDescription, setListDescription] = useState('');
     const [movieName, setMovieName] = useState('');
     const [chosenMovies, setChosenMovies] = useState<ChosenMovie[]>([]);
     const [movieFetchData, setMovieFetchData] = useState<any[]>([]);
     const [selectedMovieVisible, setSelectedMovieVisible] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [debounceTime, setDebounceTime] = useState(500);
     const [tags, setTags] = useState<string[]>([]);
@@ -117,6 +119,21 @@ const CreateListModal = ({ fromMenu }: CreateListModalProps) => {
                         title: listName,
                         description: listDescription,
                         tags: tags.join(','),
+                        filmOnePosterPath: chosenMovies[0]
+                            ? chosenMovies[0].posterPath
+                            : null,
+                        filmTwoPosterPath: chosenMovies[1]
+                            ? chosenMovies[1].posterPath
+                            : null,
+                        filmThreePosterPath: chosenMovies[2]
+                            ? chosenMovies[2].posterPath
+                            : null,
+                        filmFourPosterPath: chosenMovies[3]
+                            ? chosenMovies[3].posterPath
+                            : null,
+                        filmFivePosterPath: chosenMovies[4]
+                            ? chosenMovies[4].posterPath
+                            : null,
                     },
                     filmIds,
                 },
@@ -143,17 +160,7 @@ const CreateListModal = ({ fromMenu }: CreateListModalProps) => {
     return (
         <>
             <div>
-                {fromMenu ? (
-                    <button
-                        onClick={() => {
-                            handleOpen();
-                        }}
-                        className={`group flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-200`}
-                    >
-                        <BsCardList className={`mr-2 `} />
-                        List
-                    </button>
-                ) : (
+                {!fromMenu && (
                     <Button className='mt-8' onClick={() => handleOpen()}>
                         Create a new list
                     </Button>

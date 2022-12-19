@@ -1,29 +1,22 @@
 export type FilmListDataType = {
-    creator: {
-        __typename: string;
-        displayName: string;
-        id: number;
-        username: string;
-        avatar: string;
-    };
-    creatorId: number;
-    entries: Array<{
-        id: number;
-        listId: string;
-        __typename: string;
-        film: {
-            movieId: number;
-            movieTitle: string;
-            posterPath: string;
-            __typename: string;
-        };
-    }>;
+    __typename?: 'FilmList';
     id: string;
+    title: string;
     score: number;
     noOfComments: number;
-    description: string;
-    title: string;
-    __typename: string;
+    filmOnePosterPath?: string | null;
+    filmTwoPosterPath?: string | null;
+    filmThreePosterPath?: string | null;
+    filmFourPosterPath?: string | null;
+    filmFivePosterPath?: string | null;
+    creatorId: number;
+    creator: {
+        __typename?: 'User';
+        id: number;
+        username: string;
+        displayName?: string | null;
+        avatar?: string | null;
+    };
 };
 
 export type FilmListEntryType = {

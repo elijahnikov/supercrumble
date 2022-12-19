@@ -28,11 +28,12 @@ import { ReviewResolver } from "./resolvers/review/review";
 import { UserResolver } from "./resolvers/user";
 import { ReviewCommentResolver } from "./resolvers/review/reviewComment";
 import { FilmsResolver } from "./resolvers/film/films";
-import { FilmTagsResolver } from "./resolvers/film/filmTags";
+import { ReviewTagsResolver } from "./resolvers/review/reviewTags";
 import { FilmListResolver } from "./resolvers/filmList/filmList";
 import { FilmListEntriesResolver } from "./resolvers/filmList/filmListEntries";
 import { createFilmListUpvoteLoader } from "./utils/loaders/createFilmListUpvoteLoader";
 import { FilmListCommentResolver } from "./resolvers/filmList/filmListComment";
+import { FilmListTagsResolver } from "./resolvers/filmList/filmListTags";
 
 const main = async () => {
     const conn = await createConnection({
@@ -79,10 +80,11 @@ const main = async () => {
                 UserResolver,
                 ReviewCommentResolver,
                 FilmsResolver,
-                FilmTagsResolver,
+                ReviewTagsResolver,
                 FilmListResolver,
                 FilmListEntriesResolver,
                 FilmListCommentResolver,
+                FilmListTagsResolver,
             ],
             validate: false,
         }),

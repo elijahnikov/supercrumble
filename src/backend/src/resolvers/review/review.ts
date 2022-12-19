@@ -19,7 +19,7 @@ import { Upvote } from "../../entities/review/upvote";
 import { User } from "../../entities/user/user";
 import { ReviewInput } from "../inputs/ReviewInput";
 import { Films } from "../../entities/film/films";
-import { FilmTags } from "../../entities/film/filmTags";
+import { ReviewTags } from "../../entities/review/reviewTags";
 
 //detect whether there is no more data to paginate through
 @ObjectType()
@@ -191,13 +191,13 @@ export class ReviewResolver {
         if (input.tags) {
             const tags = input.tags.split(",");
             tags.forEach(async (tag) => {
-                const tagCheck = FilmTags.findOne({
+                const tagCheck = ReviewTags.findOne({
                     where: { text: tag },
                 });
                 if (await tagCheck) {
                     await getConnection()
                         .createQueryBuilder()
-                        .update(FilmTags)
+                        .update(ReviewTags)
                         .set({
                             count: () => '"count" + 1',
                         })
@@ -207,7 +207,7 @@ export class ReviewResolver {
                     await getConnection().transaction(async (tm) => {
                         await tm.query(
                             `
-                                insert into film_tags ("text", "count")
+                                insert into review_tags ("text", "count")
                                 values ($1, $2)
                             `,
                             [tag, 1]

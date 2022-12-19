@@ -20,16 +20,16 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
     const router = useRouter();
     const { data, loading, error } = useFilmListsQuery({
         variables: {
-            limit: 4,
+            limit: 3,
             cursor: null as null | string,
         },
     });
 
-    const [filmListData, setFilmListData] = useState<FilmListDataType[]>([]);
+    // const [filmListData, setFilmListData] = useState<FilmListDataType[]>([]);
 
-    useEffect(() => {
-        setFilmListData(formatFilmListData(data?.filmLists));
-    }, [data]);
+    // useEffect(() => {
+    //     setFilmListData(formatFilmListData(data?.filmLists));
+    // }, [data]);
 
     return (
         <div className='mt-40'>
@@ -45,67 +45,85 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
 
                     {/* LISTS */}
                     <div className='mt-[2px] flex'>
-                        {filmListData &&
-                            filmListData.map((list: FilmListDataType, j) => (
-                                <div key={j} className='grid grid-cols-4 gap-0'>
-                                    {/* <p>{list.title}</p> */}
+                        {data?.filmLists &&
+                            data.filmLists.filmLists.map(
+                                (list: FilmListDataType, j) => (
+                                    <div
+                                        key={j}
+                                        className='grid grid-cols-4 gap-0'
+                                    >
+                                        {/* <p>{list.title}</p> */}
 
-                                    <div className='w-[17.9vw] p-4'>
-                                        <div
-                                            onClick={() =>
-                                                router.push(`/list/${list.id}`)
-                                            }
-                                            className='flex w-[252px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
-                                        >
-                                            {list.entries.map(
-                                                (
-                                                    entry: FilmListEntryType,
-                                                    i
-                                                ) => {
-                                                    console.log('i', i);
-                                                    let index =
-                                                        list.entries.length *
-                                                        10;
-                                                    console.log('index', index);
-                                                    return (
+                                        <div className='w-[17.9vw] p-4'>
+                                            <div
+                                                onClick={() =>
+                                                    router.push(
+                                                        `/list/${list.id}`
+                                                    )
+                                                }
+                                                className='flex w-[352px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
+                                            >
+                                                {list.filmOnePosterPath && (
+                                                    <img
+                                                        className={`z-50 m-2 block h-[209px] w-[130px] rounded-md`}
+                                                        src={`https://image.tmdb.org/t/p/w500${list.filmOnePosterPath}`}
+                                                    />
+                                                )}
+                                                {list.filmTwoPosterPath && (
+                                                    <img
+                                                        className={`z-40 m-2 ml-[-87px] block h-[209px] w-[130px] rounded-md`}
+                                                        src={`https://image.tmdb.org/t/p/w500${list.filmTwoPosterPath}`}
+                                                    />
+                                                )}
+                                                {list.filmThreePosterPath && (
+                                                    <img
+                                                        className={`z-30 m-2 ml-[-87px] block h-[209px] w-[130px] rounded-md`}
+                                                        src={`https://image.tmdb.org/t/p/w500${list.filmThreePosterPath}`}
+                                                    />
+                                                )}
+                                                {list.filmFourPosterPath && (
+                                                    <img
+                                                        className={`z-20 m-2 ml-[-87px] block h-[209px] w-[130px] rounded-md`}
+                                                        src={`https://image.tmdb.org/t/p/w500${list.filmFourPosterPath}`}
+                                                    />
+                                                )}
+                                                {list.filmFivePosterPath && (
+                                                    <img
+                                                        className={`z-10 m-2 ml-[-87px] block h-[209px] w-[130px] rounded-md`}
+                                                        src={`https://image.tmdb.org/t/p/w500${list.filmFivePosterPath}`}
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className='float-left ml-1 mt-2 w-[100%] text-left'>
+                                                <h4>{list.title}</h4>
+                                                <div className='mt-1 flex'>
+                                                    {list.creator.avatar && (
                                                         <img
-                                                            key={i}
-                                                            className={`m-2 block h-[209px] w-[130px] rounded-md [&:not(:first-child)]:ml-[-112px] z-${index}`}
+                                                            className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
+                                                            alt='Profile image'
                                                             src={
-                                                                entry.film
-                                                                    .posterPath
-                                                                    ? `https://image.tmdb.org/t/p/w500${entry.film.posterPath}`
-                                                                    : undefined
+                                                                list.creator
+                                                                    .avatar
                                                             }
                                                         />
-                                                    );
-                                                }
-                                            )}
-                                        </div>
-                                        <div className='float-left ml-1 mt-2 w-[100%] text-left'>
-                                            <h4>{list.title}</h4>
-                                            <div className='mt-1 flex'>
-                                                <img
-                                                    className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
-                                                    alt='Profile image'
-                                                    src={list.creator.avatar}
-                                                />
-                                                <p className='text-[14px] font-semibold text-slate-400'>
-                                                    {list.creator.username}
-                                                </p>
-                                                <BsFillHeartFill className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
-                                                <p className='ml-1 text-[12px] text-slate-600'>
-                                                    {list.score}
-                                                </p>
-                                                <BiComment className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
-                                                <p className='ml-1 text-[12px] text-slate-600'>
-                                                    {list.noOfComments}
-                                                </p>
+                                                    )}
+                                                    <p className='text-[14px] font-semibold text-slate-400'>
+                                                        {list.creator.username}
+                                                    </p>
+                                                    <BsFillHeartFill className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
+                                                    <p className='ml-1 text-[12px] text-slate-600'>
+                                                        {list.score}
+                                                    </p>
+                                                    <BiComment className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
+                                                    <p className='ml-1 text-[12px] text-slate-600'>
+                                                        {list.noOfComments}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            )}
                     </div>
                 </div>
             )}

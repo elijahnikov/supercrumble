@@ -43,6 +43,11 @@ export type FilmList = {
   creator: User;
   creatorId: Scalars['Float'];
   description?: Maybe<Scalars['String']>;
+  filmFivePosterPath?: Maybe<Scalars['String']>;
+  filmFourPosterPath?: Maybe<Scalars['String']>;
+  filmOnePosterPath?: Maybe<Scalars['String']>;
+  filmThreePosterPath?: Maybe<Scalars['String']>;
+  filmTwoPosterPath?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   noOfComments: Scalars['Float'];
   score: Scalars['Float'];
@@ -87,6 +92,11 @@ export type FilmListEntriesInput = {
 
 export type FilmListInput = {
   description: Scalars['String'];
+  filmFivePosterPath?: InputMaybe<Scalars['String']>;
+  filmFourPosterPath?: InputMaybe<Scalars['String']>;
+  filmOnePosterPath?: InputMaybe<Scalars['String']>;
+  filmThreePosterPath?: InputMaybe<Scalars['String']>;
+  filmTwoPosterPath?: InputMaybe<Scalars['String']>;
   tags: Scalars['String'];
   title: Scalars['String'];
 };
@@ -98,15 +108,6 @@ export type FilmListResponse = {
 
 export type FilmListTags = {
   __typename?: 'FilmListTags';
-  count?: Maybe<Scalars['Float']>;
-  createdAt: Scalars['String'];
-  id: Scalars['Float'];
-  text: Scalars['String'];
-  updatedAt: Scalars['String'];
-};
-
-export type FilmTags = {
-  __typename?: 'FilmTags';
   count?: Maybe<Scalars['Float']>;
   createdAt: Scalars['String'];
   id: Scalars['Float'];
@@ -305,7 +306,6 @@ export type PaginatedFilmListTags = {
 
 export type PaginatedFilmLists = {
   __typename?: 'PaginatedFilmLists';
-  entries: Array<FilmListEntries>;
   filmLists: Array<FilmList>;
   hasMore: Scalars['Boolean'];
 };
@@ -337,7 +337,7 @@ export type Query = {
   reviewComment?: Maybe<ReviewComment>;
   reviewComments: PaginatedReviewComments;
   reviews: PaginatedReviews;
-  tags?: Maybe<FilmTags>;
+  tags?: Maybe<ReviewTags>;
 };
 
 
@@ -477,6 +477,15 @@ export type ReviewInput = {
   ratingGiven: Scalars['Float'];
   tags: Scalars['String'];
   text: Scalars['String'];
+};
+
+export type ReviewTags = {
+  __typename?: 'ReviewTags';
+  count?: Maybe<Scalars['Float']>;
+  createdAt: Scalars['String'];
+  id: Scalars['Float'];
+  text: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type S3Payload = {
@@ -721,7 +730,7 @@ export type FilmListsQueryVariables = Exact<{
 }>;
 
 
-export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, noOfComments: number, title: string, description?: string | null, score: number, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }>, entries: Array<{ __typename?: 'FilmListEntries', id: number, listId: string, film: { __typename?: 'Films', movieId: number, movieTitle: string, posterPath?: string | null } }> } };
+export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, title: string, score: number, noOfComments: number, filmOnePosterPath?: string | null, filmTwoPosterPath?: string | null, filmThreePosterPath?: string | null, filmFourPosterPath?: string | null, filmFivePosterPath?: string | null, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type FilmListTagsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -1767,25 +1776,20 @@ export const FilmListsDocument = gql`
   ) {
     filmLists {
       id
-      noOfComments
       title
-      description
       score
+      noOfComments
+      filmOnePosterPath
+      filmTwoPosterPath
+      filmThreePosterPath
+      filmFourPosterPath
+      filmFivePosterPath
       creatorId
       creator {
         id
         username
         displayName
         avatar
-      }
-    }
-    entries {
-      id
-      listId
-      film {
-        movieId
-        movieTitle
-        posterPath
       }
     }
     hasMore

@@ -19,6 +19,7 @@ interface FilmPageProps {}
 const FilmPage = ({}: FilmPageProps) => {
     const [movieData, setMovieData] = useState<any>({});
     const [showMoreOverview, setShowMoreOverview] = useState<boolean>(false);
+    const [reviewOpen, setReviewOpen] = useState(false);
     const [fetchLoading, setFetchLoading] = useState<boolean>(false);
     const [filmId, setFilmId] = useState<string>('');
     const imageRef = useRef(null);
@@ -128,6 +129,8 @@ const FilmPage = ({}: FilmPageProps) => {
                                             />
                                         </div>
                                         <CreateReviewModal
+                                            open={reviewOpen}
+                                            setOpen={setReviewOpen}
                                             film={{
                                                 id: movieData.id,
                                                 originalTitle:

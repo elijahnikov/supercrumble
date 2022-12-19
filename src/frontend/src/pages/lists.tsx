@@ -11,11 +11,14 @@ import Layout from '@/components/Common/Layout/Layout';
 import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
 import PopularTags from '@/components/Screens/FilmListsPage/PopularTags/PopularTags';
 import MostRecentFilmLists from '@/components/Screens/FilmListsPage/MostRecentFilmLists/MostRecentFilmLists';
+import { useState } from 'react';
 
 interface ListsPageProps {}
 
 const ListsPage = ({}: ListsPageProps) => {
     const router = useRouter();
+
+    const [listOpen, setListOpen] = useState(false);
 
     return (
         <Layout
@@ -28,7 +31,7 @@ const ListsPage = ({}: ListsPageProps) => {
                     <h1 className='mt-10'>
                         Your place to organise <br /> what you want to see most.
                     </h1>
-                    <CreateListModal />
+                    <CreateListModal open={listOpen} setOpen={setListOpen} />
                     <div className='z-[-1] mt-[-40px]'>
                         <PopularFilmLists />
                     </div>
