@@ -15,7 +15,7 @@ import {
     Root,
     UseMiddleware,
 } from "type-graphql";
-import { getConnection } from "typeorm";
+import { getConnection, SimpleConsoleLogger } from "typeorm";
 import { FilmListInput } from "../inputs/FilmListInput";
 import { User } from "../../entities/user/user";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
@@ -266,9 +266,10 @@ export class FilmListResolver {
                 dateLimit: new Date(dateLimit),
             });
         }
-        // if (tag) {
-        //     lists.andWhere()
-        // }
+        if (tag) {
+            lists.andWhere(`',' || fl.tags || ',' LIKE '%,${tag},%'`);
+        }
+
         const listsResults = await lists.getMany();
 
         return {

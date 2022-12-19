@@ -50,7 +50,7 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
                                 (list: FilmListDataType, j) => (
                                     <div
                                         key={j}
-                                        className='grid grid-cols-4 gap-0'
+                                        className='grid grid-cols-3 gap-0'
                                     >
                                         {/* <p>{list.title}</p> */}
 

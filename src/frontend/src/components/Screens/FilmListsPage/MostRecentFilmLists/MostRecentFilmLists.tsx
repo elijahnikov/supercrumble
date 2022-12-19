@@ -27,15 +27,15 @@ const MostRecentFilmLists = ({}: MostRecentFilmListsProps) => {
 
     return (
         <div>
-            <div className='ml-2 h-[3vh]'>
+            <div className='ml-2 mb-20 h-[3vh]'>
                 <div className='w-[100% h-[20px]'>
-                    <h4 className='float-left'>Most Recent</h4>
+                    <h4 className='float-left ml-5'>Most Recent</h4>
                 </div>
-                <div className='mt-[10px] ml-[20px]'>
+                <div className='mt-[-10px] ml-[10px]'>
                     {data?.filmLists &&
                         data.filmLists.filmLists.map(
                             (list: FilmListDataType) => (
-                                <div className='mt-8 w-[100%]'>
+                                <div className='mt-5 w-[100%]'>
                                     <div className='flex'>
                                         <div
                                             onClick={() =>

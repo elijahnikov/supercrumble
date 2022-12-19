@@ -21,7 +21,7 @@ const PopularTags = ({}: PopularTagsProps) => {
             <div className='ml-2 h-[3vh]'>
                 <h4 className='float-left'>Popular Tags</h4>
             </div>
-            <div className='clear-both ml-2 mt-2 text-left'>
+            <div className='clear-both mt-5  text-left'>
                 {data?.filmListTags.filmListTags.map((tag) => (
                     <NextLink
                         href='tag/[id]/list'
