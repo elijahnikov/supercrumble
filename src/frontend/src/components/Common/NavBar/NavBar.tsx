@@ -14,6 +14,7 @@ import { BsFillGearFill, BsPersonFill } from 'react-icons/bs';
 
 // Router
 import Link from 'next/link';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 // Components
@@ -128,27 +129,27 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                 <div className='px-1 py-1 '>
                                     <Menu.Item>
                                         {({ active }) => (
-                                            <button
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/@${userData?.me?.username}`
-                                                    )
-                                                }
-                                                className={`${
-                                                    active
-                                                        ? 'bg-crumble-100 text-white'
-                                                        : 'text-gray-200'
-                                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                            <NextLink
+                                                href='/[username]'
+                                                as={`/@${userData?.me?.username}`}
                                             >
-                                                <BsPersonFill
-                                                    className={`mr-2 ${
+                                                <button
+                                                    className={`${
                                                         active
-                                                            ? 'fill-white'
-                                                            : 'fill-gray-200'
-                                                    }`}
-                                                />
-                                                Profile
-                                            </button>
+                                                            ? 'bg-crumble-100 text-white'
+                                                            : 'text-gray-200'
+                                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                >
+                                                    <BsPersonFill
+                                                        className={`mr-2 ${
+                                                            active
+                                                                ? 'fill-white'
+                                                                : 'fill-gray-200'
+                                                        }`}
+                                                    />
+                                                    Profile
+                                                </button>
+                                            </NextLink>
                                         )}
                                     </Menu.Item>
                                     <Menu.Item>

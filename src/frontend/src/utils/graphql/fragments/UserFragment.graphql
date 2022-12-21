@@ -8,6 +8,7 @@ fragment UserFragment on User {
     bioLink
     totalFilmsWatched
     totalHoursWatched
+    totalListsCreated
     createdAt
     updatedAt
     usernameChangeDate

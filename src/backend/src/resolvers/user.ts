@@ -76,7 +76,7 @@ export class UserResolver {
     //get specific user by id
     @Query(() => User, { nullable: true })
     getUser(@Arg("id", () => Int) id: number): Promise<User | undefined> {
-        return User.findOne(id, { relations: ["posts"] });
+        return User.findOne(id);
     }
 
     @Query(() => User, { nullable: true })

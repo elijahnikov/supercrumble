@@ -99,6 +99,11 @@ svg.star-svg {
      navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
     }
 
+    .mediumPageFrame {
+        @apply mt-20 mb-20 w-[75%]
+        rounded-xl navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
+    }
+
     .smallerPageFrame {
         @apply mt-20 mb-20 w-[55%]
         rounded-xl navBarCollapse:mt-10 navBarCollapse:max-w-[90%];

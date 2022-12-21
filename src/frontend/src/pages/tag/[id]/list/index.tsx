@@ -10,7 +10,6 @@ interface indexProps {}
 
 const ListsByTag = ({}: indexProps) => {
     const router = useRouter();
-
     const [tagName, setTagName] = useState('');
 
     useEffect(() => {

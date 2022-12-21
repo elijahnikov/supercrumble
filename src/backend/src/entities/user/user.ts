@@ -51,14 +51,6 @@ export class User extends BaseEntity {
     @Column({ nullable: true })
     bioLink: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "int" })
-    totalFilmsWatched: number;
-
-    @Field({ nullable: true })
-    @Column({ nullable: true, type: "int" })
-    totalHoursWatched: number;
-
     @Field(() => String)
     @CreateDateColumn()
     createdAt: Date;
@@ -74,6 +66,20 @@ export class User extends BaseEntity {
     @Field({ nullable: true })
     @Column({ nullable: true })
     onboarded: boolean;
+
+    //USER STATS______________________________________________
+    //________________________________________________________
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    totalFilmsWatched: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    totalHoursWatched: number;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true, type: "int" })
+    totalListsCreated: number;
 
     //FILM LIST RELATIONSHIP___________________________________
     //_________________________________________________________

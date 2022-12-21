@@ -15,7 +15,7 @@ import {
     Root,
     UseMiddleware,
 } from "type-graphql";
-import { getConnection, SimpleConsoleLogger } from "typeorm";
+import { getConnection } from "typeorm";
 import { FilmListInput } from "../inputs/FilmListInput";
 import { User } from "../../entities/user/user";
 import { FilmListEntries } from "../../entities/filmList/filmListEntries";
@@ -139,6 +139,8 @@ export class FilmListResolver {
             return null;
         }
 
+        let connection = await getConnection();
+
         if (input.tags) {
             const tags = input.tags.split(",");
             console.table(tags);
@@ -149,7 +151,7 @@ export class FilmListResolver {
                 });
                 console.log(tagCheck);
                 if (tagCheck) {
-                    await getConnection()
+                    await connection
                         .createQueryBuilder()
                         .update(FilmListTags)
                         .set({
@@ -167,7 +169,7 @@ export class FilmListResolver {
 
         let uniqueId = nanoid(10);
 
-        let insert = await getConnection()
+        let insert = await connection
             .createQueryBuilder()
             .insert()
             .into(FilmList)
@@ -181,11 +183,20 @@ export class FilmListResolver {
         let listId = insert.raw[0].id;
         let filmList = insert.raw[0];
 
+        await connection
+            .createQueryBuilder()
+            .update(User)
+            .set({
+                totalListsCreated: () => '"totalListsCreated" + 1',
+            })
+            .where("id = :id", { id: req.session.userId })
+            .execute();
+
         let filmListEntriesArr: { listId: string; filmId: number }[] = [];
         filmIds.map((film) => {
             filmListEntriesArr.push({ listId, filmId: film });
         });
-        await getConnection()
+        await connection
             .createQueryBuilder()
             .insert()
             .into(FilmListEntries)
