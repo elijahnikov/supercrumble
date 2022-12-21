@@ -145,6 +145,7 @@ export type Mutation = {
   deleteReviewComment: Scalars['Boolean'];
   editUserDetails: UserResponse;
   filmListVote: Scalars['Boolean'];
+  follow: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -224,6 +225,12 @@ export type MutationEditUserDetailsArgs = {
 
 export type MutationFilmListVoteArgs = {
   filmListId: Scalars['String'];
+  value: Scalars['Int'];
+};
+
+
+export type MutationFollowArgs = {
+  userId: Scalars['Int'];
   value: Scalars['Int'];
 };
 
@@ -503,6 +510,9 @@ export type User = {
   createdAt: Scalars['String'];
   displayName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  followStatus?: Maybe<Scalars['Int']>;
+  followers: Scalars['Float'];
+  following: Scalars['Float'];
   id: Scalars['Float'];
   onboarded?: Maybe<Scalars['Boolean']>;
   totalFilmsWatched?: Maybe<Scalars['Float']>;
@@ -541,9 +551,9 @@ export type ReviewCommentSnippetFragment = { __typename?: 'ReviewComment', id: n
 
 export type ReviewSnippetFragment = { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
 
-export type UserFragmentFragment = { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null };
+export type UserFragmentFragment = { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null };
 
-export type UserResponseFragment = { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
+export type UserResponseFragment = { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
 
 export type CreateReviewCommentMutationVariables = Exact<{
   input: ReviewCommentInput;
@@ -673,7 +683,15 @@ export type EditUserDetailsMutationVariables = Exact<{
 }>;
 
 
-export type EditUserDetailsMutation = { __typename?: 'Mutation', editUserDetails: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+export type EditUserDetailsMutation = { __typename?: 'Mutation', editUserDetails: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+
+export type FollowMutationVariables = Exact<{
+  userId: Scalars['Int'];
+  value: Scalars['Int'];
+}>;
+
+
+export type FollowMutation = { __typename?: 'Mutation', follow: boolean };
 
 export type LoginMutationVariables = Exact<{
   usernameOrEmail: Scalars['String'];
@@ -681,7 +699,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -693,7 +711,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
 
 export type SettingsChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String'];
@@ -702,7 +720,7 @@ export type SettingsChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type SettingsChangePasswordMutation = { __typename?: 'Mutation', settingsChangePassword: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
+export type SettingsChangePasswordMutation = { __typename?: 'Mutation', settingsChangePassword: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
 
 export type FilmListQueryVariables = Exact<{
   id: Scalars['String'];
@@ -782,12 +800,12 @@ export type GetUserByUsernameQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByUsernameQuery = { __typename?: 'Query', getUserByUsername?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
+export type GetUserByUsernameQuery = { __typename?: 'Query', getUserByUsername?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, followStatus?: number | null, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
 
 export const FilmListSnippetFragmentDoc = gql`
     fragment FilmListSnippet on FilmList {
@@ -871,6 +889,9 @@ export const UserFragmentFragmentDoc = gql`
   totalFilmsWatched
   totalHoursWatched
   totalListsCreated
+  following
+  followers
+  followStatus
   createdAt
   updatedAt
   usernameChangeDate
@@ -1500,6 +1521,38 @@ export function useEditUserDetailsMutation(baseOptions?: Apollo.MutationHookOpti
 export type EditUserDetailsMutationHookResult = ReturnType<typeof useEditUserDetailsMutation>;
 export type EditUserDetailsMutationResult = Apollo.MutationResult<EditUserDetailsMutation>;
 export type EditUserDetailsMutationOptions = Apollo.BaseMutationOptions<EditUserDetailsMutation, EditUserDetailsMutationVariables>;
+export const FollowDocument = gql`
+    mutation Follow($userId: Int!, $value: Int!) {
+  follow(userId: $userId, value: $value)
+}
+    `;
+export type FollowMutationFn = Apollo.MutationFunction<FollowMutation, FollowMutationVariables>;
+
+/**
+ * __useFollowMutation__
+ *
+ * To run a mutation, you first call `useFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followMutation, { data, loading, error }] = useFollowMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      value: // value for 'value'
+ *   },
+ * });
+ */
+export function useFollowMutation(baseOptions?: Apollo.MutationHookOptions<FollowMutation, FollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FollowMutation, FollowMutationVariables>(FollowDocument, options);
+      }
+export type FollowMutationHookResult = ReturnType<typeof useFollowMutation>;
+export type FollowMutationResult = Apollo.MutationResult<FollowMutation>;
+export type FollowMutationOptions = Apollo.BaseMutationOptions<FollowMutation, FollowMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {

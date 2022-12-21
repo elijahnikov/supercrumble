@@ -94,11 +94,16 @@ const FilmListUpvoteButton = ({
                 </div>
                 {variant === 'small' ? (
                     <p className='float-right ml-2 mt-[2px] inline text-[12px] text-white'>
-                        {kFormatter(filmList?.filmList?.score)} likes
+                        {filmList?.filmList?.score
+                            ? kFormatter(filmList?.filmList?.score)
+                            : 0}{' '}
+                        likes
                     </p>
                 ) : (
                     <p className={`float-right ml-4 inline text-lg text-white`}>
-                        {kFormatter(filmList?.filmList?.score)}
+                        {filmList?.filmList?.score
+                            ? kFormatter(filmList?.filmList?.score)
+                            : 0}
                     </p>
                 )}
             </div>

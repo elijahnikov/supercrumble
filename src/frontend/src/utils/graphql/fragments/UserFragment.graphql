@@ -9,6 +9,9 @@ fragment UserFragment on User {
     totalFilmsWatched
     totalHoursWatched
     totalListsCreated
+    following
+    followers
+    followStatus
     createdAt
     updatedAt
     usernameChangeDate

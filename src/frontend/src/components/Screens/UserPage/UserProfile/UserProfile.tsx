@@ -1,6 +1,7 @@
 import Button from '@/components/Common/Button/Button';
 import { GetUserByUsernameQuery } from '@/generated/graphql';
 import UserStats from '../UserStats/UserStats';
+import FollowButton from './FollowButton/FollowButton';
 
 interface UserProfileProps {
     data?: GetUserByUsernameQuery;
@@ -28,9 +29,10 @@ const UserProfile = ({ data }: UserProfileProps) => {
                                 <p className='text-slate-500'>
                                     @{data?.getUserByUsername?.username}
                                 </p>
-                                <Button className='float-left mt-5 h-[30px] w-[65px] text-sm'>
+                                {/* <Button className='float-left mt-5 h-[30px] w-[65px] text-sm'>
                                     Follow
-                                </Button>
+                                </Button> */}
+                                <FollowButton user={data.getUserByUsername!!} />
                             </div>
                         </div>
                         <UserStats
@@ -47,6 +49,16 @@ const UserProfile = ({ data }: UserProfileProps) => {
                             listsCreated={
                                 data?.getUserByUsername?.totalListsCreated
                                     ? data.getUserByUsername.totalListsCreated
+                                    : 0
+                            }
+                            followers={
+                                data?.getUserByUsername?.followers
+                                    ? data.getUserByUsername.followers
+                                    : 0
+                            }
+                            following={
+                                data?.getUserByUsername?.following
+                                    ? data.getUserByUsername.following
                                     : 0
                             }
                         />
