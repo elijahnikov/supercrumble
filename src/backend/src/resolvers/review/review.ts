@@ -51,7 +51,7 @@ export class ReviewResolver {
             reviewId: review.id,
             userId: req.session.userId,
         });
-
+        console.log(upvote);
         return upvote ? upvote.value : null;
     }
 

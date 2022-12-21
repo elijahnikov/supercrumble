@@ -1,9 +1,10 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import {
     BaseEntity,
     Column,
     CreateDateColumn,
     Entity,
+    ManyToMany,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
@@ -15,6 +16,7 @@ import { Review } from "../review/review";
 import { ReviewComment } from "../review/reviewComment";
 import { ReviewCommentUpvote } from "../review/reviewCommentUpvote";
 import { Upvote } from "../review/upvote";
+import { Subscription } from "../subscription/subscription";
 
 //User table in db
 @ObjectType()
@@ -81,6 +83,17 @@ export class User extends BaseEntity {
     @Column({ nullable: true, type: "int" })
     totalListsCreated: number;
 
+    @Field()
+    @Column({ default: 0, type: "int" })
+    followers: number;
+
+    @Field()
+    @Column({ default: 0, type: "int" })
+    following: number;
+
+    @Field(() => Int, { nullable: true })
+    followStatus: number | null; //1 or -1 or null
+
     //FILM LIST RELATIONSHIP___________________________________
     //_________________________________________________________
     @OneToMany(() => FilmList, (filmList) => filmList.creator)
@@ -111,4 +124,9 @@ export class User extends BaseEntity {
 
     @OneToMany(() => ReviewComment, (reviewComment) => reviewComment.creator)
     reviewComments: ReviewComment[];
+
+    //SUBSCRIPTION RELATIONSHIP_________________________________
+    //__________________________________________________________
+    @ManyToMany(() => Subscription, (subscription) => subscription.follower)
+    subscription: Subscription[];
 }

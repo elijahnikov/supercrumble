@@ -34,6 +34,7 @@ import { FilmListEntriesResolver } from "./resolvers/filmList/filmListEntries";
 import { createFilmListUpvoteLoader } from "./utils/loaders/createFilmListUpvoteLoader";
 import { FilmListCommentResolver } from "./resolvers/filmList/filmListComment";
 import { FilmListTagsResolver } from "./resolvers/filmList/filmListTags";
+import { SubscriptionResolver } from "./resolvers/subscription/subscription";
 
 const main = async () => {
     const conn = await createConnection({
@@ -76,15 +77,21 @@ const main = async () => {
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
             resolvers: [
+                //Review
                 ReviewResolver,
-                UserResolver,
                 ReviewCommentResolver,
-                FilmsResolver,
                 ReviewTagsResolver,
+                //User
+                UserResolver,
+                //Films
+                FilmsResolver,
+                //FilmList
                 FilmListResolver,
                 FilmListEntriesResolver,
                 FilmListCommentResolver,
                 FilmListTagsResolver,
+                //Subscription
+                SubscriptionResolver,
             ],
             validate: false,
         }),

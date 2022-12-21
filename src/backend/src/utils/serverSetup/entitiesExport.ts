@@ -10,6 +10,7 @@ import { Upvote } from "../../entities/review/upvote";
 import { User } from "../../entities/user/user";
 import { FilmListUpvote } from "../../entities/filmList/filmListUpvote";
 import { FilmListComment } from "../../entities/filmList/filmListComment";
+import { Subscription } from "../../entities/subscription/subscription";
 
 export default [
     //User
@@ -31,4 +32,7 @@ export default [
     FilmListTags,
     FilmListUpvote,
     FilmListComment,
+
+    //Subscription
+    Subscription,
 ];
