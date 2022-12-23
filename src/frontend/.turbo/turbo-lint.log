@@ -1,0 +1,3 @@
+$ next lint
+info  - Loaded env from /Users/elijah/Desktop/supercrumble/src/frontend/.env.local
+error - ESLint must be installed: yarn add --dev eslint

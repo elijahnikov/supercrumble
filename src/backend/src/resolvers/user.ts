@@ -24,7 +24,6 @@ import { UserDetailsInput } from "./inputs/UserDetailsInput";
 import { isAuth } from "../middleware/isAuth";
 import { validateUserDetails } from "../utils/validation/validateUserDetails";
 import aws from "aws-sdk";
-import { Subscription } from "../entities/subscription/subscription";
 
 @ObjectType()
 class S3Payload {
@@ -63,104 +62,6 @@ export class UserResolver {
             return user.email;
         }
         return "";
-    }
-
-    // @FieldResolver(() => User)
-    // follower(
-    //     @Root() subscription: Subscription,
-    //     @Ctx() { userLoader }: MyContext
-    // ) {
-    //     return userLoader.load(subscription.followerId);
-    // }
-
-    async followStatus(
-        @Root() user: User,
-        @Ctx() { followLoader, req }: MyContext
-    ) {
-        if (!req.session.userId) {
-            return null;
-        }
-
-        const follow = await followLoader.load({
-            userId: req.session.userId,
-            followerId: user.id,
-        });
-        console.log(follow);
-        return follow ? follow.value : null;
-    }
-
-    @Mutation(() => Boolean)
-    @UseMiddleware(isAuth)
-    async follow(
-        @Arg("userId", () => Int) userId: number,
-        @Arg("value", () => Int) value: number,
-        @Ctx() { req }: MyContext
-    ): Promise<boolean> {
-        const { userId: meId } = req.session;
-
-        const followCheck = await Subscription.findOne({
-            where: { followerId: userId },
-        });
-
-        if (followCheck) {
-            await getConnection().transaction(async (tm) => {
-                await tm.query(
-                    `
-                        delete from subscription
-                        where "followerId" = $1 and "userId" = $2
-                    `,
-                    [userId, meId]
-                );
-
-                await tm.query(
-                    `
-                        update "user"
-                        set following = following - 1
-                        where id = $1
-                    `,
-                    [meId]
-                );
-
-                await tm.query(
-                    `
-                        update "user"
-                        set followers = followers - 1
-                        where id = $1
-                    `,
-                    [userId]
-                );
-            });
-        } else if (!followCheck) {
-            await getConnection().transaction(async (tm) => {
-                await tm.query(
-                    `
-                        insert into subscription ("userId", "followerId", value)
-                        values ($1, $2, $3)
-                    `,
-                    [meId, userId, value]
-                );
-
-                await tm.query(
-                    `
-                        update "user"
-                        set following = following + 1
-                        where id = $1
-                    `,
-                    [meId]
-                );
-
-                await tm.query(
-                    `
-                        update "user"
-                        set followers = followers + 1
-                        where id = $1
-                    `,
-                    [userId]
-                );
-            });
-        }
-
-        return true;
     }
 
     //check if user is logged in, get current user

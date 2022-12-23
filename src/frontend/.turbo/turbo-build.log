@@ -1,0 +1,42 @@
+$ next build
+info  - Loaded env from /Users/elijah/Desktop/supercrumble/src/frontend/.env.local
+info  - Linting and checking validity of types...
+error - ESLint must be installed in order to run during builds: yarn add --dev eslint
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/3)
+info  - Generating static pages (3/3)
+info  - Finalizing page optimization...
+
+Route (pages)                              Size     First Load JS
+┌ λ /                                      21.8 kB         186 kB
+├   /_app                                  0 B            73.4 kB
+├ λ /[username]                            1.38 kB         166 kB
+├ λ /[username]/films                      1.31 kB         166 kB
+├ ○ /404                                   257 B          73.7 kB
+├ λ /diary                                 921 B           116 kB
+├ λ /film/[id]                             5.79 kB         170 kB
+├ λ /films                                 319 B           165 kB
+├ λ /list/[id]                             4.01 kB         169 kB
+├ λ /lists                                 1.72 kB         166 kB
+├ λ /login                                 1.18 kB         139 kB
+├ ○ /register                              1.15 kB         139 kB
+├ λ /review/[id]                           3.71 kB         168 kB
+├ λ /tag/[id]/list                         413 B           165 kB
+└ λ /tag/[id]/review                       862 B           116 kB
++ First Load JS shared by all              82.6 kB
+  ├ chunks/framework-3b5a00d5d7e8d93b.js   45.4 kB
+  ├ chunks/main-f2e125da23ccdc4a.js        26.7 kB
+  ├ chunks/pages/_app-97143e92e7968efe.js  296 B
+  ├ chunks/webpack-87b3a303122f2f0d.js     995 B
+  └ css/aeae00fedd7fe2b1.css               9.15 kB
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
+$ next-sitemap
+Loaded env from /Users/elijah/Desktop/supercrumble/src/frontend/.env.local
+✅ [next-sitemap] Generated index sitemap and 1 sitemap(s)
+   ○ https://tsnext-tw.thcl.dev/sitemap.xml (index)
+   ○ https://tsnext-tw.thcl.dev/sitemap-0.xml 

@@ -1,13 +1,17 @@
 import Button from '@/components/Common/Button/Button';
-import { GetUserByUsernameQuery } from '@/generated/graphql';
+import {
+    CheckIfFollowingUserQuery,
+    GetUserByUsernameQuery,
+} from '@/generated/graphql';
 import UserStats from '../UserStats/UserStats';
 import FollowButton from './FollowButton/FollowButton';
 
 interface UserProfileProps {
     data?: GetUserByUsernameQuery;
+    isCurrentUser?: boolean;
 }
 
-const UserProfile = ({ data }: UserProfileProps) => {
+const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
     return (
         <>
             {data && (
@@ -29,13 +33,14 @@ const UserProfile = ({ data }: UserProfileProps) => {
                                 <p className='text-slate-500'>
                                     @{data?.getUserByUsername?.username}
                                 </p>
-                                {/* <Button className='float-left mt-5 h-[30px] w-[65px] text-sm'>
-                                    Follow
-                                </Button> */}
-                                <FollowButton user={data.getUserByUsername!!} />
+                                {/* {!isCurrentUser ? (
+                                    <FollowButton
+                                        user={data.getUserByUsername!!}
+                                    />
+                                ) : null} */}
                             </div>
                         </div>
-                        <UserStats
+                        {/* <UserStats
                             filmsWatched={
                                 data?.getUserByUsername?.totalFilmsWatched
                                     ? data.getUserByUsername.totalFilmsWatched
@@ -61,8 +66,8 @@ const UserProfile = ({ data }: UserProfileProps) => {
                                     ? data.getUserByUsername.following
                                     : 0
                             }
-                        />
-                        <div className='clear-both mt-[10px] ml-[9.5vw] text-left'>
+                        /> */}
+                        <div className='clear-both ml-[9.5vw] text-left'>
                             <p className='w-[20vw] text-sm text-slate-400'>
                                 {data.getUserByUsername?.bio}
                             </p>

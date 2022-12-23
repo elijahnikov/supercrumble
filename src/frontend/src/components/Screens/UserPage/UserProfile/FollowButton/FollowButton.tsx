@@ -1,95 +1,59 @@
 import {
+    CheckIfFollowingUserDocument,
+    CheckIfFollowingUserQuery,
     FollowMutation,
+    useCheckIfFollowingUserLazyQuery,
+    useCheckIfFollowingUserQuery,
     useFollowMutation,
     UserFragmentFragment,
 } from '@/generated/graphql';
 import clxsm from '@/lib/clsxm';
 import { ApolloCache, gql } from '@apollo/client';
+import { useEffect, useState } from 'react';
 
 interface FollowButtonProps {
     user: UserFragmentFragment;
 }
 
-const updateAfterFollow = (
-    value: number,
-    userId: number,
-    cache: ApolloCache<FollowMutation>
-) => {
-    const data = cache.readFragment<{
-        id: number;
-        following: number;
-        followers: number;
-        followStatus: number | null;
-    }>({
-        id: 'User:' + userId,
-        fragment: gql`
-            fragment _ on User {
-                id
-                following
-                followers
-                followStatus
-            }
-        `,
+const FollowButton = ({ user }: FollowButtonProps) => {
+    const [following, setFollowing] = useState(false);
+    const [follow] = useFollowMutation();
+    const { data: isFollowing } = useCheckIfFollowingUserQuery({
+        variables: {
+            userId: user.id,
+        },
     });
 
-    if (data) {
-        if (data.followStatus === value) {
-            return;
-        }
-        // const newFollowing = (data.following as number) + value;
-        const newFollowers = (data.followers as number) + value;
+    useEffect(() => {
+        console.log(isFollowing);
+        setFollowing(isFollowing!.checkIfFollowingUser);
+    }, [isFollowing]);
 
-        cache.writeFragment({
-            id: 'User:' + userId,
-            fragment: gql`
-                fragment __ on User {
-                    followers
-                    followStatus
-                }
-            `,
-            data: {
-                // following: newFollowing,
-                followers: newFollowers,
-                followStatus: value,
-            },
-        });
-    }
-};
-
-const FollowButton = ({ user }: FollowButtonProps) => {
-    const [follow] = useFollowMutation();
-
-    const followHandler = async () => {
+    const handleFollow = async () => {
         await follow({
             variables: {
                 userId: user.id,
-                value: 1,
             },
-            update: (cache) => updateAfterFollow(status, user.id, cache),
         });
+        setFollowing(!following);
     };
 
-    let status = 0;
-    if (user.followStatus === 1) {
-        status = -1;
-    } else {
-        status = 1;
-    }
-
     return (
-        <div className='flex'>
+        <div className='mt-4 flex'>
             <div>
                 <div
-                    onClick={followHandler}
+                    onClick={() => {
+                        handleFollow();
+                    }}
                     className={clxsm(
                         'inline-flex items-center rounded px-4 py-2 font-semibold',
                         'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
                         'shadow-sm',
                         'justify-center',
                         'cursor-pointer',
-                        'transition-colors duration-75',
+                        'transition-colors duration-200',
                         [
-                            user.followStatus !== 1 && [
+                            !following && [
                                 'bg-superRed text-white',
                                 'border-none',
                                 'text-center',
@@ -98,7 +62,7 @@ const FollowButton = ({ user }: FollowButtonProps) => {
                             ],
                         ],
                         [
-                            user.followStatus === 1 && [
+                            following && [
                                 'bg-gray-800 text-white',
                                 'border-none',
                                 'text-center',
@@ -108,7 +72,7 @@ const FollowButton = ({ user }: FollowButtonProps) => {
                         ]
                     )}
                 >
-                    {user.followStatus === 1 ? 'Unfollow' : 'Follow'}
+                    {following ? 'Unfollow' : 'Follow'}
                 </div>
             </div>
         </div>

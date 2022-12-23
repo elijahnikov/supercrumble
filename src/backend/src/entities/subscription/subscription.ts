@@ -1,11 +1,10 @@
 import { Field, ObjectType } from "type-graphql";
 import {
     BaseEntity,
-    Column,
     CreateDateColumn,
     Entity,
     ManyToMany,
-    PrimaryGeneratedColumn,
+    PrimaryColumn,
 } from "typeorm";
 import { User } from "../user/user";
 
@@ -13,19 +12,12 @@ import { User } from "../user/user";
 @Entity()
 export class Subscription extends BaseEntity {
     @Field()
-    @PrimaryGeneratedColumn()
-    id!: number;
-
-    @Field()
-    @Column()
+    @PrimaryColumn()
     userId: number;
 
     @Field()
-    @Column()
+    @PrimaryColumn()
     followerId: number;
-
-    @Column({ type: "int", nullable: true })
-    value: number;
 
     @Field(() => String)
     @CreateDateColumn()

@@ -91,9 +91,6 @@ export class User extends BaseEntity {
     @Column({ default: 0, type: "int" })
     following: number;
 
-    @Field(() => Int, { nullable: true })
-    followStatus: number | null; //1 or -1 or null
-
     //FILM LIST RELATIONSHIP___________________________________
     //_________________________________________________________
     @OneToMany(() => FilmList, (filmList) => filmList.creator)

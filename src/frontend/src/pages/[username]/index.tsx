@@ -4,17 +4,28 @@ import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTab
 import UserProfile from '@/components/Screens/UserPage/UserProfile/UserProfile';
 
 // GraphQL
-import { useMeQuery } from '@/generated/graphql';
+import { useCheckIfFollowingUserQuery, useMeQuery } from '@/generated/graphql';
 import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
 
 // Utils
 import { withApollo } from '@/utils/withApollo';
+import { useEffect, useState } from 'react';
 
 interface UserPageProps {}
 
 const UserPage = ({}: UserPageProps) => {
     const { data, error, loading } = getUsernameFromURL();
     const { data: me, error: meError, loading: meLoading } = useMeQuery();
+
+    const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (data?.getUserByUsername?.id === me?.me?.id) {
+            setIsCurrentUser(true);
+        } else {
+            setIsCurrentUser(false);
+        }
+    }, []);
 
     if (!data?.getUserByUsername) {
         return <h1 className='text-white'>usernotfound</h1>;
@@ -24,7 +35,12 @@ const UserPage = ({}: UserPageProps) => {
         <Layout showNavBar={true}>
             <div className='mb-20 flex justify-center'>
                 <div className='mediumPageFrame h-[100vh]  text-center'>
-                    {data && <UserProfile data={data} />}
+                    {data && (
+                        <UserProfile
+                            isCurrentUser={isCurrentUser}
+                            data={data}
+                        />
+                    )}
                     <UserPageTabs username={data.getUserByUsername.username} />
                 </div>
             </div>
