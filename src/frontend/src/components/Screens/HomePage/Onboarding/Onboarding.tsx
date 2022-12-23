@@ -34,7 +34,9 @@ const Onboarding = ({ userData }: OnboardingProps) => {
         displayName: '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         setInputs((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
@@ -58,6 +60,7 @@ const Onboarding = ({ userData }: OnboardingProps) => {
     };
 
     const handleSave = async () => {
+        console.log(inputs);
         setLoading(true);
         const s3Response = await signS3({
             variables: {
@@ -100,8 +103,6 @@ const Onboarding = ({ userData }: OnboardingProps) => {
         }
     };
 
-    let username = userData.me?.username;
-
     return (
         <Layout>
             <div className='layout flex min-h-screen w-[20vw] flex-col items-center justify-center text-center'>
@@ -115,7 +116,7 @@ const Onboarding = ({ userData }: OnboardingProps) => {
                                 name='displayName'
                                 placeholder='display name'
                                 label='Display Name'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <div className='mt-8 flex flex-wrap gap-2'>
@@ -125,8 +126,8 @@ const Onboarding = ({ userData }: OnboardingProps) => {
                                 </label>
                             </div>
                             <InputArea
-                                value={bio}
-                                onChange={(e) => setBio(e.target.value)}
+                                name={'bio'}
+                                onChange={(e) => handleChange(e)}
                                 placeholder='Write your throughs'
                             />
                         </div>
@@ -137,7 +138,7 @@ const Onboarding = ({ userData }: OnboardingProps) => {
                                 name='bioLink'
                                 placeholder='link'
                                 label='Bio Link'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <div className='mt-8 flex flex-wrap gap-2'>

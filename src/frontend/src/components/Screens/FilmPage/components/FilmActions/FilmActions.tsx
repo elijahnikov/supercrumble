@@ -126,7 +126,7 @@ const ShareFilmAction = ({ shareOpen, setShareOpen }: ShareFilmActionProps) => {
                                                     placeholder={''}
                                                     type={'text'}
                                                     disabled
-                                                    handleChange={() => null}
+                                                    onChange={() => null}
                                                 />
                                                 {showCopyText ? (
                                                     <p className='ml-[8px] mt-[1px] text-sm text-superRed'>

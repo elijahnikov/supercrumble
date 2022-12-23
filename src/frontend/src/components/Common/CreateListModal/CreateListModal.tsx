@@ -252,17 +252,17 @@ const CreateListModal = ({ open, setOpen, fromMenu }: CreateListModalProps) => {
                                                                 <p className='mb-2 text-sm font-semibold text-superRed'>
                                                                     Name of list
                                                                 </p>
-                                                                <div>
+                                                                <div className='w-[350px]'>
                                                                     <InputField
                                                                         autoFocus
                                                                         value={
                                                                             listName
                                                                         }
                                                                         id='listName'
-                                                                        className='w-[350px] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
+                                                                        className=' rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
                                                                         name='listName'
                                                                         placeholder=''
-                                                                        handleChange={(
+                                                                        onChange={(
                                                                             e: React.ChangeEvent<HTMLInputElement>
                                                                         ) =>
                                                                             setListName(
@@ -311,22 +311,26 @@ const CreateListModal = ({ open, setOpen, fromMenu }: CreateListModalProps) => {
                                                         <p className='mb-2 text-sm font-semibold text-superRed'>
                                                             Add a film
                                                         </p>
-                                                        <InputField
-                                                            autoFocus
-                                                            value={movieName}
-                                                            id='movieInput'
-                                                            className='w-[350px] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
-                                                            name='searchFilms'
-                                                            placeholder=''
-                                                            handleChange={(
-                                                                e: React.ChangeEvent<HTMLInputElement>
-                                                            ) =>
-                                                                handleMovieNameChange(
-                                                                    e
-                                                                )
-                                                            }
-                                                            type='text'
-                                                        />
+                                                        <div className='w-[350px]'>
+                                                            <InputField
+                                                                autoFocus
+                                                                value={
+                                                                    movieName
+                                                                }
+                                                                id='movieInput'
+                                                                className='rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
+                                                                name='searchFilms'
+                                                                placeholder=''
+                                                                onChange={(
+                                                                    e: React.ChangeEvent<HTMLInputElement>
+                                                                ) =>
+                                                                    handleMovieNameChange(
+                                                                        e
+                                                                    )
+                                                                }
+                                                                type='text'
+                                                            />
+                                                        </div>
                                                         <MovieResults
                                                             loading={loading}
                                                             handleMovieClick={

@@ -77,7 +77,7 @@ const Register = ({}: RegisterProps) => {
                                 name='username'
                                 placeholder='username'
                                 label='Username'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <div className='mt-8 flex flex-wrap gap-2'>
@@ -87,7 +87,7 @@ const Register = ({}: RegisterProps) => {
                                 name='email'
                                 placeholder='email'
                                 label='E-mail'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <div className='mt-8 flex flex-wrap gap-2'>
@@ -97,7 +97,7 @@ const Register = ({}: RegisterProps) => {
                                 name='password'
                                 placeholder='password'
                                 label='Password'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         {error && <p className='mt-2 text-superRed'>{error}</p>}

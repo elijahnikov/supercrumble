@@ -77,7 +77,7 @@ const Login = ({}: LoginProps) => {
                                 name='usernameOrEmail'
                                 placeholder='Username/E-mail'
                                 label='Username/E-mail'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <div className='mt-8 flex flex-wrap gap-2'>
@@ -87,7 +87,7 @@ const Login = ({}: LoginProps) => {
                                 name='password'
                                 placeholder='password'
                                 label='Password'
-                                handleChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         {error && <p className='mt-2 text-superRed'>{error}</p>}

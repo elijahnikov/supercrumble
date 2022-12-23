@@ -278,7 +278,7 @@ const CreateReviewModal = ({
                                                                             className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
                                                                             name='searchFilms'
                                                                             placeholder='search film...'
-                                                                            handleChange={(
+                                                                            onChange={(
                                                                                 e: React.ChangeEvent<HTMLInputElement>
                                                                             ) =>
                                                                                 handleMovieNameChange(

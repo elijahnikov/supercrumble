@@ -54,7 +54,7 @@ const AddFilmToList = ({ listId }: AddFilmToListProps) => {
             <InputField
                 name='searchText'
                 placeholder='Search to add a film to the list...'
-                handleChange={(e: any) => setSearchText(e.target.value)}
+                onChange={(e: any) => setSearchText(e.target.value)}
                 value={searchText}
                 type={'text'}
             />

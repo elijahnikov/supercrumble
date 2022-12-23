@@ -154,7 +154,7 @@ const ListPage = ({}: ListPageProps) => {
                                             placeholder={
                                                 data.filmList.filmList?.title!!
                                             }
-                                            handleChange={(e: any) =>
+                                            onChange={(e: any) =>
                                                 setTitle(e.target.value)
                                             }
                                         />

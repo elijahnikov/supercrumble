@@ -55,9 +55,7 @@ const Tags = ({ tags, setTags }: TagsProps) => {
                     placeholder='tags (hit enter)'
                     type={'text'}
                     onKeyDown={handleKeyDown}
-                    handleChange={(e: ChangeEventHandler<HTMLInputElement>) =>
-                        handleTagChange(e)
-                    }
+                    onChange={(e) => handleTagChange(e)}
                 />
             </div>
             <div className='mt-5 w-[100%]'>
