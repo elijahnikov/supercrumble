@@ -1,44 +1,25 @@
 interface UserStatsProps {
     filmsWatched: number;
-    totalHoursWatched: number;
-    listsCreated: number;
     following: number;
     followers: number;
 }
 
-const UserStats = ({
-    filmsWatched,
-    totalHoursWatched,
-    listsCreated,
-    followers,
-    following,
-}: UserStatsProps) => {
+const UserStats = ({ filmsWatched, followers, following }: UserStatsProps) => {
     return (
-        <div className='float-right m-2 flex justify-center text-center'>
-            <div className='mx-5'>
-                <p>{filmsWatched}</p>
-                <p className='text-xs uppercase text-slate-500'>Films</p>
+        <div className='float-left m-2 ml-[140px] flex justify-center text-center'>
+            <div className='mx-5 inline-block'>
+                <p className='inline'>{followers} </p>
+                <p className='inline text-sm text-slate-500'>Followers</p>
             </div>
-            <div className='mt-2 h-[30px] border-[0.5px] border-slate-800' />
 
-            <div className='mx-5'>
-                <p>{totalHoursWatched}</p>
-                <p className='text-xs uppercase text-slate-500'>Hours</p>
+            <div className='mx-5 inline-block'>
+                <p className='inline'>{following} </p>
+                <p className='inline text-sm text-slate-500'>Following</p>
             </div>
-            <div className='mt-2 h-[30px] border-[0.5px] border-slate-800' />
-            <div className='mx-5'>
-                <p>{listsCreated}</p>
-                <p className='text-xs uppercase text-slate-500'>Lists</p>
-            </div>
-            <div className='mt-2 h-[30px] border-[0.5px] border-slate-800' />
-            <div className='mx-5'>
-                <p>{followers}</p>
-                <p className='text-xs uppercase text-slate-500'>Followers</p>
-            </div>
-            <div className='mt-2 h-[30px] border-[0.5px] border-slate-800' />
-            <div className='mx-5'>
-                <p>{following}</p>
-                <p className='text-xs uppercase text-slate-500'>Following</p>
+
+            <div className='mx-5 inline-block'>
+                <p className='inline'>{filmsWatched} </p>
+                <p className='inline text-sm text-slate-500'> Films</p>
             </div>
         </div>
     );

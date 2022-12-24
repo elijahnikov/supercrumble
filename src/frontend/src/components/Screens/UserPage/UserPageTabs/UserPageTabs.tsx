@@ -59,7 +59,7 @@ const UserPageTabs = ({ username }: UserPageTabsProps) => {
                             router.asPath === tab.url
                                 ? 'border-[1px]  border-superRed text-white'
                                 : 'border-[1px] border-gray-800 text-superRed'
-                        }  inline cursor-pointer p-2 pr-[70px] pl-[70px] text-xs hover:border-b-superRed`}
+                        }  inline cursor-pointer p-2 pr-[49px] pl-[49px] text-xs hover:border-b-superRed`}
                     >
                         {tab.label}
                     </div>

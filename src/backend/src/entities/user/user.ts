@@ -47,6 +47,10 @@ export class User extends BaseEntity {
 
     @Field({ nullable: true })
     @Column({ nullable: true })
+    header: string;
+
+    @Field({ nullable: true })
+    @Column({ nullable: true })
     bio: string;
 
     @Field({ nullable: true })

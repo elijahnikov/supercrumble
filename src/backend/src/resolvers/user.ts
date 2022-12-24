@@ -171,11 +171,7 @@ export class UserResolver {
                 .createQueryBuilder()
                 .update(User)
                 .set({
-                    bio: input.bio,
-                    bioLink: input.bioLink,
-                    displayName: input.displayName,
-                    avatar: input.avatar,
-                    onboarded: input.onboarded,
+                    ...input,
                 })
                 .where("id = :id", { id: userId })
                 .returning("*")

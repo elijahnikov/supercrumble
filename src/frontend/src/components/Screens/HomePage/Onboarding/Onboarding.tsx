@@ -19,9 +19,7 @@ interface OnboardingProps {
 const Onboarding = ({ userData }: OnboardingProps) => {
     const router = useRouter();
     const [editUserDetails] = useEditUserDetailsMutation();
-    const [showError, setShowError] = useState(false);
     const [error, setError] = useState('');
-    const [bio, setBio] = useState('');
     const [file, setFile] = useState({
         name: '',
         type: '',

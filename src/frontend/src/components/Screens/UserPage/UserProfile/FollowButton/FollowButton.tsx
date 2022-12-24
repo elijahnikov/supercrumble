@@ -25,7 +25,6 @@ const FollowButton = ({ user }: FollowButtonProps) => {
     });
 
     useEffect(() => {
-        console.log(isFollowing);
         setFollowing(isFollowing!.checkIfFollowingUser);
     }, [isFollowing]);
 
@@ -39,14 +38,14 @@ const FollowButton = ({ user }: FollowButtonProps) => {
     };
 
     return (
-        <div className='mt-4 flex'>
+        <div className='mt-4 '>
             <div>
                 <div
                     onClick={() => {
                         handleFollow();
                     }}
                     className={clxsm(
-                        'inline-flex items-center rounded px-4 py-2 font-semibold',
+                        'mt-3 ml-5 inline-flex items-center rounded px-4 py-2 font-semibold',
                         'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
                         'shadow-sm',
                         'justify-center',
