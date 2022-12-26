@@ -4,6 +4,7 @@ fragment UserFragment on User {
     displayName
     email
     avatar
+    header
     bio
     bioLink
     totalFilmsWatched

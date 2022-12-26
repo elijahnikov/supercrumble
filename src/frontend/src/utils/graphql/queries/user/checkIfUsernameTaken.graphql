@@ -1,0 +1,3 @@
+query CheckIfUsernameTaken($username: String!) {
+    checkIfUsernameTaken(username: $username)
+}

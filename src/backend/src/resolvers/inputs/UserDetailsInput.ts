@@ -10,6 +10,9 @@ export class UserDetailsInput {
     bioLink: string;
 
     @Field({ nullable: true })
+    username: string;
+
+    @Field({ nullable: true })
     displayName: string;
 
     @Field({ nullable: true })

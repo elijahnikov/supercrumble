@@ -58,7 +58,6 @@ const Onboarding = ({ userData }: OnboardingProps) => {
     };
 
     const handleSave = async () => {
-        console.log(inputs);
         setLoading(true);
         const s3Response = await signS3({
             variables: {

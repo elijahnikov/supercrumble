@@ -5,6 +5,7 @@ import { ImSpinner2 } from 'react-icons/im';
 enum ButtonVariant {
     'primary',
     'secondary',
+    'transparent',
 }
 
 type ButtonProps = {
@@ -51,6 +52,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     [
                         variant === 'secondary' && [
                             'bg-gray-800 text-white',
+                            'border-none',
+                            'text-center',
+                            'hover:bg-gray-600 hover:text-white',
+                            'disabled:bg-gray-600 disabled:hover:bg-gray-600',
+                        ],
+                        variant === 'transparent' && [
+                            'bg-transparent text-white',
                             'border-none',
                             'text-center',
                             'hover:bg-gray-600 hover:text-white',

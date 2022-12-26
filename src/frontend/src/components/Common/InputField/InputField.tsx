@@ -1,47 +1,6 @@
-// import clxsm from '@/lib/clsxm';
-// import * as React from 'react';
-// import { IconType } from 'react-icons/lib';
-
+import clxsm from '@/lib/clsxm';
 import React from 'react';
-
-// type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
-//     name: string;
-//     label?: string;
-//     icon?: any;
-//     placeholder: string;
-//     type: string;
-//     handleChange: Function;
-// };
-
-// const InputField = ({
-//     icon,
-//     handleChange,
-//     size: _,
-//     ...props
-// }: InputFieldProps) => {
-//     let IconTag = icon ? icon : null;
-//     return (
-//         <div className='w-[100%] text-left'>
-//             {props.label && (
-//                 <div>
-//                     <label className='mb-2 text-sm font-bold text-white'>
-//                         {props.label}
-//                     </label>
-//                 </div>
-//             )}
-//             <input
-//                 className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
-//                 {...props}
-//                 type={props.type}
-//                 spellCheck={false}
-//                 placeholder={props.placeholder}
-//                 onChange={(e) => handleChange(e)}
-//             />
-//         </div>
-//     );
-// };
-
-// export default InputField;
+import { IconType } from 'react-icons/lib';
 
 enum InputFieldVariant {
     'primary',
@@ -52,6 +11,7 @@ type InputFieldProps = React.ComponentPropsWithRef<'input'> & {
     placeholder?: string;
     variant?: keyof typeof InputFieldVariant;
     label?: string;
+    leftInfo?: string;
 };
 
 const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
@@ -59,6 +19,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
         {
             children,
             className,
+            leftInfo,
             disabled: inputDisabled,
             variant = 'primary',
             isDarkBg = false,
@@ -71,7 +32,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
         const disabled = inputDisabled;
 
         return (
-            <div className='w-[100%] text-left'>
+            <div className='flex w-[100%] text-left'>
                 {label && (
                     <div>
                         <label className='mb-2 text-sm font-bold text-white'>
@@ -79,11 +40,23 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
                         </label>
                     </div>
                 )}
+                {leftInfo && (
+                    <div className='mt-[0.2px] h-[42px] rounded-l-sm border-[1px] border-r-0 border-gray-800 bg-gray-900 py-2 px-3 text-sm'>
+                        <p className='mt-[2px] text-slate-400'>{leftInfo}</p>
+                    </div>
+                )}
                 <input
                     ref={ref}
                     disabled={disabled}
                     placeholder={placeholder}
-                    className='w-[100%] rounded border-gray-800 bg-crumble-200 py-2 px-3 text-white'
+                    // className={`${
+                    // leftInfo ? 'rounded-r-sm' : 'rounded'
+                    // } w-[100%] border-gray-800 bg-crumble-200 py-2 px-3 text-white ${className}`}
+                    className={clxsm(
+                        'w-[100%] border-gray-800 bg-crumble-200 py-2 px-3 text-white',
+                        [leftInfo ? ['rounded-r-sm'] : ['rounded']],
+                        className
+                    )}
                     {...rest}
                 >
                     {children}

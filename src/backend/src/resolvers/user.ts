@@ -73,6 +73,17 @@ export class UserResolver {
         return User.findOne(req.session.userId);
     }
 
+    @Query(() => Boolean, { nullable: true })
+    async checkIfUsernameTaken(
+        @Arg("username") username: string
+    ): Promise<boolean | null> {
+        const user = await User.findOne({ where: { username } });
+        if (user) {
+            return true;
+        }
+        return false;
+    }
+
     //get specific user by id
     @Query(() => User, { nullable: true })
     getUser(@Arg("id", () => Int) id: number): Promise<User | undefined> {
