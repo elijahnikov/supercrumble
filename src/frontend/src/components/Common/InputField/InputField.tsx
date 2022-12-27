@@ -32,16 +32,16 @@ const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
         const disabled = inputDisabled;
 
         return (
-            <div className='flex w-[100%] text-left'>
+            <div className={`${leftInfo && 'flex'} w-[100%] text-left`}>
                 {label && (
                     <div>
-                        <label className='mb-2 text-sm font-bold text-white'>
+                        <label className='ml-1 text-sm font-bold text-white'>
                             {label}
                         </label>
                     </div>
                 )}
                 {leftInfo && (
-                    <div className='mt-[0.2px] h-[42px] rounded-l-sm border-[1px] border-r-0 border-gray-800 bg-gray-900 py-2 px-3 text-sm'>
+                    <div className=' mt-[0.2px] h-[42px] rounded-l-sm border-[1px] border-r-0 border-gray-800 bg-gray-900 py-2 px-3 text-sm'>
                         <p className='mt-[2px] text-slate-400'>{leftInfo}</p>
                     </div>
                 )}

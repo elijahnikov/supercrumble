@@ -1,11 +1,13 @@
 import Button from '@/components/Common/Button/Button';
 import InputField from '@/components/Common/InputField/InputField';
+import Layout from '@/components/Common/Layout/Layout';
 import {
     MeDocument,
     MeQuery,
     useLoginMutation,
     useMeQuery,
 } from '@/generated/graphql';
+import { LOGIN_BACKGROUND_IMAGE } from '@/utils/consts';
 import { withApollo } from '@/utils/withApollo';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -22,7 +24,7 @@ const Login = ({}: LoginProps) => {
     const [login] = useLoginMutation();
     const router = useRouter();
 
-    const { data } = useMeQuery();
+    // const { data } = useMeQuery();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputs((prevState) => ({
@@ -61,7 +63,7 @@ const Login = ({}: LoginProps) => {
     };
 
     return (
-        <div>
+        <Layout backgroundImage={LOGIN_BACKGROUND_IMAGE}>
             <div className='layout flex min-h-screen w-[20vw] flex-col items-center justify-center text-center'>
                 <div className='mt-[-90px] w-full'>
                     <img
@@ -115,7 +117,7 @@ const Login = ({}: LoginProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     );
 };
 

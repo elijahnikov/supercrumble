@@ -22,17 +22,17 @@ const Layout = ({ children, ...props }: LayoutProps) => {
 
     return (
         <div className='h-[100% m-0 min-h-[100%] p-0'>
-            {props.showNavBar ? (
-                <div className='z-10'>
+            <div className='z-10'>
+                {props.showNavBar && (
                     <MainNavBar userData={data ? data!! : undefined} />
-                    {props.backgroundImage && (
-                        <img
-                            className='bigImage absolute top-0 z-[-1] object-cover'
-                            src={`https://image.tmdb.org/t/p/original/${props.backgroundImage}`}
-                        />
-                    )}
-                </div>
-            ) : null}
+                )}
+                {props.backgroundImage && (
+                    <img
+                        className='bigImage absolute top-0 z-[-1] object-cover'
+                        src={`https://image.tmdb.org/t/p/original/${props.backgroundImage}`}
+                    />
+                )}
+            </div>
             <div className='layout-container'>{children}</div>
             {/* <Footer /> */}
         </div>

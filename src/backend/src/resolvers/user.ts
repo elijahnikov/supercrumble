@@ -103,10 +103,10 @@ export class UserResolver {
     async settingsChangePassword(
         @Arg("currentPassword") currentPassword: string,
         @Arg("settingsNewPassword") settingsNewPassword: string,
-        @Arg("username") username: string
+        @Arg("id", () => Int) id: number
     ): Promise<UserResponse | null> {
         //find username from User table where username equals given username
-        const findUser = await User.findOne({ where: { username: username } });
+        const findUser = await User.findOne({ where: { id } });
         if (!findUser) {
             //if user is not found
             return null;

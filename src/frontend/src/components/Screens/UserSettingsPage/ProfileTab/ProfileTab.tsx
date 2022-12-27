@@ -225,11 +225,11 @@ const ProfileTab = ({ user }: ProfileTabProps) => {
                         <div {...getRootProps()}>
                             <input {...getInputProps()} />
                             <img
-                                className='relative 
-                                        top-[-45px] 
-                                        ml-8 h-[120px] 
-                                        w-[120px] cursor-pointer 
-                                        rounded-full object-cover'
+                                className='relative top-[-45px]
+                                        ml-8 
+                                        h-[120px] w-[120px] 
+                                        cursor-pointer rounded-full 
+                                        bg-red-400 object-cover'
                                 src={
                                     avatarFile.preview
                                         ? avatarFile.preview

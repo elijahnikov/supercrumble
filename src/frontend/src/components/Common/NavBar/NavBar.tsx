@@ -156,7 +156,9 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                         {({ active }) => (
                                             <button
                                                 onClick={() =>
-                                                    router.push('/settings')
+                                                    router.push(
+                                                        `/@${userData?.me?.username}/settings`
+                                                    )
                                                 }
                                                 className={`${
                                                     active
