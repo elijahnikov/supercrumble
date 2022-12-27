@@ -5,6 +5,7 @@ import {
     useSettingsChangePasswordMutation,
 } from '@/generated/graphql';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface PasswordTabProps {}
 
@@ -43,12 +44,27 @@ const PasswordTab = ({}: PasswordTabProps) => {
                 );
             } else if (response.data?.settingsChangePassword.user) {
                 setError('');
+                toast('Password has been updated.', {
+                    icon: '✅',
+                    style: {
+                        border: '1px solid #171B23',
+                        borderRadius: '10px',
+                        background: '#0C1117',
+                        color: '#fff',
+                    },
+                });
+                setInputs({
+                    currentPassword: '',
+                    newPassword: '',
+                    newPasswordConfirm: '',
+                });
             }
         }
     };
 
     return (
         <div className='p-5'>
+            <Toaster position='bottom-center' reverseOrder={false} />
             <div className='float-left text-left'>
                 <h3>Password</h3>
                 <p className='text-sm text-superRed'>
