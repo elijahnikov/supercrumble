@@ -150,6 +150,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   register: UserResponse;
   reviewCommentVote: Scalars['Boolean'];
+  settingsChangeEmail: UserResponse;
   settingsChangePassword: UserResponse;
   signS3: S3Payload;
   updateFilmList?: Maybe<Scalars['Boolean']>;
@@ -251,10 +252,15 @@ export type MutationReviewCommentVoteArgs = {
 };
 
 
+export type MutationSettingsChangeEmailArgs = {
+  currentEmail: Scalars['String'];
+  newEmail: Scalars['String'];
+};
+
+
 export type MutationSettingsChangePasswordArgs = {
   currentPassword: Scalars['String'];
   settingsNewPassword: Scalars['String'];
-  username: Scalars['String'];
 };
 
 
@@ -732,10 +738,17 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, header?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
 
+export type SettingsChangeEmailMutationVariables = Exact<{
+  newEmail: Scalars['String'];
+  currentEmail: Scalars['String'];
+}>;
+
+
+export type SettingsChangeEmailMutation = { __typename?: 'Mutation', settingsChangeEmail: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, updatedAt: string, createdAt: string } | null } };
+
 export type SettingsChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String'];
   settingsNewPassword: Scalars['String'];
-  username: Scalars['String'];
 }>;
 
 
@@ -1708,12 +1721,57 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SettingsChangeEmailDocument = gql`
+    mutation SettingsChangeEmail($newEmail: String!, $currentEmail: String!) {
+  settingsChangeEmail(newEmail: $newEmail, currentEmail: $currentEmail) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      username
+      displayName
+      email
+      avatar
+      updatedAt
+      createdAt
+    }
+  }
+}
+    `;
+export type SettingsChangeEmailMutationFn = Apollo.MutationFunction<SettingsChangeEmailMutation, SettingsChangeEmailMutationVariables>;
+
+/**
+ * __useSettingsChangeEmailMutation__
+ *
+ * To run a mutation, you first call `useSettingsChangeEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSettingsChangeEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [settingsChangeEmailMutation, { data, loading, error }] = useSettingsChangeEmailMutation({
+ *   variables: {
+ *      newEmail: // value for 'newEmail'
+ *      currentEmail: // value for 'currentEmail'
+ *   },
+ * });
+ */
+export function useSettingsChangeEmailMutation(baseOptions?: Apollo.MutationHookOptions<SettingsChangeEmailMutation, SettingsChangeEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SettingsChangeEmailMutation, SettingsChangeEmailMutationVariables>(SettingsChangeEmailDocument, options);
+      }
+export type SettingsChangeEmailMutationHookResult = ReturnType<typeof useSettingsChangeEmailMutation>;
+export type SettingsChangeEmailMutationResult = Apollo.MutationResult<SettingsChangeEmailMutation>;
+export type SettingsChangeEmailMutationOptions = Apollo.BaseMutationOptions<SettingsChangeEmailMutation, SettingsChangeEmailMutationVariables>;
 export const SettingsChangePasswordDocument = gql`
-    mutation SettingsChangePassword($currentPassword: String!, $settingsNewPassword: String!, $username: String!) {
+    mutation SettingsChangePassword($currentPassword: String!, $settingsNewPassword: String!) {
   settingsChangePassword(
     currentPassword: $currentPassword
     settingsNewPassword: $settingsNewPassword
-    username: $username
   ) {
     ...UserResponse
   }
@@ -1736,7 +1794,6 @@ export type SettingsChangePasswordMutationFn = Apollo.MutationFunction<SettingsC
  *   variables: {
  *      currentPassword: // value for 'currentPassword'
  *      settingsNewPassword: // value for 'settingsNewPassword'
- *      username: // value for 'username'
  *   },
  * });
  */

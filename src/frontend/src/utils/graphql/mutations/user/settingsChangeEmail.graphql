@@ -1,0 +1,17 @@
+mutation SettingsChangeEmail($newEmail: String!, $currentEmail: String!) {
+    settingsChangeEmail(newEmail: $newEmail, currentEmail: $currentEmail) {
+        errors {
+            field
+            message
+        }
+        user {
+            id
+            username
+            displayName
+            email
+            avatar
+            updatedAt
+            createdAt
+        }
+    }
+}

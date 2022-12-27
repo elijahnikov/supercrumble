@@ -2,6 +2,7 @@ import Layout from '@/components/Common/Layout/Layout';
 import EmailTab from '@/components/Screens/UserSettingsPage/EmailTab/EmailTab';
 import NotificationsTab from '@/components/Screens/UserSettingsPage/NotificationsTab/NotificationsTab';
 import PasswordTab from '@/components/Screens/UserSettingsPage/PasswordTab/PasswordTab';
+import PrivacyTab from '@/components/Screens/UserSettingsPage/PrivacyTab/PrivacyTab';
 import ProfileTab from '@/components/Screens/UserSettingsPage/ProfileTab/ProfileTab';
 import { useMeQuery } from '@/generated/graphql';
 import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
@@ -47,6 +48,12 @@ const Settings = ({}: settingsProps) => {
             id: 4,
             label: 'Notifications',
             dataName: 'notifications',
+            active: false,
+        },
+        {
+            id: 5,
+            label: 'Privacy',
+            dataName: 'privacy',
             active: false,
         },
     ]);
@@ -124,6 +131,9 @@ const Settings = ({}: settingsProps) => {
                                 )}
                                 {currentMenuDataName === 'notifications' && (
                                     <NotificationsTab />
+                                )}
+                                {currentMenuDataName === 'privacy' && (
+                                    <PrivacyTab />
                                 )}
                             </div>
                         </div>

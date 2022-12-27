@@ -2,8 +2,10 @@ interface EmailTabProps {}
 
 const EmailTab = ({}: EmailTabProps) => {
     return (
-        <div>
-            <h1>Email Tab</h1>
+        <div className='p-5'>
+            <div className='float-left text-left'>
+                <h3>E-mail</h3>
+            </div>
         </div>
     );
 };

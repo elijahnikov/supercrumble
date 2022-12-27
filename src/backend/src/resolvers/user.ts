@@ -100,13 +100,16 @@ export class UserResolver {
 
     //mutation for changing password in settings page
     @Mutation(() => UserResponse)
+    @UseMiddleware(isAuth)
     async settingsChangePassword(
         @Arg("currentPassword") currentPassword: string,
         @Arg("settingsNewPassword") settingsNewPassword: string,
-        @Arg("id", () => Int) id: number
+        @Ctx() { req }: MyContext
     ): Promise<UserResponse | null> {
         //find username from User table where username equals given username
-        const findUser = await User.findOne({ where: { id } });
+        const findUser = await User.findOne({
+            where: { id: req.session.userId },
+        });
         if (!findUser) {
             //if user is not found
             return null;
@@ -157,6 +160,85 @@ export class UserResolver {
             user = result.raw[0];
         } catch (err) {
             console.log(err);
+        }
+        return {
+            user,
+        };
+    }
+
+    //mutation for changing email in settings page
+    @Mutation(() => UserResponse)
+    @UseMiddleware(isAuth)
+    async settingsChangeEmail(
+        @Arg("currentEmail") currentEmail: string,
+        @Arg("newEmail") newEmail: string,
+        @Ctx() { req }: MyContext
+    ): Promise<UserResponse | null> {
+        const findUser = await User.findOne({
+            where: { id: req.session.userId, email: currentEmail },
+        });
+        if (!findUser) {
+            return {
+                errors: [
+                    {
+                        field: "currentEmail",
+                        message: "Current email provided is incorrect.",
+                    },
+                ],
+            };
+        }
+
+        if (findUser.email === newEmail) {
+            return {
+                errors: [
+                    {
+                        field: "newEmail",
+                        message: "Please enter a new e-mail address.",
+                    },
+                ],
+            };
+        }
+
+        const checkIfEmailInUse = await User.findOne({
+            where: { email: newEmail },
+        });
+
+        if (checkIfEmailInUse) {
+            return {
+                errors: [
+                    {
+                        field: "newEmail",
+                        message: "Email address is already in use.",
+                    },
+                ],
+            };
+        }
+
+        let user;
+        try {
+            //update query using querybuilder to update username in User table
+            const result = await getConnection()
+                .createQueryBuilder()
+                .update(User)
+                .set({ email: newEmail })
+                .where("id = :id", { id: req.session.userId })
+                .returning("*")
+                .execute();
+            user = result.raw[0];
+        } catch (err) {
+            //if chosen username already exists in User table, return this error as FieldError format
+            if (
+                err.detail.includes(`(username)=(${newEmail}) already exists`)
+            ) {
+                return {
+                    errors: [
+                        {
+                            field: "newEmail",
+                            message: "Email already exists.",
+                        },
+                    ],
+                };
+            }
         }
         return {
             user,
