@@ -146,7 +146,15 @@ const FilmPage = ({}: FilmPageProps) => {
                                             }}
                                         />
                                         <div className='mt-5'>
-                                            <FilmActions />
+                                            <FilmActions
+                                                filmId={movieData.id}
+                                                filmTitle={
+                                                    movieData.original_title
+                                                }
+                                                posterPath={
+                                                    movieData.poster_path
+                                                }
+                                            />
                                         </div>
                                         <div className='inline-block'>
                                             <FilmStats
