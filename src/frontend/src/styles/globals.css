@@ -108,6 +108,11 @@ svg.star-svg {
         @apply mt-20 mb-20 w-[55%]
         rounded-xl navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
     }
+
+    .smallMedPageFrame {
+        @apply mt-20 mb-20 w-[65%]
+        rounded-xl navBarCollapse:mt-10 navBarCollapse:max-w-[90%];
+    }
 }
 
 @layer base {

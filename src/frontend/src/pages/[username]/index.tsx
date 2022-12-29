@@ -34,7 +34,7 @@ const UserPage = ({}: UserPageProps) => {
     return (
         <Layout showNavBar={true}>
             <div className='mb-20 flex justify-center'>
-                <div className='smallerPageFrame h-[100vh]  text-center'>
+                <div className='smallMedPageFrame h-[100vh] text-center'>
                     {data && (
                         <UserProfile
                             isCurrentUser={isCurrentUser}

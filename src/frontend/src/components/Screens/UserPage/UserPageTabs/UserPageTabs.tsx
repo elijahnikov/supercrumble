@@ -49,22 +49,20 @@ const UserPageTabs = ({ username }: UserPageTabsProps) => {
     ];
 
     return (
-        <div className='mt-[20px]'>
-            <div className='mt-[10px]'>
-                {tabs.map((tab: tabMenuType) => (
-                    <div
-                        key={tab.id}
-                        onClick={() => router.push(tab.url)}
-                        className={`${
-                            router.asPath === tab.url
-                                ? 'border-[1px]  border-superRed text-white'
-                                : 'border-[1px] border-gray-800 text-superRed'
-                        }  inline cursor-pointer p-2 pr-[49px] pl-[49px] text-xs hover:border-b-superRed`}
-                    >
-                        {tab.label}
-                    </div>
-                ))}
-            </div>
+        <div className='flex w-[100%] rounded-md bg-crumble-200 p-[7px]'>
+            {tabs.map((tab: tabMenuType) => (
+                <div
+                    key={tab.id}
+                    onClick={() => router.push(tab.url)}
+                    className={`${
+                        router.asPath === tab.url
+                            ? 'bg-crumble-100'
+                            : 'bg-crumble-200 text-gray-400'
+                    } ml-1 mr-1 w-[100%] cursor-pointer rounded-md bg-crumble-200 p-2 text-xs hover:bg-crumble-100  hover:text-white `}
+                >
+                    <div className='inline'>{tab.label}</div>
+                </div>
+            ))}
         </div>
     );
 };

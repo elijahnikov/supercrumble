@@ -9,12 +9,23 @@ import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
 
 // Utils
 import { withApollo } from '@/utils/withApollo';
+import { useEffect, useState } from 'react';
 
 interface FilmPageProps {}
 
 const FilmPage = ({}: FilmPageProps) => {
     const { data, error, loading } = getUsernameFromURL();
     const { data: me, error: meError, loading: meLoading } = useMeQuery();
+
+    const [isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (data?.getUserByUsername?.id === me?.me?.id) {
+            setIsCurrentUser(true);
+        } else {
+            setIsCurrentUser(false);
+        }
+    }, []);
 
     if (!data?.getUserByUsername) {
         return <h1 className='text-white'>usernotfound</h1>;
@@ -23,8 +34,13 @@ const FilmPage = ({}: FilmPageProps) => {
     return (
         <Layout showNavBar={true}>
             <div className='mb-20 flex justify-center'>
-                <div className='mediumPageFrame h-[100vh]  text-center'>
-                    {data && <UserProfile data={data} />}
+                <div className='smallerPageFrame h-[100vh] text-center'>
+                    {data && (
+                        <UserProfile
+                            isCurrentUser={isCurrentUser}
+                            data={data}
+                        />
+                    )}
                     <UserPageTabs username={data.getUserByUsername.username} />
                 </div>
             </div>

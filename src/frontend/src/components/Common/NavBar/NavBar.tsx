@@ -10,7 +10,12 @@ import { Menu, Transition } from '@headlessui/react';
 
 // Icons
 import { IconType } from 'react-icons/lib';
-import { BsFillGearFill, BsPersonFill } from 'react-icons/bs';
+import {
+    BsAlarmFill,
+    BsBellFill,
+    BsFillGearFill,
+    BsPersonFill,
+} from 'react-icons/bs';
 
 // Router
 import Link from 'next/link';
@@ -99,7 +104,9 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                         // </div>
                     ))}
                 </div>
+
                 <div className='absolute top-[50%] right-0 mt-0 flex translate-y-[-50%]'>
+                    <BsBellFill className='mt-[10px] mr-2 h-[20px] w-[20px]' />
                     <p className='text-shadow-md bold ml-3 mt-2 mr-5 inline'>
                         @{userData?.me?.username}
                     </p>

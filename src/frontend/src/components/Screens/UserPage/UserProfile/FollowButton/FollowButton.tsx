@@ -25,6 +25,7 @@ const FollowButton = ({ user }: FollowButtonProps) => {
     });
 
     useEffect(() => {
+        console.log(isFollowing);
         setFollowing(isFollowing!.checkIfFollowingUser);
     }, [isFollowing]);
 
@@ -38,42 +39,38 @@ const FollowButton = ({ user }: FollowButtonProps) => {
     };
 
     return (
-        <div className='mt-4 '>
-            <div>
-                <div
-                    onClick={() => {
-                        handleFollow();
-                    }}
-                    className={clxsm(
-                        'mt-3 ml-5 inline-flex items-center rounded px-4 py-2 font-semibold',
-                        'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
-                        'shadow-sm',
-                        'justify-center',
-                        'cursor-pointer',
-                        'transition-colors duration-200',
-                        [
-                            !following && [
-                                'bg-superRed text-white',
-                                'border-none',
-                                'text-center',
-                                'hover:bg-red-400 hover:text-white',
-                                'disabled:bg-red-400 disabled:hover:bg-red-400',
-                            ],
-                        ],
-                        [
-                            following && [
-                                'bg-gray-800 text-white',
-                                'border-none',
-                                'text-center',
-                                'hover:bg-gray-600 hover:text-white',
-                                'disabled:bg-gray-600 disabled:hover:bg-gray-600',
-                            ],
-                        ]
-                    )}
-                >
-                    {following ? 'Unfollow' : 'Follow'}
-                </div>
-            </div>
+        <div
+            onClick={() => {
+                handleFollow();
+            }}
+            className={clxsm(
+                'ml-10 inline-flex items-center rounded px-4 py-2 font-semibold',
+                'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
+                'shadow-sm',
+                'justify-center',
+                'cursor-pointer',
+                'transition-colors duration-200',
+                [
+                    !following && [
+                        'bg-superRed text-white',
+                        'border-none',
+                        'text-center',
+                        'hover:bg-red-400 hover:text-white',
+                        'disabled:bg-red-400 disabled:hover:bg-red-400',
+                    ],
+                ],
+                [
+                    following && [
+                        'bg-gray-800 text-white',
+                        'border-none',
+                        'text-center',
+                        'hover:bg-gray-600 hover:text-white',
+                        'disabled:bg-gray-600 disabled:hover:bg-gray-600',
+                    ],
+                ]
+            )}
+        >
+            {following ? 'Unfollow' : 'Follow'}
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import clxsm from '@/lib/clsxm';
 import React from 'react';
 import { ImSpinner2 } from 'react-icons/im';
+import { IconType } from 'react-icons/lib';
 
 enum ButtonVariant {
     'primary',

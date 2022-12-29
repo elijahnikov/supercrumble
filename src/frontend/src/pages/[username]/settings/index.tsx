@@ -5,8 +5,6 @@ import PasswordTab from '@/components/Screens/UserSettingsPage/PasswordTab/Passw
 import PrivacyTab from '@/components/Screens/UserSettingsPage/PrivacyTab/PrivacyTab';
 import ProfileTab from '@/components/Screens/UserSettingsPage/ProfileTab/ProfileTab';
 import { useMeQuery } from '@/generated/graphql';
-import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
-import { isAuthHook } from '@/utils/isAuthHook';
 import { withApollo } from '@/utils/withApollo';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
