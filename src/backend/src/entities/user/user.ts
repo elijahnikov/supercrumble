@@ -130,4 +130,7 @@ export class User extends BaseEntity {
     //__________________________________________________________
     @ManyToMany(() => Subscription, (subscription) => subscription.follower)
     subscription: Subscription[];
+
+    //WATCHED RELATIONSHIP______________________________________
+    //__________________________________________________________
 }
