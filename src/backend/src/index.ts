@@ -35,6 +35,7 @@ import { createFilmListUpvoteLoader } from "./utils/loaders/createFilmListUpvote
 import { FilmListCommentResolver } from "./resolvers/filmList/filmListComment";
 import { FilmListTagsResolver } from "./resolvers/filmList/filmListTags";
 import { SubscriptionResolver } from "./resolvers/subscription/subscription";
+import { WatchedResolver } from "./resolvers/watched/watched";
 
 const main = async () => {
     const conn = await createConnection({
@@ -92,6 +93,8 @@ const main = async () => {
                 FilmListTagsResolver,
                 //Subscription
                 SubscriptionResolver,
+                //Watched
+                WatchedResolver,
             ],
             validate: false,
         }),

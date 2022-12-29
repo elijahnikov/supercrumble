@@ -1,16 +1,28 @@
-import { FilmListTags } from "../../entities/filmList/filmListTags";
-import { Films } from "../../entities/film/films";
-import { ReviewTags } from "../../entities/review/reviewTags";
-import { FilmList } from "../../entities/filmList/filmList";
-import { FilmListEntries } from "../../entities/filmList/filmListEntries";
+//User
+import { User } from "../../entities/user/user";
+
+//Review
 import { Review } from "../../entities/review/review";
 import { ReviewComment } from "../../entities/review/reviewComment";
 import { ReviewCommentUpvote } from "../../entities/review/reviewCommentUpvote";
 import { Upvote } from "../../entities/review/upvote";
-import { User } from "../../entities/user/user";
+import { ReviewTags } from "../../entities/review/reviewTags";
+
+//Films
+import { Films } from "../../entities/film/films";
+
+//FilmList
+import { FilmListTags } from "../../entities/filmList/filmListTags";
+import { FilmList } from "../../entities/filmList/filmList";
+import { FilmListEntries } from "../../entities/filmList/filmListEntries";
 import { FilmListUpvote } from "../../entities/filmList/filmListUpvote";
 import { FilmListComment } from "../../entities/filmList/filmListComment";
+
+//Subscription
 import { Subscription } from "../../entities/subscription/subscription";
+
+//Watched
+import { Watched } from "../../entities/watched/watched";
 
 export default [
     //User
@@ -35,4 +47,7 @@ export default [
 
     //Subscription
     Subscription,
+
+    //Watched
+    Watched,
 ];

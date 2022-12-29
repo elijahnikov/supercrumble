@@ -17,6 +17,7 @@ import { ReviewComment } from "../review/reviewComment";
 import { ReviewCommentUpvote } from "../review/reviewCommentUpvote";
 import { Upvote } from "../review/upvote";
 import { Subscription } from "../subscription/subscription";
+import { Watched } from "../watched/watched";
 
 //User table in db
 @ObjectType()
@@ -133,4 +134,6 @@ export class User extends BaseEntity {
 
     //WATCHED RELATIONSHIP______________________________________
     //__________________________________________________________
+    @OneToMany(() => Watched, (watched) => watched.creator)
+    watched: Watched[];
 }
