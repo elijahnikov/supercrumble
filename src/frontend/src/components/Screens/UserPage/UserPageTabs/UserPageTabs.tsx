@@ -49,7 +49,7 @@ const UserPageTabs = ({ username }: UserPageTabsProps) => {
     ];
 
     return (
-        <div className='flex w-[100%] rounded-md bg-crumble-200 p-[7px]'>
+        <div className='mt-8 flex w-[100%] rounded-md bg-crumble-200 p-[7px]'>
             {tabs.map((tab: tabMenuType) => (
                 <div
                     key={tab.id}

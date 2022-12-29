@@ -1,7 +1,16 @@
-import { useCreateWatchedMutation } from '@/generated/graphql';
+import {
+    useCheckIfWatchedQuery,
+    useCreateWatchedMutation,
+} from '@/generated/graphql';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { BiShare } from 'react-icons/bi';
+import {
+    BsFillBookmarkFill,
+    BsFillEyeFill,
+    BsFillHeartFill,
+} from 'react-icons/bs';
 import { actionsMap } from './actionsMap';
 import ShareAction from './ShareAction/ShareAction';
 
@@ -39,30 +48,28 @@ const FilmActions = ({ filmId, filmTitle, posterPath }: FilmActionsProps) => {
         }
     };
 
-    const handleActionClick = (name: string) => {
-        switch (name) {
-            case 'share': {
-                setShareOpen(true);
-            }
-            case 'watched': {
-                handleCreateWatched();
-            }
-        }
-    };
-
     return (
         <div>
             <Toaster position='bottom-center' reverseOrder={false} />
+            <div
+                className='inline cursor-pointer p-3'
+                onClick={() => setShareOpen(true)}
+            >
+                <BiShare className='inline hover:fill-superRed' />
+            </div>
+            <div className='inline p-3'>
+                <BsFillHeartFill className='inline cursor-pointer hover:fill-superRed' />{' '}
+            </div>
+            <div className='inline p-3'>
+                <BsFillBookmarkFill className='inline cursor-pointer hover:fill-superRed' />
+            </div>
+            <div
+                className='inline cursor-pointer p-3'
+                onClick={() => handleCreateWatched()}
+            >
+                <BsFillEyeFill className='inline  hover:fill-superRed' />
+            </div>
 
-            {actionsMap.map((action) => (
-                <div
-                    className='inline p-3'
-                    onClick={() => handleActionClick(action.name)}
-                    key={action.id}
-                >
-                    <action.icon className='inline cursor-pointer hover:fill-superRed' />
-                </div>
-            ))}
             <ShareAction shareOpen={shareOpen} setShareOpen={setShareOpen} />
         </div>
     );

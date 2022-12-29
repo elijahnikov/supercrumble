@@ -16,7 +16,7 @@ interface UserProfileProps {
 const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
     const router = useRouter();
     return (
-        <div className='mb-[-10px]  h-[320px] rounded-xl border-[0.5px] border-slate-700'>
+        <div className='mb-[-10px]  h-[350px] rounded-xl border-[0.5px] border-slate-700'>
             {data?.getUserByUsername?.header ? (
                 <img
                     src={data.getUserByUsername.header}
@@ -81,6 +81,10 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     <FollowButton user={data!.getUserByUsername!!} />
                 </div>
             )}
+            <UserStats
+                followers={data?.getUserByUsername?.followers!}
+                following={data?.getUserByUsername?.following!}
+            />
         </div>
     );
 };

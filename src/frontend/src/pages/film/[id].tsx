@@ -147,7 +147,7 @@ const FilmPage = ({}: FilmPageProps) => {
                                         />
                                         <div className='mt-5'>
                                             <FilmActions
-                                                filmId={movieData.id}
+                                                filmId={parseInt(movieData.id)}
                                                 filmTitle={
                                                     movieData.original_title
                                                 }
