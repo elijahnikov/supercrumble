@@ -1,0 +1,30 @@
+query Watched(
+    $limit: Int
+    $cursor: String
+    $orderBy: String
+    $orderDir: String
+) {
+    watched(
+        limit: $limit
+        cursor: $cursor
+        orderBy: $orderBy
+        orderDir: $orderDir
+    ) {
+        watched {
+            id
+            filmId
+            creatorId
+            filmTitle
+            posterPath
+            createdAt
+            updatedAt
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+        hasMore
+    }
+}

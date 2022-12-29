@@ -1,0 +1,18 @@
+mutation CreateWatched($input: CreateWatchedInput!) {
+    createWatched(input: $input) {
+        id
+        filmId
+        creatorId
+        filmTitle
+        posterPath
+        creator {
+            id
+            username
+            displayName
+            email
+            avatar
+        }
+        createdAt
+        updatedAt
+    }
+}

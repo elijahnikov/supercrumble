@@ -22,6 +22,12 @@ export type BatchedListResponse = {
   hasMore: Scalars['Boolean'];
 };
 
+export type CreateWatchedInput = {
+  filmId: Scalars['Float'];
+  filmTitle: Scalars['String'];
+  posterPath: Scalars['String'];
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -140,6 +146,7 @@ export type Mutation = {
   createFilmListComment: FilmListComment;
   createReview: Review;
   createReviewComment: ReviewComment;
+  createWatched: Watched;
   deleteFilmListEntry: Scalars['Boolean'];
   deleteReview: Scalars['Boolean'];
   deleteReviewComment: Scalars['Boolean'];
@@ -199,6 +206,11 @@ export type MutationCreateReviewArgs = {
 
 export type MutationCreateReviewCommentArgs = {
   input: ReviewCommentInput;
+};
+
+
+export type MutationCreateWatchedArgs = {
+  input: CreateWatchedInput;
 };
 
 
@@ -334,6 +346,12 @@ export type PaginatedReviews = {
   reviews: Array<Review>;
 };
 
+export type PaginatedWatched = {
+  __typename?: 'PaginatedWatched';
+  hasMore: Scalars['Boolean'];
+  watched: Array<Watched>;
+};
+
 export type Query = {
   __typename?: 'Query';
   checkIfFollowingUser: Scalars['Boolean'];
@@ -352,6 +370,7 @@ export type Query = {
   reviewComments: PaginatedReviewComments;
   reviews: PaginatedReviews;
   tags?: Maybe<ReviewTags>;
+  watched: PaginatedWatched;
 };
 
 
@@ -448,6 +467,14 @@ export type QueryReviewsArgs = {
 
 export type QueryTagsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryWatchedArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
 };
 
 export type Review = {
@@ -560,6 +587,18 @@ export type UsernamePasswordInput = {
   email: Scalars['String'];
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+export type Watched = {
+  __typename?: 'Watched';
+  createdAt: Scalars['String'];
+  creator: User;
+  creatorId: Scalars['Float'];
+  filmId: Scalars['Float'];
+  filmTitle: Scalars['String'];
+  id: Scalars['Float'];
+  posterPath: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type ErrorFragment = { __typename?: 'FieldError', field: string, message: string };
@@ -754,6 +793,13 @@ export type SettingsChangePasswordMutationVariables = Exact<{
 
 export type SettingsChangePasswordMutation = { __typename?: 'Mutation', settingsChangePassword: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, header?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null } };
 
+export type CreateWatchedMutationVariables = Exact<{
+  input: CreateWatchedInput;
+}>;
+
+
+export type CreateWatchedMutation = { __typename?: 'Mutation', createWatched: { __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null } } };
+
 export type FilmListQueryVariables = Exact<{
   id: Scalars['String'];
   cursor?: InputMaybe<Scalars['String']>;
@@ -845,6 +891,16 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null, header?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
+
+export type WatchedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  cursor?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type WatchedQuery = { __typename?: 'Query', watched: { __typename?: 'PaginatedWatched', hasMore: boolean, watched: Array<{ __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export const FilmListSnippetFragmentDoc = gql`
     fragment FilmListSnippet on FilmList {
@@ -1804,6 +1860,52 @@ export function useSettingsChangePasswordMutation(baseOptions?: Apollo.MutationH
 export type SettingsChangePasswordMutationHookResult = ReturnType<typeof useSettingsChangePasswordMutation>;
 export type SettingsChangePasswordMutationResult = Apollo.MutationResult<SettingsChangePasswordMutation>;
 export type SettingsChangePasswordMutationOptions = Apollo.BaseMutationOptions<SettingsChangePasswordMutation, SettingsChangePasswordMutationVariables>;
+export const CreateWatchedDocument = gql`
+    mutation CreateWatched($input: CreateWatchedInput!) {
+  createWatched(input: $input) {
+    id
+    filmId
+    creatorId
+    filmTitle
+    posterPath
+    creator {
+      id
+      username
+      displayName
+      email
+      avatar
+    }
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateWatchedMutationFn = Apollo.MutationFunction<CreateWatchedMutation, CreateWatchedMutationVariables>;
+
+/**
+ * __useCreateWatchedMutation__
+ *
+ * To run a mutation, you first call `useCreateWatchedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateWatchedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createWatchedMutation, { data, loading, error }] = useCreateWatchedMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateWatchedMutation(baseOptions?: Apollo.MutationHookOptions<CreateWatchedMutation, CreateWatchedMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateWatchedMutation, CreateWatchedMutationVariables>(CreateWatchedDocument, options);
+      }
+export type CreateWatchedMutationHookResult = ReturnType<typeof useCreateWatchedMutation>;
+export type CreateWatchedMutationResult = Apollo.MutationResult<CreateWatchedMutation>;
+export type CreateWatchedMutationOptions = Apollo.BaseMutationOptions<CreateWatchedMutation, CreateWatchedMutationVariables>;
 export const FilmListDocument = gql`
     query FilmList($id: String!, $cursor: String, $limit: Int) {
   filmList(id: $id, cursor: $cursor, limit: $limit) {
@@ -2304,3 +2406,56 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const WatchedDocument = gql`
+    query Watched($limit: Int, $cursor: String, $orderBy: String, $orderDir: String) {
+  watched(limit: $limit, cursor: $cursor, orderBy: $orderBy, orderDir: $orderDir) {
+    watched {
+      id
+      filmId
+      creatorId
+      filmTitle
+      posterPath
+      createdAt
+      updatedAt
+      creator {
+        id
+        username
+        displayName
+        avatar
+      }
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useWatchedQuery__
+ *
+ * To run a query within a React component, call `useWatchedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWatchedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWatchedQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      cursor: // value for 'cursor'
+ *      orderBy: // value for 'orderBy'
+ *      orderDir: // value for 'orderDir'
+ *   },
+ * });
+ */
+export function useWatchedQuery(baseOptions?: Apollo.QueryHookOptions<WatchedQuery, WatchedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WatchedQuery, WatchedQueryVariables>(WatchedDocument, options);
+      }
+export function useWatchedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WatchedQuery, WatchedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WatchedQuery, WatchedQueryVariables>(WatchedDocument, options);
+        }
+export type WatchedQueryHookResult = ReturnType<typeof useWatchedQuery>;
+export type WatchedLazyQueryHookResult = ReturnType<typeof useWatchedLazyQuery>;
+export type WatchedQueryResult = Apollo.QueryResult<WatchedQuery, WatchedQueryVariables>;
