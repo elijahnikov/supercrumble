@@ -24,6 +24,9 @@ import { Subscription } from "../../entities/subscription/subscription";
 //Watched
 import { Watched } from "../../entities/watched/watched";
 
+//Diary
+import { Diary } from "../../entities/diary/diary";
+
 export default [
     //User
     User,
@@ -50,4 +53,7 @@ export default [
 
     //Watched
     Watched,
+
+    //Diary
+    Diary,
 ];

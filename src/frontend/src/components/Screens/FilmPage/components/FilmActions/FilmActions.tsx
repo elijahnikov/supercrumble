@@ -1,7 +1,4 @@
-import {
-    useCheckIfWatchedQuery,
-    useCreateWatchedMutation,
-} from '@/generated/graphql';
+import { useCreateWatchedMutation } from '@/generated/graphql';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';

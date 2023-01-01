@@ -1,0 +1,19 @@
+mutation CreateDiary($input: CreateDiaryInput!) {
+    createDiary(input: $input) {
+        id
+        filmId
+        creatorId
+        filmTitle
+        posterPath
+        ratingGiven
+        watchedOn
+        rewatch
+        reviewLink
+        createdAt
+        updatedAt
+        creator {
+            id
+            username
+        }
+    }
+}

@@ -1,36 +1,34 @@
 import Button from '@/components/Common/Button/Button';
-import {
-    CheckIfFollowingUserQuery,
-    GetUserByUsernameQuery,
-} from '@/generated/graphql';
+import { GetUserByUsernameQuery } from '@/generated/graphql';
 import { useRouter } from 'next/router';
-import { BsFillPatchCheckFill, BsPencil, BsPencilFill } from 'react-icons/bs';
+import { BsFillPatchCheckFill, BsPencilFill } from 'react-icons/bs';
+import FollowButton from '../UserProfile/FollowButton/FollowButton';
 import UserStats from '../UserStats/UserStats';
-import FollowButton from './FollowButton/FollowButton';
 
-interface UserProfileProps {
+interface UserProfileMiniProps {
     data?: GetUserByUsernameQuery;
     isCurrentUser?: boolean;
 }
 
-const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
+const UserProfileMini = ({ data, isCurrentUser }: UserProfileMiniProps) => {
     const router = useRouter();
     return (
-        <div className='mb-[-10px]  h-[350px] rounded-xl border-[0.5px] border-slate-700'>
+        <div className='mb-[-10px]  h-[150px] rounded-xl border-[0.5px] border-slate-700'>
             {data?.getUserByUsername?.header ? (
                 <img
                     src={data.getUserByUsername.header}
-                    className='aspect-auto h-[150px] w-[100%] rounded-tl-xl rounded-tr-xl object-cover'
+                    className='aspect-auto h-[150px] w-[100%] rounded-xl object-cover'
                 />
             ) : (
-                <div className='relative h-[200px] w-[100%] rounded-xl bg-green-400 bg-gradient-to-tr from-white via-lime-100 to-indigo-200' />
+                <div className='relative h-[150px] w-[100%] rounded-xl bg-green-400 bg-gradient-to-tr from-white via-lime-100 to-indigo-200' />
             )}
             <div className='flex w-[80%]'>
                 <img
-                    className='relative top-[-80px]
-                                ml-8 h-[150px] w-[150px] 
-                                cursor-pointer rounded-full 
-                                object-cover'
+                    className='relative top-[-135px]
+                                    ml-8 
+                                    h-[120px] w-[120px] 
+                                    cursor-pointer rounded-full 
+                                    object-cover'
                     src={
                         data?.getUserByUsername?.avatar
                             ? data.getUserByUsername.avatar
@@ -39,7 +37,7 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     alt='Profile image'
                 />
 
-                <div className='m-3 '>
+                {/* <div className='m-3 '>
                     <h3 className='float-left inline'>
                         {data?.getUserByUsername?.displayName}
                     </h3>
@@ -61,10 +59,10 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     >
                         {data?.getUserByUsername?.bioLink}
                     </a>
-                </div>
+                </div> */}
             </div>
             {isCurrentUser ? (
-                <div className='relative top-[-140px] float-right w-[19%]'>
+                <div className='relative top-[-260px] float-right w-[19%]'>
                     <Button
                         variant='secondary'
                         onClick={() => {
@@ -79,16 +77,16 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     </Button>
                 </div>
             ) : (
-                <div className='relative top-[-140px] float-right w-[19%]'>
+                <div className='relative top-[-260px] float-right w-[19%]'>
                     <FollowButton user={data!.getUserByUsername!!} />
                 </div>
             )}
-            <UserStats
+            {/* <UserStats
                 followers={data?.getUserByUsername?.followers!}
                 following={data?.getUserByUsername?.following!}
-            />
+            /> */}
         </div>
     );
 };
 
-export default UserProfile;
+export default UserProfileMini;

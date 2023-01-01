@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Dropzone, { useDropzone } from 'react-dropzone';
+import { BiX } from 'react-icons/bi';
 import { BsPencil, BsUpload } from 'react-icons/bs';
 
 interface ProfileTabProps {
@@ -193,7 +194,7 @@ const ProfileTab = ({ user }: ProfileTabProps) => {
 
     return (
         <div className='p-5'>
-            {headerFile.preview ? (
+            {headerFile.preview !== '' ? (
                 <img
                     src={headerFile.preview}
                     className='h-[200px] w-[100%] rounded-xl'
@@ -219,6 +220,22 @@ const ProfileTab = ({ user }: ProfileTabProps) => {
                     </div>
                 )}
             </Dropzone>
+            <Button
+                onClick={() => {
+                    URL.revokeObjectURL(headerFile.preview);
+
+                    setHeaderFile({
+                        name: '',
+                        type: '',
+                        preview: '',
+                    });
+                    setHasEdited(true);
+                }}
+                variant='transparent'
+                className='relative top-[-45px] float-right mr-4 bg-crumble-200 opacity-50'
+            >
+                <BiX />
+            </Button>
             <div className='flex w-[80%]'>
                 <Dropzone onDrop={onAvatarDrop}>
                     {({ getRootProps, getInputProps }) => (

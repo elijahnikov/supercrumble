@@ -57,7 +57,7 @@ const AddModalMenu = ({}: AddModalMenuProps) => {
                                     className={`group flex w-[100%] items-center rounded-md px-2 py-2 text-sm text-gray-200`}
                                 >
                                     <BiCommentDetail className={`mr-2 `} />
-                                    Review
+                                    Film Log
                                 </button>
                             </Menu.Item>
                             <Menu.Item>

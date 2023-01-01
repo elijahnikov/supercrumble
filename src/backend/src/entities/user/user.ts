@@ -28,6 +28,10 @@ export class User extends BaseEntity {
     id!: number;
 
     @Field()
+    @Column({ default: false })
+    verified: boolean;
+
+    @Field()
     @Column({ unique: true })
     username!: string;
 

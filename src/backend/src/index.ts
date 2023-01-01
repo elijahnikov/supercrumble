@@ -36,6 +36,7 @@ import { FilmListCommentResolver } from "./resolvers/filmList/filmListComment";
 import { FilmListTagsResolver } from "./resolvers/filmList/filmListTags";
 import { SubscriptionResolver } from "./resolvers/subscription/subscription";
 import { WatchedResolver } from "./resolvers/watched/watched";
+import { DiaryResolver } from "./resolvers/diary/diary";
 
 const main = async () => {
     const conn = await createConnection({
@@ -95,6 +96,8 @@ const main = async () => {
                 SubscriptionResolver,
                 //Watched
                 WatchedResolver,
+                //Diary
+                DiaryResolver,
             ],
             validate: false,
         }),

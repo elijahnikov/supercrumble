@@ -1,7 +1,7 @@
 import { InputType, Field, Int } from "type-graphql";
 
 @InputType()
-export class CreateWatchedInput {
+export class CreateDiaryInput {
     @Field(() => Int)
     filmId: number;
 
@@ -10,4 +10,16 @@ export class CreateWatchedInput {
 
     @Field(() => String)
     posterPath: string;
+
+    @Field()
+    ratingGiven: number;
+
+    @Field()
+    rewatch: boolean;
+
+    @Field()
+    reviewLink: string;
+
+    @Field(() => String)
+    watchedOn: string;
 }

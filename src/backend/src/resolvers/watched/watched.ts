@@ -47,7 +47,8 @@ export class WatchedResolver {
             defaultValue: "DESC",
             nullable: true,
         })
-        orderDir: "DESC" | "ASC"
+        orderDir: "DESC" | "ASC",
+        @Arg("userId", () => Int) userId: number
     ): Promise<PaginatedWatched> {
         const maxLimit = Math.min(50, limit);
         const maxLimitPlusOne = maxLimit + 1;
@@ -56,7 +57,8 @@ export class WatchedResolver {
             .getRepository(Watched)
             .createQueryBuilder("w")
             .orderBy(`w."${orderBy}"`, orderDir)
-            .take(maxLimitPlusOne);
+            .take(maxLimitPlusOne)
+            .where('w."creatorId" = :userId', { userId });
         if (cursor) {
             qb.where('w. "createdAt" < :cursor', {
                 cursor: new Date(parseInt(cursor)),
@@ -70,12 +72,18 @@ export class WatchedResolver {
         };
     }
 
-    @Mutation(() => Watched)
+    @Mutation(() => Watched, { nullable: true })
     @UseMiddleware(isAuth)
     async createWatched(
         @Arg("input") input: CreateWatchedInput,
         @Ctx() { req }: MyContext
     ): Promise<Watched | null> {
+        const check = await Watched.findOne({
+            where: { creatorId: req.session.userId, filmId: input.filmId },
+        });
+        if (check) {
+            return null;
+        }
         return Watched.create({
             creatorId: req.session.userId,
             ...input,

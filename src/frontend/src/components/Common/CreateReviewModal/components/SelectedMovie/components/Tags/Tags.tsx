@@ -12,9 +12,10 @@ import { BiX } from 'react-icons/bi';
 interface TagsProps {
     tags: string[];
     setTags: Dispatch<SetStateAction<string[]>>;
+    reviewStarted: boolean;
 }
 
-const Tags = ({ tags, setTags }: TagsProps) => {
+const Tags = ({ tags, setTags, reviewStarted }: TagsProps) => {
     const [tag, setTag] = useState<string>('');
     // const [tags, setTags] = useState<string[]>([]);
     const [disabled, setDisabled] = useState<boolean>(false);
@@ -51,7 +52,7 @@ const Tags = ({ tags, setTags }: TagsProps) => {
                 <InputField
                     value={tag}
                     name='tags'
-                    disabled={disabled}
+                    disabled={disabled || !reviewStarted}
                     placeholder='tags (hit enter)'
                     type={'text'}
                     onKeyDown={handleKeyDown}

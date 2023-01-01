@@ -10,11 +10,6 @@ const UserPageTabs = ({ username }: UserPageTabsProps) => {
     const [currentTabDataName, setCurrentTabDataName] = useState('profile');
     const router = useRouter();
 
-    // const handleTabChange = (tab: string) => {
-    //     let path = router.asPath + '/' + tab;
-    //     router.push(path);
-    // };
-
     const tabs: tabMenuType[] = [
         {
             id: 0,

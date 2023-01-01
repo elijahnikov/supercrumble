@@ -1,6 +1,8 @@
 import {
+    useCreateDiaryMutation,
     useCreateFilmMutation,
     useCreateReviewMutation,
+    useCreateWatchedMutation,
 } from '@/generated/graphql';
 import { isAuthHook } from '@/utils/isAuthHook';
 import { useRouter } from 'next/router';
@@ -62,9 +64,15 @@ const CreateReviewModal = ({
     const [blockInput, setBlockInput] = useState(false);
     const [ratingValue, setRatingValue] = useState(0);
     const [spoilerChecked, setSpoilerChecked] = useState(false);
+    const [watchedOnChecked, setWatchedOnCheck] = useState(true);
+    const [watchedOnDate, setWatchedOnDate] = useState(new Date());
+    const [rewatchChecked, setRewatchChecked] = useState(false);
+    const [reviewStarted, setReviewStarted] = useState(false);
 
     const [createReview] = useCreateReviewMutation();
     const [createFilm] = useCreateFilmMutation();
+    const [createWatched] = useCreateWatchedMutation();
+    const [createDiary] = useCreateDiaryMutation();
 
     const handleOpen = () => {
         setOpen(!open);
@@ -105,17 +113,19 @@ const CreateReviewModal = ({
         return () => clearTimeout(delayDebounceFn);
     }, [movieName]);
 
+    useEffect(() => {
+        if (reviewText !== '') setReviewStarted(true);
+        else setReviewStarted(false);
+    }, [reviewText]);
+
     const handleRating = (rate: any) => {
         setRatingValue(rate);
     };
 
-    const handleSpoiler = () => {
-        setSpoilerChecked(!spoilerChecked);
-    };
-
     const handleCreateReview = async () => {
+        let reviewResponse = null;
         setLoading(true);
-        const filmResponse = await createFilm({
+        await createFilm({
             variables: {
                 input: {
                     movieId: chosenMovieDetails.movieId,
@@ -127,26 +137,48 @@ const CreateReviewModal = ({
                 },
             },
         });
-        const response = await createReview({
+        const watched = await createWatched({
             variables: {
                 input: {
-                    tags: tags.join(','),
-                    containsSpoilers: spoilerChecked,
-                    movieId: chosenMovieDetails.movieId,
-                    movie_poster: chosenMovieDetails.posterPath,
-                    backdrop: chosenMovieDetails.backdropPath,
-                    movie_release_year: parseInt(chosenMovieDetails.year),
-                    movie_title: chosenMovieDetails.movieTitle,
-                    ratingGiven: ratingValue / 20,
-                    text: reviewText,
+                    filmId: chosenMovieDetails.movieId,
+                    filmTitle: chosenMovieDetails.movieTitle,
+                    posterPath: chosenMovieDetails.posterPath,
                 },
             },
         });
-        if (filmResponse.errors) {
-            console.log(filmResponse.errors);
+        if (reviewText) {
+            reviewResponse = await createReview({
+                variables: {
+                    input: {
+                        tags: tags.join(','),
+                        containsSpoilers: spoilerChecked,
+                        movieId: chosenMovieDetails.movieId,
+                        movie_poster: chosenMovieDetails.posterPath,
+                        backdrop: chosenMovieDetails.backdropPath,
+                        movie_release_year: parseInt(chosenMovieDetails.year),
+                        movie_title: chosenMovieDetails.movieTitle,
+                        ratingGiven: ratingValue / 20,
+                        text: reviewText,
+                    },
+                },
+            });
         }
-        setLoading(false);
-        router.push(`/review/${response.data?.createReview.referenceId}`);
+        if (watchedOnChecked) {
+            const diaryResponse = await createDiary({
+                variables: {
+                    input: {
+                        filmId: chosenMovieDetails.movieId,
+                        filmTitle: chosenMovieDetails.movieTitle,
+                        posterPath: chosenMovieDetails.posterPath,
+                        ratingGiven: ratingValue / 20,
+                        reviewLink: `/review/${reviewResponse?.data?.createReview.referenceId}`,
+                        rewatch: rewatchChecked,
+                        watchedOn: '01/01/2023',
+                    },
+                },
+            });
+        }
+        router.push(`/@${watched.data?.createWatched?.creator.username}/films`);
     };
 
     const handleMovieNameChange = (
@@ -200,14 +232,14 @@ const CreateReviewModal = ({
             <div>
                 {!fromMenu && (
                     <Button className='mt-8' onClick={() => handleOpen()}>
-                        Create a new review
+                        Create a review
                     </Button>
                 )}
             </div>
             <Transition.Root show={open} as={Fragment}>
                 <Dialog
                     as='div'
-                    className='relative z-50'
+                    className='relative z-40'
                     initialFocus={cancelButtonRef}
                     onClose={setOpen}
                 >
@@ -223,7 +255,7 @@ const CreateReviewModal = ({
                         <div className='fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity' />
                     </Transition.Child>
                     <div className=' fixed inset-0 z-10 '>
-                        <div className=' flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
+                        <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
                             <Transition.Child
                                 as={Fragment}
                                 enter='ease-out duration-300'
@@ -234,29 +266,30 @@ const CreateReviewModal = ({
                                 leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
                             >
                                 <Dialog.Panel
-                                    className='
+                                    className={`
+                                        ${
+                                            blockInput
+                                                ? 'smallerPageFrame'
+                                                : 'w-[35%]'
+                                        }
                                         relative
                                         transform
-                                        
                                         rounded-lg
                                         bg-crumble-100
                                         text-left
                                         text-white
                                         shadow-xl
                                         transition-all
-                                        sm:my-10
-                                        sm:w-full
-                                        sm:max-w-2xl
-                                    '
+                                    `}
                                 >
-                                    <div className=' bg-crumble-100 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
-                                        <div className='mb-10 sm:flex sm:items-start'>
+                                    <div className=' bg-crumble-200 px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
+                                        <div className='sm:flex sm:items-start'>
                                             <div className='mt-3 w-full text-center sm:mt-0 sm:text-left'>
                                                 <Dialog.Title
                                                     as='h3'
                                                     className='text-lg font-medium leading-6 text-superRed'
                                                 >
-                                                    Create a review
+                                                    Add to your films
                                                 </Dialog.Title>
                                                 <div className='mt-2'>
                                                     <div className='w-full md:flex'>
@@ -324,8 +357,10 @@ const CreateReviewModal = ({
                                                                     spoilerChecked={
                                                                         spoilerChecked
                                                                     }
-                                                                    handleSpoiler={
-                                                                        handleSpoiler
+                                                                    handleSpoiler={() =>
+                                                                        setSpoilerChecked(
+                                                                            !spoilerChecked
+                                                                        )
                                                                     }
                                                                     setRatingValue={
                                                                         setRatingValue
@@ -333,6 +368,25 @@ const CreateReviewModal = ({
                                                                     tags={tags}
                                                                     setTags={
                                                                         setTags
+                                                                    }
+                                                                    watchedOnChecked={
+                                                                        watchedOnChecked
+                                                                    }
+                                                                    handleWatchedOnCheck={() =>
+                                                                        setWatchedOnCheck(
+                                                                            !watchedOnChecked
+                                                                        )
+                                                                    }
+                                                                    rewatchChecked={
+                                                                        rewatchChecked
+                                                                    }
+                                                                    handleRewatchChecked={() =>
+                                                                        setRewatchChecked(
+                                                                            !rewatchChecked
+                                                                        )
+                                                                    }
+                                                                    reviewStarted={
+                                                                        reviewStarted
                                                                     }
                                                                 />
                                                             </>
@@ -342,26 +396,30 @@ const CreateReviewModal = ({
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='bg-crumble-200 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
-                                        <button
-                                            type='button'
-                                            className='handleCreateReview'
-                                            onClick={handleCreateReview}
-                                        >
-                                            Post
-                                        </button>
-                                        <button
-                                            type='button'
-                                            className='cancelCreateReview'
-                                            onClick={() => {
-                                                setOpen(false),
-                                                    handleCancelClick(false);
-                                            }}
-                                            ref={cancelButtonRef}
-                                        >
-                                            Cancel
-                                        </button>
-                                    </div>
+                                    {blockInput ? (
+                                        <div className='bg-crumble-200 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
+                                            <button
+                                                type='button'
+                                                className='handleCreateReview'
+                                                onClick={handleCreateReview}
+                                            >
+                                                Save
+                                            </button>
+                                            <button
+                                                type='button'
+                                                className='cancelCreateReview'
+                                                onClick={() => {
+                                                    setOpen(false),
+                                                        handleCancelClick(
+                                                            false
+                                                        );
+                                                }}
+                                                ref={cancelButtonRef}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    ) : null}
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

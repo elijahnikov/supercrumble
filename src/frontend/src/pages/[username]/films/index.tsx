@@ -1,7 +1,9 @@
 // Components
 import Layout from '@/components/Common/Layout/Layout';
+import FilmTab from '@/components/Screens/UserPage/UserPageTabs/FIlmTab/FilmTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
 import UserProfile from '@/components/Screens/UserPage/UserProfile/UserProfile';
+import UserProfileMini from '@/components/Screens/UserPage/UserProfileMini/UserProfileMini';
 
 // GraphQL
 import { useMeQuery } from '@/generated/graphql';
@@ -36,12 +38,17 @@ const FilmPage = ({}: FilmPageProps) => {
             <div className='mb-20 flex justify-center'>
                 <div className='smallMedPageFrame h-[100vh] text-center'>
                     {data && (
-                        <UserProfile
+                        // <UserProfile
+                        //     isCurrentUser={isCurrentUser}
+                        //     data={data}
+                        // />
+                        <UserProfileMini
                             isCurrentUser={isCurrentUser}
                             data={data}
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername.username} />
+                    <FilmTab />
                 </div>
             </div>
         </Layout>

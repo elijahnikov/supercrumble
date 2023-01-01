@@ -1,0 +1,30 @@
+query Diary(
+    $limit: Int
+    $cursor: String
+    $orderBy: String
+    $orderDir: String
+    $userId: Int!
+) {
+    diary(
+        limit: $limit
+        cursor: $cursor
+        orderBy: $orderBy
+        orderDir: $orderDir
+        userId: $userId
+    ) {
+        diary {
+            id
+            filmId
+            creatorId
+            filmTitle
+            watchedOn
+            posterPath
+            ratingGiven
+            rewatch
+            reviewLink
+            createdAt
+            updatedAt
+        }
+        hasMore
+    }
+}
