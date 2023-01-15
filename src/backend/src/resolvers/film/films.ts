@@ -12,6 +12,7 @@ import { isAuth } from "../../middleware/isAuth";
 import { MyContext } from "../../types";
 import { FilmInput } from "../inputs/FilmInput";
 import { getConnection } from "typeorm";
+// import { User}
 
 @Resolver(Films)
 export class FilmsResolver {

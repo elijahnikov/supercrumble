@@ -6,7 +6,7 @@ import Redis from "ioredis";
 import session from "express-session";
 import connectRedis from "connect-redis";
 import cors from "cors";
-import { createConnection } from "typeorm";
+import { createConnection, getConnection } from "typeorm";
 
 // Utils/Constants
 import path from "path";
@@ -47,6 +47,7 @@ const main = async () => {
         migrations: [path.join(__dirname, "./migrations/*")],
         entities,
     });
+
     await conn.runMigrations();
     const app = express();
 
@@ -126,3 +127,55 @@ const main = async () => {
 main().catch((err) => {
     console.error(err);
 });
+
+const loadFilms = async () => {
+    let connection = getConnection();
+
+    for (let i = 967257; i <= 1066747; i++) {
+        console.log("⬇️  ----> Fetching film " + i + "/1,066,747");
+        await fetch(
+            `https://api.themoviedb.org/3/movie/${i}?api_key=062b67bca7a1dbc477fd28d5b6a7eb99&language=en-US`
+        )
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    console.log("❌ ----> errored out on " + i);
+                }
+            })
+            .then(async (res) => {
+                if (res) {
+                    await connection.query(
+                        `
+                            INSERT INTO films ("movieId", "movieTitle", "overview", "posterPath", "backdropPath", "releaseDate")
+                            VALUES ($1, $2, $3, $4, $5, $6);
+                            `,
+                        [
+                            res.id,
+                            res.original_title,
+                            res.overview,
+                            res.poster_path,
+                            res.backdrop_path,
+                            res.release_date,
+                        ]
+                    );
+
+                    console.log(
+                        "✅ ----> inserting film " +
+                            res.original_title +
+                            "--------------"
+                    );
+                    console.log(
+                        "---------------⏳" +
+                            ((i / 1066747) * 100).toFixed(2) +
+                            "%"
+                    );
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+};
+
+// loadFilms();

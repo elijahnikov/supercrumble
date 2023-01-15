@@ -36,6 +36,7 @@ export type CreateWatchedInput = {
   filmId: Scalars['Int'];
   filmTitle: Scalars['String'];
   posterPath: Scalars['String'];
+  ratingGiven: Scalars['Float'];
 };
 
 export type Diary = {
@@ -523,6 +524,7 @@ export type QueryWatchedArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
+  username: Scalars['String'];
 };
 
 export type Review = {
@@ -545,6 +547,7 @@ export type Review = {
   text: Scalars['String'];
   updatedAt: Scalars['String'];
   voteStatus?: Maybe<Scalars['Int']>;
+  watchedOn?: Maybe<Scalars['String']>;
 };
 
 export type ReviewComment = {
@@ -577,6 +580,7 @@ export type ReviewInput = {
   ratingGiven: Scalars['Float'];
   tags: Scalars['String'];
   text: Scalars['String'];
+  watchedOn?: InputMaybe<Scalars['String']>;
 };
 
 export type ReviewTags = {
@@ -647,6 +651,7 @@ export type Watched = {
   filmTitle: Scalars['String'];
   id: Scalars['Float'];
   posterPath: Scalars['String'];
+  ratingGiven: Scalars['Float'];
   updatedAt: Scalars['String'];
 };
 
@@ -656,7 +661,7 @@ export type FilmListSnippetFragment = { __typename?: 'FilmList', id: string, tit
 
 export type ReviewCommentSnippetFragment = { __typename?: 'ReviewComment', id: number, parentId?: number | null, creatorId: number, reviewId: number, text: string, score: number, voteStatus?: number | null, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
 
-export type ReviewSnippetFragment = { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
+export type ReviewSnippetFragment = { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, watchedOn?: string | null, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } };
 
 export type UserFragmentFragment = { __typename?: 'User', id: number, verified: boolean, username: string, displayName?: string | null, email: string, avatar?: string | null, header?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null };
 
@@ -759,7 +764,7 @@ export type CreateReviewMutationVariables = Exact<{
 }>;
 
 
-export type CreateReviewMutation = { __typename?: 'Mutation', createReview: { __typename?: 'Review', id: number, createdAt: string, updatedAt: string, text: string, score: number, creatorId: number, referenceId: string } };
+export type CreateReviewMutation = { __typename?: 'Mutation', createReview: { __typename?: 'Review', id: number, createdAt: string, updatedAt: string, watchedOn?: string | null, text: string, score: number, creatorId: number, referenceId: string } };
 
 export type DeleteReviewMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -854,7 +859,7 @@ export type CreateWatchedMutationVariables = Exact<{
 }>;
 
 
-export type CreateWatchedMutation = { __typename?: 'Mutation', createWatched?: { __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null } } | null };
+export type CreateWatchedMutation = { __typename?: 'Mutation', createWatched?: { __typename?: 'Watched', id: number, filmId: number, creatorId: number, ratingGiven: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null } } | null };
 
 export type DiaryQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -910,7 +915,7 @@ export type ReviewQueryVariables = Exact<{
 }>;
 
 
-export type ReviewQuery = { __typename?: 'Query', review?: { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null };
+export type ReviewQuery = { __typename?: 'Query', review?: { __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, watchedOn?: string | null, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } } | null };
 
 export type ReviewCommentQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -938,7 +943,7 @@ export type ReviewsQueryVariables = Exact<{
 }>;
 
 
-export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, watchedOn?: string | null, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type CheckIfUsernameTakenQueryVariables = Exact<{
   username: Scalars['String'];
@@ -964,10 +969,11 @@ export type WatchedQueryVariables = Exact<{
   cursor?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
+  username: Scalars['String'];
 }>;
 
 
-export type WatchedQuery = { __typename?: 'Query', watched: { __typename?: 'PaginatedWatched', hasMore: boolean, watched: Array<{ __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type WatchedQuery = { __typename?: 'Query', watched: { __typename?: 'PaginatedWatched', hasMore: boolean, watched: Array<{ __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, ratingGiven: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export const FilmListSnippetFragmentDoc = gql`
     fragment FilmListSnippet on FilmList {
@@ -1019,6 +1025,7 @@ export const ReviewSnippetFragmentDoc = gql`
   movie_release_year
   ratingGiven
   score
+  watchedOn
   containsSpoilers
   tags
   createdAt
@@ -1532,6 +1539,7 @@ export const CreateReviewDocument = gql`
     id
     createdAt
     updatedAt
+    watchedOn
     text
     score
     creatorId
@@ -1981,6 +1989,7 @@ export const CreateWatchedDocument = gql`
     id
     filmId
     creatorId
+    ratingGiven
     filmTitle
     posterPath
     creator {
@@ -2580,8 +2589,14 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const WatchedDocument = gql`
-    query Watched($limit: Int, $cursor: String, $orderBy: String, $orderDir: String) {
-  watched(limit: $limit, cursor: $cursor, orderBy: $orderBy, orderDir: $orderDir) {
+    query Watched($limit: Int, $cursor: String, $orderBy: String, $orderDir: String, $username: String!) {
+  watched(
+    limit: $limit
+    cursor: $cursor
+    orderBy: $orderBy
+    orderDir: $orderDir
+    username: $username
+  ) {
     watched {
       id
       filmId
@@ -2590,6 +2605,7 @@ export const WatchedDocument = gql`
       posterPath
       createdAt
       updatedAt
+      ratingGiven
       creator {
         id
         username
@@ -2618,10 +2634,11 @@ export const WatchedDocument = gql`
  *      cursor: // value for 'cursor'
  *      orderBy: // value for 'orderBy'
  *      orderDir: // value for 'orderDir'
+ *      username: // value for 'username'
  *   },
  * });
  */
-export function useWatchedQuery(baseOptions?: Apollo.QueryHookOptions<WatchedQuery, WatchedQueryVariables>) {
+export function useWatchedQuery(baseOptions: Apollo.QueryHookOptions<WatchedQuery, WatchedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<WatchedQuery, WatchedQueryVariables>(WatchedDocument, options);
       }

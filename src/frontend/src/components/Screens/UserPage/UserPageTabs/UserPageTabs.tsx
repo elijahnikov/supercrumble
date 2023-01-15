@@ -24,6 +24,12 @@ const UserPageTabs = ({ username }: UserPageTabsProps) => {
             url: `/@${username}/films`,
         },
         {
+            id: 5,
+            label: 'DIARY',
+            dataName: 'diary',
+            url: `/@${username}/diary`,
+        },
+        {
             id: 2,
             label: 'REVIEWS',
             dataName: 'reviews',

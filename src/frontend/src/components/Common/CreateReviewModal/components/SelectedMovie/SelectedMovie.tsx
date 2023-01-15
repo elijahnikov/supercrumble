@@ -10,6 +10,7 @@ import {
 import { BsArrowLeft, BsFillXCircleFill } from 'react-icons/bs';
 import { Rating } from 'react-simple-star-rating';
 import Tags from './components/Tags/Tags';
+import DatePicker from 'react-datepicker';
 
 type ChosenMovieDetailsType = {
     movieId: number;
@@ -39,8 +40,8 @@ interface SelectedMovieProps {
     rewatchChecked: boolean;
     handleRewatchChecked: ChangeEventHandler<HTMLInputElement>;
     reviewStarted: boolean;
-    // watchedOnDate: Date;
-    // setWatchedOnDate: Dispatch<SetStateAction<Date>>;
+    watchedOnDate: Date;
+    setWatchedOnDate: Dispatch<SetStateAction<Date>>;
 }
 
 const SelectedMovie = ({
@@ -61,11 +62,14 @@ const SelectedMovie = ({
     rewatchChecked,
     handleRewatchChecked,
     reviewStarted,
-}: // watchedOnDate,
-// setWatchedOnDate,
-SelectedMovieProps) => {
+    watchedOnDate,
+    setWatchedOnDate,
+}: SelectedMovieProps) => {
     const [addToDiary, setAddToDiary] = useState(false);
 
+    const handleDateChange = (newValue: any) => {
+        setWatchedOnDate(newValue);
+    };
     useEffect(() => {
         setAddToDiary(watchedOnChecked);
     }, [watchedOnChecked]);
@@ -101,19 +105,27 @@ SelectedMovieProps) => {
                                 </h3>
                             </div>
                             {watchedOnChecked ? (
-                                <div className='flex w-[400px]'>
-                                    <div className='inline w-[150px]'>
+                                <div className='flex w-[550px]'>
+                                    <div className='flex w-[300px] '>
                                         <input
                                             type='checkbox'
                                             value=''
                                             checked={watchedOnChecked}
                                             onChange={handleWatchedOnCheck}
                                             id='flexCheckDefault'
-                                            className='spoilerCheckbox form-check-input'
+                                            className='spoilerCheckbox form-check-input float-left inline'
                                         />
-                                        <p>Watched on</p>
+                                        <p className='w-[150px]'>Watched on</p>
+                                        <DatePicker
+                                            className='ml-3 mt-[-10px] inline w-[110px] rounded-md border-none bg-crumble-100'
+                                            selected={watchedOnDate}
+                                            dateFormat='dd/MM/yyyy'
+                                            onChange={(date: Date) =>
+                                                setWatchedOnDate(date)
+                                            }
+                                        />
                                     </div>
-                                    <div className='inline w-[250px]'>
+                                    <div className='ml-[-20px] inline w-[250px]'>
                                         <input
                                             type='checkbox'
                                             value=''
@@ -166,7 +178,7 @@ SelectedMovieProps) => {
                                     <div>
                                         <p className='mt-5'>Rating</p>
                                     </div>
-                                    <div className='mt-3 w-[140px]'>
+                                    <div className='mt-3 w-[160px]'>
                                         <div className='inline'>
                                             <Rating
                                                 allowHalfIcon={true}

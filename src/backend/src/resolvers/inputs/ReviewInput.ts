@@ -14,6 +14,9 @@ export class ReviewInput {
     @Field()
     backdrop: string;
 
+    @Field({ nullable: true })
+    watchedOn: string;
+
     @Field()
     movie_title: string;
 

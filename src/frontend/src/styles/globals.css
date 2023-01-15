@@ -116,7 +116,6 @@ svg.star-svg {
 }
 
 @layer base {
-    /* inter var - latin */
     @font-face {
         font-family: 'Inter';
         font-style: normal;
@@ -132,7 +131,6 @@ svg.star-svg {
         cursor: url('/images/new-tab.png') 10 10, pointer;
     }
 
-    /* #region  /**=========== Typography =========== */
     .h0 {
         @apply font-primary text-3xl font-bold md:text-5xl;
     }
@@ -169,10 +167,8 @@ svg.star-svg {
     .p {
         @apply font-primary text-sm md:text-base;
     }
-    /* #endregion  /**======== Typography =========== */
 
     .layout {
-        /* 1100px */
         max-width: 68.75rem;
         @apply mx-auto w-11/12;
     }
@@ -181,19 +177,11 @@ svg.star-svg {
         @apply border-gray-200 hover:border-gray-200/0;
     }
 
-    /* Class to adjust with sticky footer */
     .min-h-main {
         @apply min-h-[calc(100vh-56px)];
     }
 
     .bigImage {
-        /* -webkit-mask-image: -webkit-gradient(
-            linear,
-            left top,
-            left bottom,
-            from(rgba(0, 0, 0, 1)),
-            to(rgba(0, 0, 0, 0))
-        ); */
         width: 100%;
         height: 100%;
 
@@ -201,11 +189,11 @@ svg.star-svg {
             top,
             rgba(255, 255, 255, 1) 0%,
             rgba(255, 255, 255, 0) 60%
-        ); /* Chrome10+,Safari5.1+ */
+        );
     }
 
     .stickDiv {
-        position: -webkit-sticky; /* Safari & IE */
+        position: -webkit-sticky;
         position: sticky;
         top: 0;
     }

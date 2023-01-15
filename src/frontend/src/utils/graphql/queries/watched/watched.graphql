@@ -3,12 +3,14 @@ query Watched(
     $cursor: String
     $orderBy: String
     $orderDir: String
+    $username: String!
 ) {
     watched(
         limit: $limit
         cursor: $cursor
         orderBy: $orderBy
         orderDir: $orderDir
+        username: $username
     ) {
         watched {
             id
@@ -18,6 +20,7 @@ query Watched(
             posterPath
             createdAt
             updatedAt
+            ratingGiven
             creator {
                 id
                 username

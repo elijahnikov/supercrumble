@@ -3,6 +3,7 @@ mutation CreateWatched($input: CreateWatchedInput!) {
         id
         filmId
         creatorId
+        ratingGiven
         filmTitle
         posterPath
         creator {

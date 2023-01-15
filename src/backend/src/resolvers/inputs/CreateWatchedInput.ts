@@ -8,6 +8,9 @@ export class CreateWatchedInput {
     @Field(() => String)
     filmTitle: string;
 
+    @Field()
+    ratingGiven: number;
+
     @Field(() => String)
     posterPath: string;
 }

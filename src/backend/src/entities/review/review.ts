@@ -76,6 +76,10 @@ export class Review extends BaseEntity {
     @Column({ type: "float" })
     ratingGiven: number;
 
+    @Field(() => String, { nullable: true })
+    @Column({ nullable: true })
+    watchedOn: string;
+
     @Field()
     @Column({ type: "int", default: 0 })
     score!: number;

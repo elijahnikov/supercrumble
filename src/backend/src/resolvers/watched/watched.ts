@@ -48,10 +48,15 @@ export class WatchedResolver {
             nullable: true,
         })
         orderDir: "DESC" | "ASC",
-        @Arg("userId", () => Int) userId: number
+        @Arg("username", () => String) username: string
     ): Promise<PaginatedWatched> {
         const maxLimit = Math.min(50, limit);
         const maxLimitPlusOne = maxLimit + 1;
+
+        const user = await User.findOne({
+            where: { username },
+        });
+        const userId = user?.id;
 
         const qb = getConnection()
             .getRepository(Watched)

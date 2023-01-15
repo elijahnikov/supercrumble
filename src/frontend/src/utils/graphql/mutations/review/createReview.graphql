@@ -3,6 +3,7 @@ mutation CreateReview($input: ReviewInput!) {
         id
         createdAt
         updatedAt
+        watchedOn
         text
         score
         creatorId

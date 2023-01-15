@@ -40,7 +40,6 @@ const CreateReviewModal = ({
 }: CreateReviewModalProps) => {
     // const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [showTooltip, setShowTooltip] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
     const cancelButtonRef = useRef(null);
 
@@ -140,6 +139,7 @@ const CreateReviewModal = ({
         const watched = await createWatched({
             variables: {
                 input: {
+                    ratingGiven: ratingValue / 20,
                     filmId: chosenMovieDetails.movieId,
                     filmTitle: chosenMovieDetails.movieTitle,
                     posterPath: chosenMovieDetails.posterPath,
@@ -152,6 +152,7 @@ const CreateReviewModal = ({
                     input: {
                         tags: tags.join(','),
                         containsSpoilers: spoilerChecked,
+                        watchedOn: watchedOnDate.toLocaleDateString(),
                         movieId: chosenMovieDetails.movieId,
                         movie_poster: chosenMovieDetails.posterPath,
                         backdrop: chosenMovieDetails.backdropPath,
@@ -173,7 +174,7 @@ const CreateReviewModal = ({
                         ratingGiven: ratingValue / 20,
                         reviewLink: `/review/${reviewResponse?.data?.createReview.referenceId}`,
                         rewatch: rewatchChecked,
-                        watchedOn: '01/01/2023',
+                        watchedOn: watchedOnDate.toLocaleDateString(),
                     },
                 },
             });
@@ -387,6 +388,12 @@ const CreateReviewModal = ({
                                                                     }
                                                                     reviewStarted={
                                                                         reviewStarted
+                                                                    }
+                                                                    watchedOnDate={
+                                                                        watchedOnDate
+                                                                    }
+                                                                    setWatchedOnDate={
+                                                                        setWatchedOnDate
                                                                     }
                                                                 />
                                                             </>

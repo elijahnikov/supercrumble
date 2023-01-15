@@ -33,6 +33,10 @@ export class Watched extends BaseEntity {
     @Column()
     posterPath: string;
 
+    @Field()
+    @Column({ type: "float" })
+    ratingGiven: number;
+
     @Field(() => User)
     @ManyToOne(() => User, (user) => user.watched)
     creator: User;
