@@ -106,7 +106,7 @@ const SelectedMovie = ({
                             </div>
                             {watchedOnChecked ? (
                                 <div className='flex w-[550px]'>
-                                    <div className='flex w-[300px] '>
+                                    <div className='flex w-[260px]'>
                                         <input
                                             type='checkbox'
                                             value=''
@@ -115,9 +115,9 @@ const SelectedMovie = ({
                                             id='flexCheckDefault'
                                             className='spoilerCheckbox form-check-input float-left inline'
                                         />
-                                        <p className='w-[150px]'>Watched on</p>
+                                        <p className='w-[200px]'>Watched on</p>
                                         <DatePicker
-                                            className='ml-3 mt-[-10px] inline w-[110px] rounded-md border-none bg-crumble-100'
+                                            className='ml-1 mt-[-10px] inline w-[110px] rounded-md border-none bg-crumble-100'
                                             selected={watchedOnDate}
                                             dateFormat='dd/MM/yyyy'
                                             onChange={(date: Date) =>
@@ -125,7 +125,7 @@ const SelectedMovie = ({
                                             }
                                         />
                                     </div>
-                                    <div className='ml-[-20px] inline w-[250px]'>
+                                    <div className='ml-2 inline w-[250px]'>
                                         <input
                                             type='checkbox'
                                             value=''

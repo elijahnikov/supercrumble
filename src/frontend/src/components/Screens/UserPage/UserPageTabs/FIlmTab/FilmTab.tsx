@@ -1,3 +1,4 @@
+import Button from '@/components/Common/Button/Button';
 import { useWatchedQuery } from '@/generated/graphql';
 import { getUsername } from '@/utils/getUsername';
 import { formatForURL } from '@/utils/url/formatForURL';
@@ -26,7 +27,7 @@ const FilmTab = ({}: FilmTabProps) => {
     const username = getUsername();
     const router = useRouter();
 
-    const { data, loading, error } = useWatchedQuery({
+    const { data, loading, error, fetchMore, variables } = useWatchedQuery({
         variables: {
             limit: 50,
             orderBy: 'createdAt',
@@ -43,6 +44,7 @@ const FilmTab = ({}: FilmTabProps) => {
                     {data &&
                         data.watched.watched.map((watched) => (
                             <Film
+                                key={watched.filmId}
                                 filmId={watched.filmId}
                                 filmTitle={watched.filmTitle}
                                 poster={watched.posterPath}
@@ -50,6 +52,24 @@ const FilmTab = ({}: FilmTabProps) => {
                             />
                         ))}
                 </div>
+                {data && data.watched.hasMore && (
+                    <div>
+                        <Button
+                            onClick={() =>
+                                fetchMore({
+                                    variables: {
+                                        limit: variables?.limit,
+                                        cursor: data.watched.watched[
+                                            data.watched.watched.length - 1
+                                        ].createdAt,
+                                    },
+                                })
+                            }
+                        >
+                            Load more
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

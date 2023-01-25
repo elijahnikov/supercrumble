@@ -25,8 +25,7 @@ const FollowButton = ({ user }: FollowButtonProps) => {
     });
 
     useEffect(() => {
-        console.log(isFollowing);
-        setFollowing(isFollowing!.checkIfFollowingUser);
+        if (isFollowing) setFollowing(isFollowing!.checkIfFollowingUser);
     }, [isFollowing]);
 
     const handleFollow = async () => {

@@ -17,7 +17,7 @@ export class CreateDiaryInput {
     @Field()
     rewatch: boolean;
 
-    @Field()
+    @Field({ nullable: true })
     reviewLink: string;
 
     @Field(() => String)

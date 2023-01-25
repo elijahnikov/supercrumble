@@ -3,6 +3,7 @@ import {
     useCreateFilmMutation,
     useCreateReviewMutation,
     useCreateWatchedMutation,
+    useMeQuery,
 } from '@/generated/graphql';
 import { isAuthHook } from '@/utils/isAuthHook';
 import { useRouter } from 'next/router';
@@ -44,7 +45,7 @@ const CreateReviewModal = ({
     const cancelButtonRef = useRef(null);
 
     const router = useRouter();
-    isAuthHook();
+    const { data: meData } = useMeQuery();
 
     const [movieName, setMovieName] = useState('');
     const [chosenMovieDetails, setChosenMovieDetails] = useState({
@@ -172,14 +173,24 @@ const CreateReviewModal = ({
                         filmTitle: chosenMovieDetails.movieTitle,
                         posterPath: chosenMovieDetails.posterPath,
                         ratingGiven: ratingValue / 20,
-                        reviewLink: `/review/${reviewResponse?.data?.createReview.referenceId}`,
+                        reviewLink: reviewResponse?.data
+                            ? `/review/${reviewResponse?.data?.createReview.referenceId}`
+                            : null,
                         rewatch: rewatchChecked,
                         watchedOn: watchedOnDate.toLocaleDateString(),
                     },
                 },
             });
         }
-        router.push(`/@${watched.data?.createWatched?.creator.username}/films`);
+        if (reviewText) {
+            router.push(
+                `/review/${reviewResponse?.data?.createReview.referenceId}`
+            );
+            setOpen(!open);
+        } else {
+            router.push(`/@${meData?.me?.username}/films`);
+            setOpen(!open);
+        }
     };
 
     const handleMovieNameChange = (

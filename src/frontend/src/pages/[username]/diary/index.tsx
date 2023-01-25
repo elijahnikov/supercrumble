@@ -38,7 +38,7 @@ const UserDiaryPage = ({}: UserDiaryPageProps) => {
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername.username} />
-                    <DiaryTab />
+                    <DiaryTab userId={me?.me?.id!!} />
                 </div>
             </div>
         </Layout>

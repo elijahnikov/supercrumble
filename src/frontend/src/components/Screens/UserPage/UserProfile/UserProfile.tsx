@@ -23,7 +23,12 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     className='aspect-auto h-[150px] w-[100%] rounded-tl-xl rounded-tr-xl object-cover'
                 />
             ) : (
-                <div className='relative h-[200px] w-[100%] rounded-xl bg-green-400 bg-gradient-to-tr from-white via-lime-100 to-indigo-200' />
+                <div
+                    className='
+                    relative h-[150px] w-[100%] 
+                    rounded-tl-xl rounded-tr-xl 
+                    bg-green-400 bg-gradient-to-tr from-white via-lime-100 to-indigo-200'
+                />
             )}
             <div className='flex w-[80%]'>
                 <img

@@ -25,6 +25,7 @@ const SecondaryUserPageTabs = ({}: SecondaryUserPageTabsProps) => {
                     //     as={`/@${username}/${tab.url}`}
                     // >
                     <div
+                        key={tab.id}
                         onClick={() => router.push(`/@${username}${tab.url}`)}
                         className={`${
                             router.asPath.includes(tab.url)

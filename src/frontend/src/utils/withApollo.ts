@@ -1,4 +1,4 @@
-import { PaginatedReviewComments } from '@/generated/graphql';
+import { PaginatedReviewComments, PaginatedWatched } from '@/generated/graphql';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { NextPageContext } from 'next';
 
@@ -18,13 +18,34 @@ export const createClient = (ctx: NextPageContext) =>
                     fields: {
                         reviewComments: {
                             keyArgs: [],
-                            merge(existing: PaginatedReviewComments | undefined, incoming: PaginatedReviewComments): PaginatedReviewComments{
+                            merge(
+                                existing: PaginatedReviewComments | undefined,
+                                incoming: PaginatedReviewComments
+                            ): PaginatedReviewComments {
                                 return {
                                     ...incoming,
-                                    reviewComments: [...(existing?.reviewComments || []), ...incoming.reviewComments]
-                                }
-                            }
-                        }
+                                    reviewComments: [
+                                        ...(existing?.reviewComments || []),
+                                        ...incoming.reviewComments,
+                                    ],
+                                };
+                            },
+                        },
+                        watched: {
+                            keyArgs: [],
+                            merge(
+                                existing: PaginatedWatched | undefined,
+                                incoming: PaginatedWatched
+                            ): PaginatedWatched {
+                                return {
+                                    ...incoming,
+                                    watched: [
+                                        ...(existing?.watched || []),
+                                        ...incoming.watched,
+                                    ],
+                                };
+                            },
+                        },
                     },
                 },
             },

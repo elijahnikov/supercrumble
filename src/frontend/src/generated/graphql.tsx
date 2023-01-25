@@ -27,7 +27,7 @@ export type CreateDiaryInput = {
   filmTitle: Scalars['String'];
   posterPath: Scalars['String'];
   ratingGiven: Scalars['Float'];
-  reviewLink: Scalars['String'];
+  reviewLink?: InputMaybe<Scalars['String']>;
   rewatch: Scalars['Boolean'];
   watchedOn: Scalars['String'];
 };
