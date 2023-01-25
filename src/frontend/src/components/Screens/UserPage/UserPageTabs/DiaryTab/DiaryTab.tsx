@@ -1,8 +1,15 @@
 import SuperTable from '@/components/Common/SuperTable/SuperTable';
 import { DiaryQuery, MeQuery, useDiaryQuery } from '@/generated/graphql';
+import { getMonthName } from '@/utils/general';
 import { TableCell } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { BiCommentDetail, BiRefresh } from 'react-icons/bi';
+import { BsCheck } from 'react-icons/bs';
+import { Rating } from 'react-simple-star-rating';
 import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
+import NextLink from 'next/link';
+import { formatForURL } from '@/utils/url/formatForURL';
+import diary from '@/pages/[username]/diary';
 
 interface DiaryTabProps {
     userId: number;
@@ -19,6 +26,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
     const [formattedData, setFormattedData] = useState<any[]>([]);
 
     useEffect(() => {
+        console.log(data);
         formatData(data);
     }, [data]);
 
@@ -27,9 +35,11 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             month: diary.watchedOn,
             day: diary.watchedOn,
             film: diary.filmTitle,
+            filmId: diary.filmId,
             rating: diary.ratingGiven,
             rewatch: diary.rewatch,
             review: diary.reviewLink,
+            poster: diary.posterPath,
         }));
         setFormattedData(tempData!!);
     };
@@ -40,7 +50,18 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'MONTH',
             sortable: false,
             value: 'month',
-            cell: (data: any) => <p className='text-slate-500'>{data.month}</p>,
+            cell: (data: any) => (
+                <div className='justify-center text-center'>
+                    <p className='text-md text-slate-400'>
+                        {getMonthName(
+                            Number(data.month.split('/')[1])
+                        ).toLocaleUpperCase()}
+                    </p>
+                    <p className='text-xs text-slate-300'>
+                        {data.month.split('/')[2]}
+                    </p>
+                </div>
+            ),
             show: true,
             fullDataRow: true,
             width: '10%',
@@ -50,7 +71,11 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'DAY',
             sortable: false,
             value: 'day',
-            cell: (data: any) => <p>{data.day}</p>,
+            cell: (data: any) => (
+                <p className='text-center text-2xl text-slate-400'>
+                    {data.day.split('/')[0]}
+                </p>
+            ),
             show: true,
             fullDataRow: true,
             width: '10%',
@@ -60,37 +85,85 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'FILM',
             sortable: false,
             value: 'film',
-            cell: (data: any) => <h4>{data.film}</h4>,
+            cell: (data: any) => (
+                <div className='flex text-center'>
+                    {data.poster ? (
+                        <NextLink
+                            href='/film/[id]'
+                            as={`/film/${formatForURL(data.film.toString())}-${
+                                data.filmId
+                            }`}
+                        >
+                            <img
+                                className={`aspect-auto h-16 rounded-md border-[1px] border-slate-700 hover:outline hover:outline-superRed `}
+                                src={
+                                    data.poster
+                                        ? `https://image.tmdb.org/t/p/w500${data.poster}`
+                                        : undefined
+                                }
+                            />
+                        </NextLink>
+                    ) : (
+                        <p>?</p>
+                    )}
+                    <h4 className='mt-[20px] ml-5'>{data.film}</h4>
+                </div>
+            ),
             show: true,
             fullDataRow: true,
-            width: '40%',
+            width: '50%',
         },
         {
             id: 4,
             title: 'RATING',
             sortable: false,
             value: 'rating',
-            cell: (data: any) => <p>{data.rating}</p>,
+            cell: (data: any) => (
+                <div>
+                    <Rating
+                        readonly
+                        allowFraction={true}
+                        size={15}
+                        fillColor={'#FD4443'}
+                        initialValue={Number(data.rating)}
+                    />
+                </div>
+            ),
             show: true,
             fullDataRow: true,
+            width: '10%',
         },
         {
             id: 6,
             title: 'REWATCH',
             sortable: false,
             value: 'rewatch',
-            cell: (data: any) => <p>{String(data.rewatch)}</p>,
+            cell: (data: any) => (
+                <>
+                    {Boolean(data.rewatch) ? (
+                        <BiRefresh className='h-[20px] w-[20px] fill-slate-400' />
+                    ) : null}
+                </>
+            ),
             show: true,
             fullDataRow: true,
+            width: '5%',
         },
         {
             id: 7,
             title: 'REVIEW',
             sortable: false,
             value: 'review',
-            cell: (data: any) => <p>{data.review}</p>,
+            cell: (data: any) => (
+                <>
+                    {data.review ? (
+                        <BiCommentDetail className='h-[15px] w-[15px] fill-slate-400' />
+                    ) : null}
+                </>
+            ),
             show: true,
             fullDataRow: true,
+            width: '5%',
         },
     ];
 

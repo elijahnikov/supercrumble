@@ -107,7 +107,7 @@ const SuperTable = ({
                         (column: Column) =>
                             column.show && (
                                 <TableCell
-                                    className='text-xs text-slate-500'
+                                    className='border-slate-700 text-center text-xs text-slate-500'
                                     key={column.id + '-head'}
                                 >
                                     {column.title}
@@ -124,7 +124,7 @@ const SuperTable = ({
                             (column: Column) =>
                                 column.show && (
                                     <TableCell
-                                        className='text-slate-500'
+                                        className='h-[18px] border-slate-700 text-white'
                                         style={{
                                             width: column.width
                                                 ? column.width

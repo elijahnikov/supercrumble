@@ -181,12 +181,11 @@ const SelectedMovie = ({
                                     <div className='mt-3 w-[160px]'>
                                         <div className='inline'>
                                             <Rating
-                                                allowHalfIcon={true}
+                                                allowFraction={true}
                                                 initialValue={0}
                                                 size={25}
                                                 fillColor={'#FD4443'}
                                                 onClick={handleRating}
-                                                ratingValue={ratingValue}
                                             />
                                         </div>
                                         {ratingValue > 0 ? (
