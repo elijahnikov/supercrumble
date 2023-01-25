@@ -12,7 +12,6 @@ import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteBut
 // Icons
 import { BiComment } from 'react-icons/bi';
 import { BsFillArrowDownCircleFill } from 'react-icons/bs';
-import { Rating } from 'react-simple-star-rating';
 
 // Utils
 import { formatForURL } from '@/utils/url/formatForURL';
@@ -21,6 +20,7 @@ import { withApollo } from '@/utils/withApollo';
 import { getReviewFromURL } from '@/utils/getFromURL/review/getReviewFromURL';
 import { epochToDate } from '@/utils/EpochToDate';
 import { kFormatter } from '@/utils/general';
+import { Rating } from 'react-simple-star-rating';
 
 interface ReviewPageProps {}
 
@@ -28,11 +28,20 @@ const ReviewPage = ({}) => {
     const { data, loading, error } = getReviewFromURL();
     const { data: meData, loading: meLoading } = useMeQuery();
     const [spoilerActive, setSpoilerActive] = useState(false);
+    const [showRating, setShowRating] = useState(false);
     const myRef = useRef<any>(null);
 
     useEffect(() => {
         if (data?.review) setSpoilerActive(data.review.containsSpoilers);
     }, [data]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShowRating(true);
+        } else {
+            setShowRating(false);
+        }
+    }, []);
 
     if (!data?.review) {
         return <h1>Post does not exist</h1>;
@@ -131,18 +140,20 @@ const ReviewPage = ({}) => {
                                         <h4 className='mt-4 inline text-superRed'>
                                             {data.review.movie_release_year}
                                         </h4>
-                                        <Rating
-                                            className='mb-2 ml-2 navBarCollapse:ml-2'
-                                            ratingValue={0}
-                                            allowHalfIcon={true}
-                                            initialValue={
-                                                data.review.ratingGiven
-                                            }
-                                            size={20}
-                                            fillColor={'#FD4443'}
-                                            onClick={undefined}
-                                            readonly
-                                        />
+                                        {showRating ? (
+                                            <Rating
+                                                className='mb-2 ml-2 navBarCollapse:ml-2'
+                                                ratingValue={0}
+                                                allowHalfIcon={true}
+                                                initialValue={
+                                                    data.review.ratingGiven
+                                                }
+                                                size={20}
+                                                fillColor={'#FD4443'}
+                                                onClick={undefined}
+                                                readonly
+                                            />
+                                        ) : null}
                                     </div>
                                     <div>
                                         <p className=''>

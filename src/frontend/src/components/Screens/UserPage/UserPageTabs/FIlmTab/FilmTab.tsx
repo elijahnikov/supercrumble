@@ -29,9 +29,10 @@ const FilmTab = ({}: FilmTabProps) => {
 
     const { data, loading, error, fetchMore, variables } = useWatchedQuery({
         variables: {
-            limit: 50,
+            limit: 10,
             orderBy: 'createdAt',
             username: username,
+            cursor: null as null | string,
         },
     });
 
@@ -52,7 +53,7 @@ const FilmTab = ({}: FilmTabProps) => {
                             />
                         ))}
                 </div>
-                {data && data.watched.hasMore && (
+                {data && data.watched.hasMore ? (
                     <div>
                         <Button
                             onClick={() =>
@@ -69,7 +70,7 @@ const FilmTab = ({}: FilmTabProps) => {
                             Load more
                         </Button>
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );
