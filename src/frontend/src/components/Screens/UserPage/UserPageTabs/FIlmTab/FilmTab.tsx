@@ -31,7 +31,7 @@ const FilmTab = ({}: FilmTabProps) => {
         variables: {
             limit: 50,
             orderBy: 'createdAt',
-            username,
+            username: username,
         },
     });
 

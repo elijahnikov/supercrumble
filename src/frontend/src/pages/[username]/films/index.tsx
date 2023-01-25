@@ -1,6 +1,6 @@
 // Components
 import Layout from '@/components/Common/Layout/Layout';
-import FilmTab from '@/components/Screens/UserPage/UserPageTabs/FIlmTab/FilmTab';
+import FilmTab from '@/components/Screens/UserPage/UserPageTabs/FilmTab/FilmTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
 import UserProfile from '@/components/Screens/UserPage/UserProfile/UserProfile';
 import UserProfileMini from '@/components/Screens/UserPage/UserProfileMini/UserProfileMini';
