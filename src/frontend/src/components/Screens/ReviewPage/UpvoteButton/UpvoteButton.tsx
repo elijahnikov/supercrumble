@@ -3,7 +3,7 @@ import {
     useVoteMutation,
     VoteMutation,
 } from '@/generated/graphql';
-import { kFormatter } from '@/utils/kFormatter';
+import { kFormatter } from '@/utils/general';
 import { ApolloCache, gql } from '@apollo/client';
 import React from 'react';
 import { BsFillHeartFill, BsHeart } from 'react-icons/bs';
@@ -76,7 +76,7 @@ const UpvoteButton = ({ review, variant }: UpvoteButtonProps) => {
             <div>
                 <div
                     onClick={voteHandler}
-                    className={`inline hover:bg-scBlack-100 float-left 
+                    className={`hover:bg-scBlack-100 float-left inline 
                     rounded-md p-1 text-gray-400 hover:cursor-pointer hover:text-white `}
                 >
                     <BsFillHeartFill
@@ -89,11 +89,11 @@ const UpvoteButton = ({ review, variant }: UpvoteButtonProps) => {
                     />
                 </div>
                 {variant === 'small' ? (
-                    <p className='inline float-right ml-2 mt-[2px] text-[12px] text-white'>
+                    <p className='float-right ml-2 mt-[2px] inline text-[12px] text-white'>
                         {kFormatter(review.score)} likes
                     </p>
                 ) : (
-                    <p className={`inline float-right ml-4 text-lg text-white`}>
+                    <p className={`float-right ml-4 inline text-lg text-white`}>
                         {kFormatter(review.score)}
                     </p>
                 )}

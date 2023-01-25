@@ -3,7 +3,7 @@ import {
     FilmListVoteMutation,
     useFilmListVoteMutation,
 } from '@/generated/graphql';
-import { kFormatter } from '@/utils/kFormatter';
+import { kFormatter } from '@/utils/general';
 import { ApolloCache, gql } from '@apollo/client';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { FilmListType } from './types';

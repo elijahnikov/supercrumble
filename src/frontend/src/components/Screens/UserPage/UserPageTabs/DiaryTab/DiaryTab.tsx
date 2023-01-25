@@ -31,7 +31,6 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             rewatch: diary.rewatch,
             review: diary.reviewLink,
         }));
-        console.log('1', tempData);
         setFormattedData(tempData!!);
     };
 
@@ -41,9 +40,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'MONTH',
             sortable: false,
             value: 'month',
-            cell: (data: any) => (
-                <p className='text-slate-500'>{data.watchedOn}</p>
-            ),
+            cell: (data: any) => <p className='text-slate-500'>{data.month}</p>,
             show: true,
             fullDataRow: true,
             width: '10%',
@@ -53,7 +50,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'DAY',
             sortable: false,
             value: 'day',
-            cell: (data: any) => <p>{data.watchedOn}</p>,
+            cell: (data: any) => <p>{data.day}</p>,
             show: true,
             fullDataRow: true,
             width: '10%',
@@ -63,7 +60,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'FILM',
             sortable: false,
             value: 'film',
-            cell: (data: any) => <h4>{data.filmTitle}</h4>,
+            cell: (data: any) => <h4>{data.film}</h4>,
             show: true,
             fullDataRow: true,
             width: '40%',
@@ -73,7 +70,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'RATING',
             sortable: false,
             value: 'rating',
-            cell: (data: any) => <p>{data.ratingGiven}</p>,
+            cell: (data: any) => <p>{data.rating}</p>,
             show: true,
             fullDataRow: true,
         },
@@ -91,7 +88,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             title: 'REVIEW',
             sortable: false,
             value: 'review',
-            cell: (data: any) => <p>{data.reviewLink}</p>,
+            cell: (data: any) => <p>{data.review}</p>,
             show: true,
             fullDataRow: true,
         },

@@ -1,5 +1,5 @@
 import { FilmQuery } from '@/generated/graphql';
-import { kFormatter } from '@/utils/kFormatter';
+import { kFormatter } from '@/utils/general';
 import { BsFillEyeFill, BsFillGridFill, BsFillHeartFill } from 'react-icons/bs';
 
 interface FilmStatsProps {

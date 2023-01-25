@@ -21,8 +21,8 @@ import {
 // Utils
 import { epochToDate } from '@/utils/EpochToDate';
 import { getListFromURL } from '@/utils/getFromURL/list/getListFromURL';
-import { kFormatter } from '@/utils/kFormatter';
 import { withApollo } from '@/utils/withApollo';
+import { kFormatter } from '@/utils/general';
 
 // React Icons
 import { BiComment } from 'react-icons/bi';

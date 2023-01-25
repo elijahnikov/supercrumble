@@ -16,11 +16,11 @@ import { Rating } from 'react-simple-star-rating';
 
 // Utils
 import { formatForURL } from '@/utils/url/formatForURL';
-import { kFormatter } from '@/utils/kFormatter';
 import NextLink from 'next/link';
 import { withApollo } from '@/utils/withApollo';
 import { getReviewFromURL } from '@/utils/getFromURL/review/getReviewFromURL';
 import { epochToDate } from '@/utils/EpochToDate';
+import { kFormatter } from '@/utils/general';
 
 interface ReviewPageProps {}
 
