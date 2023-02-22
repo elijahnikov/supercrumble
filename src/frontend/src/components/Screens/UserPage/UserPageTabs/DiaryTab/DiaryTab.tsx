@@ -16,7 +16,7 @@ interface DiaryTabProps {
 }
 
 const DiaryTab = ({ userId }: DiaryTabProps) => {
-    const { data } = useDiaryQuery({
+    const { data, loading } = useDiaryQuery({
         variables: {
             userId: userId,
             limit: 10,
@@ -26,11 +26,11 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
     const [formattedData, setFormattedData] = useState<any[]>([]);
 
     useEffect(() => {
-        console.log(data);
-        formatData(data);
+        if (data && !loading) formatData(data);
     }, [data]);
 
     const formatData = (data?: DiaryQuery) => {
+        console.log(data);
         let tempData = data?.diary.diary.map((diary: any) => ({
             month: diary.watchedOn,
             day: diary.watchedOn,
@@ -168,6 +168,10 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             width: '5%',
         },
     ];
+
+    if (loading) {
+        return <h1>loading...</h1>;
+    }
 
     return (
         <div>

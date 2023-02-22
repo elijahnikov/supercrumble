@@ -27,6 +27,10 @@ const UserDiaryPage = ({}: UserDiaryPageProps) => {
         return <h1 className='text-white'>usernotfound</h1>;
     }
 
+    if (!me) {
+        return <h1>error</h1>;
+    }
+
     return (
         <Layout showNavBar={true}>
             <div className='mb-20 flex justify-center'>
@@ -38,7 +42,9 @@ const UserDiaryPage = ({}: UserDiaryPageProps) => {
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername.username} />
-                    <DiaryTab userId={me?.me?.id!!} />
+                    {me && !meLoading ? (
+                        <DiaryTab userId={me.me?.id!!} />
+                    ) : null}
                 </div>
             </div>
         </Layout>
