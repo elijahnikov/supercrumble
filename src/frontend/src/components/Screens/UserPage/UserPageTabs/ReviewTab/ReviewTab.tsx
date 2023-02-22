@@ -14,7 +14,7 @@ const ReviewTab = ({}: ReviewTabProps) => {
         variables: {
             limit: 10,
             orderBy: "createdAt",
-            username: username,
+            
             cursor: null as null | string 
         }
     })
