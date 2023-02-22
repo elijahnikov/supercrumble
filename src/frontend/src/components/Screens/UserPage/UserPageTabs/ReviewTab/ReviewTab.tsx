@@ -9,6 +9,8 @@ import { epochToDate } from '@/utils/EpochToDate';
 import { BiComment } from 'react-icons/bi';
 import { kFormatter } from '@/utils/general';
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
+import CreateReviewModal from '@/components/Common/CreateReviewModal/CreateReviewModal';
+import { useState } from 'react';
 
 interface ReviewTabProps {}
 
@@ -20,6 +22,8 @@ const ReviewTab = ({}: ReviewTabProps) => {
     const username = getUsername();
     const router = useRouter();
 
+    const [reviewOpen, setReviewOpen] = useState<boolean>(false);
+
     const { data, loading, error, fetchMore, variables } = useReviewsQuery({
         variables: {
             limit: 10,
@@ -29,23 +33,34 @@ const ReviewTab = ({}: ReviewTabProps) => {
         },
     });
 
-    console.log({ data });
-
     return (
-        <div>
-            <SecondaryUserPageTabs />
-            <br />
-            <div className='mt-[100px]'>
-                {loading && <p>loading...</p>}
-                <div>
-                    {!loading &&
-                        data &&
-                        data.reviews.reviews.map((reviews) => (
-                            <Review key={reviews.id} data={reviews} />
-                        ))}
+        <>
+            <div>
+                <SecondaryUserPageTabs />
+                <br />
+                <div className='mt-[100px]'>
+                    {loading && <p>loading...</p>}
+                    {data && data?.reviews.reviews.length > 0 ? (
+                        <div>
+                            {!loading &&
+                                data &&
+                                data.reviews.reviews.map((reviews) => (
+                                    <Review key={reviews.id} data={reviews} />
+                                ))}
+                        </div>
+                    ) : (
+                        <div className='h-[125px] rounded-md border border-slate-800'>
+                            <p className='mt-5 mb-[-20px]'>No reviews</p>
+                            <CreateReviewModal
+                                fromMenu={false}
+                                open={reviewOpen}
+                                setOpen={setReviewOpen}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
