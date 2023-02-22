@@ -115,9 +115,19 @@ const Review = ({ data }: ReviewProps) => {
                         <p className='mb-[5px] text-xs text-slate-400'>
                             You wrote...
                         </p>
-                        <span>{data.text}</span>
+                        <div>
+                            {data.text.length > 260 ? (
+                                <div>
+                                    <span>{data.text.slice(0, 250)}</span>
+                                    <span className='ml-2 text-sm text-superRed'>
+                                        Read more...
+                                    </span>
+                                </div>
+                            ) : (
+                                <span>{data.text}</span>
+                            )}
+                        </div>
                     </div>
-                    <br />
                     <div className='clear-both mt-[15px] flex text-left text-slate-400'>
                         <UpvoteButton review={data} variant={'small'} />
                         <div className='ml-[20px] cursor-pointer'>
