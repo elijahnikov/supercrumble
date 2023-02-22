@@ -157,7 +157,9 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             cell: (data: any) => (
                 <>
                     {data.review ? (
-                        <BiCommentDetail className='h-[15px] w-[15px] fill-slate-400' />
+                        <NextLink href='/review/[id]' as={`${data.review}`}>
+                            <BiCommentDetail className='h-[15px] w-[15px] fill-slate-400' />
+                        </NextLink>
                     ) : null}
                 </>
             ),

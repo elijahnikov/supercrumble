@@ -43,10 +43,7 @@ export class WatchedResolver {
             nullable: true,
         })
         orderBy: string | null,
-        @Arg("orderDir", () => String, {
-            defaultValue: "DESC",
-            nullable: true,
-        })
+        @Arg("orderDir", () => String, { defaultValue: "DESC", nullable: true })
         orderDir: "DESC" | "ASC",
         @Arg("username", () => String) username: string
     ): Promise<PaginatedWatched> {
@@ -54,26 +51,31 @@ export class WatchedResolver {
         const maxLimitPlusOne = maxLimit + 1;
 
         const user = await User.findOne({
-            where: { username },
+            where: {
+                username: username,
+            },
         });
+
         const userId = user?.id;
 
         const qb = getConnection()
             .getRepository(Watched)
-            .createQueryBuilder("w")
-            .orderBy(`w."${orderBy}"`, orderDir)
-            .take(maxLimitPlusOne)
-            .where('w."creatorId" = :userId', { userId });
+            .createQueryBuilder("wa")
+            .orderBy(`wa."${orderBy}"`, orderDir)
+            .where('wa. "creatorId" = :userId', {
+                userId: userId,
+            })
+            .take(maxLimitPlusOne);
         if (cursor) {
-            qb.where('w. "createdAt" < :cursor', {
+            qb.andWhere('wa. "createdAt" < :cursor', {
                 cursor: new Date(parseInt(cursor)),
             });
         }
 
-        const watched = await qb.getMany();
+        const watchedFilms = await qb.getMany();
         return {
-            watched: watched.slice(0, maxLimit),
-            hasMore: watched.length === maxLimitPlusOne,
+            watched: watchedFilms.slice(0, maxLimit),
+            hasMore: watchedFilms.length === maxLimitPlusOne,
         };
     }
 

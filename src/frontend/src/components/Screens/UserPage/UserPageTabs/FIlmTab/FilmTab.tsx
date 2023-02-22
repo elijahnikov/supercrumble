@@ -29,7 +29,7 @@ const FilmTab = ({}: FilmTabProps) => {
 
     const { data, loading, error, fetchMore, variables } = useWatchedQuery({
         variables: {
-            limit: 10,
+            limit: 50,
             orderBy: 'createdAt',
             username: username,
             cursor: null as null | string,

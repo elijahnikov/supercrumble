@@ -5,6 +5,7 @@ query Reviews(
     $movieId: Int
     $orderBy: String
     $orderDir: String
+    $username: String
 ) {
     reviews(
         limit: $limit
@@ -13,6 +14,7 @@ query Reviews(
         movieId: $movieId
         orderBy: $orderBy
         orderDir: $orderDir
+        username: $username
     ) {
         hasMore
         reviews {

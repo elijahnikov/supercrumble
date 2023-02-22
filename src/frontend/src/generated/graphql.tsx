@@ -511,6 +511,7 @@ export type QueryReviewsArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -940,6 +941,7 @@ export type ReviewsQueryVariables = Exact<{
   movieId?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -2437,7 +2439,7 @@ export type ReviewCommentsQueryHookResult = ReturnType<typeof useReviewCommentsQ
 export type ReviewCommentsLazyQueryHookResult = ReturnType<typeof useReviewCommentsLazyQuery>;
 export type ReviewCommentsQueryResult = Apollo.QueryResult<ReviewCommentsQuery, ReviewCommentsQueryVariables>;
 export const ReviewsDocument = gql`
-    query Reviews($limit: Int!, $cursor: String, $text: String, $movieId: Int, $orderBy: String, $orderDir: String) {
+    query Reviews($limit: Int!, $cursor: String, $text: String, $movieId: Int, $orderBy: String, $orderDir: String, $username: String) {
   reviews(
     limit: $limit
     cursor: $cursor
@@ -2445,6 +2447,7 @@ export const ReviewsDocument = gql`
     movieId: $movieId
     orderBy: $orderBy
     orderDir: $orderDir
+    username: $username
   ) {
     hasMore
     reviews {
@@ -2472,6 +2475,7 @@ export const ReviewsDocument = gql`
  *      movieId: // value for 'movieId'
  *      orderBy: // value for 'orderBy'
  *      orderDir: // value for 'orderDir'
+ *      username: // value for 'username'
  *   },
  * });
  */
