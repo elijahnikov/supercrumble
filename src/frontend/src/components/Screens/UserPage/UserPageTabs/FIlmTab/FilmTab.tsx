@@ -1,11 +1,15 @@
+// Components
+import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
 import Button from '@/components/Common/Button/Button';
-import { useWatchedQuery } from '@/generated/graphql';
-import { getUsername } from '@/utils/getUsername';
-import { formatForURL } from '@/utils/url/formatForURL';
+
+// Router
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { filmTabs } from '../filmTabs';
-import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
+
+// Utils
+import { getUsername } from '@/utils/getUsername';
+import { formatForURL } from '@/utils/url/formatForURL';
+import { useWatchedQuery } from '@/generated/graphql';
 
 type FilmTabType = {
     id: number;

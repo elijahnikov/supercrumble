@@ -1,16 +1,26 @@
-import { ReviewsQuery, useReviewsQuery } from '@/generated/graphql';
-import { getUsername } from '@/utils/getUsername';
-import { useRouter } from 'next/router';
-import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
-import { ReviewType } from './reviewType';
-import NextLink from 'next/link';
-import { formatForURL } from '@/utils/url/formatForURL';
-import { epochToDate } from '@/utils/EpochToDate';
-import { BiComment } from 'react-icons/bi';
-import { kFormatter } from '@/utils/general';
+import { useState } from 'react';
+
+// Components
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
 import CreateReviewModal from '@/components/Common/CreateReviewModal/CreateReviewModal';
-import { useState } from 'react';
+import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
+
+// Utils
+import { formatForURL } from '@/utils/url/formatForURL';
+import { epochToDate } from '@/utils/EpochToDate';
+import { kFormatter } from '@/utils/general';
+import { getUsername } from '@/utils/getUsername';
+import { useReviewsQuery } from '@/generated/graphql';
+
+// Router
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+
+// Types
+import { ReviewType } from './reviewType';
+
+// React Icons
+import { BiComment } from 'react-icons/bi';
 
 interface ReviewTabProps {}
 
