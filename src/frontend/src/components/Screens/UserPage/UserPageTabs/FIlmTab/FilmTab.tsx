@@ -42,7 +42,8 @@ const FilmTab = ({}: FilmTabProps) => {
             <div className=''>
                 {loading && <p>loading...</p>}
                 <div className='grid w-[100%] grid-cols-10 gap-2'>
-                    {data &&
+                    {!loading &&
+                        data &&
                         data.watched.watched.map((watched) => (
                             <Film
                                 key={watched.filmId}
@@ -53,7 +54,7 @@ const FilmTab = ({}: FilmTabProps) => {
                             />
                         ))}
                 </div>
-                {data && data.watched.hasMore ? (
+                {!loading && data && data.watched.hasMore ? (
                     <div>
                         <Button
                             onClick={() =>

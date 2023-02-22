@@ -1,4 +1,5 @@
 import Layout from '@/components/Common/Layout/Layout';
+import ReviewTab from '@/components/Screens/UserPage/UserPageTabs/ReviewTab/ReviewTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
 import UserProfileMini from '@/components/Screens/UserPage/UserProfileMini/UserProfileMini';
 import { useMeQuery } from '@/generated/graphql';
@@ -29,17 +30,16 @@ const UserReviewPage = ({}: UserReviewPageProps) => {
     return (
         <Layout showNavBar={true}>
             <div className='mb-20 flex justify-center'>
-                {!loading && data && (
-                    <UserProfileMini
-                        isCurrentUser={isCurrentUser}
-                        data={data}
-                    />
-                )}
-                <UserPageTabs
-                    username={
-                        !loading && data ? data.getUserByUsername.username : ''
-                    }
-                />
+                <div className='smallMedPageFrame h-[100vh] text-center'>
+                    {data && (
+                        <UserProfileMini
+                            isCurrentUser={isCurrentUser}
+                            data={data}
+                        />
+                    )}
+                    <UserPageTabs username={data.getUserByUsername.username} />
+                    <ReviewTab />
+                </div>
             </div>
         </Layout>
     );
