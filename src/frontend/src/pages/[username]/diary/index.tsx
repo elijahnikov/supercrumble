@@ -1,11 +1,15 @@
+import { useState, useEffect } from 'react';
+
+// Utils
+import { useMeQuery } from '@/generated/graphql';
+import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
+import { withApollo } from '@/utils/withApollo';
+
+// Components
 import Layout from '@/components/Common/Layout/Layout';
 import DiaryTab from '@/components/Screens/UserPage/UserPageTabs/DiaryTab/DiaryTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
 import UserProfileMini from '@/components/Screens/UserPage/UserProfileMini/UserProfileMini';
-import { useMeQuery } from '@/generated/graphql';
-import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
-import { withApollo } from '@/utils/withApollo';
-import { useState, useEffect } from 'react';
 
 interface UserDiaryPageProps {}
 

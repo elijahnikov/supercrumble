@@ -1,15 +1,22 @@
-import SuperTable from '@/components/Common/SuperTable/SuperTable';
-import { DiaryQuery, MeQuery, useDiaryQuery } from '@/generated/graphql';
-import { getMonthName } from '@/utils/general';
-import { TableCell } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { BiCommentDetail, BiRefresh } from 'react-icons/bi';
-import { BsCheck } from 'react-icons/bs';
-import { Rating } from 'react-simple-star-rating';
+
+// Components
 import SecondaryUserPageTabs from '../SecondaryUserPageTabs/SecondaryUserPageTabs';
-import NextLink from 'next/link';
+import SuperTable from '@/components/Common/SuperTable/SuperTable';
+
+// Utils
 import { formatForURL } from '@/utils/url/formatForURL';
-import diary from '@/pages/[username]/diary';
+import { getMonthName } from '@/utils/general';
+import { DiaryQuery, useDiaryQuery } from '@/generated/graphql';
+
+// React Icons
+import { BiCommentDetail, BiRefresh } from 'react-icons/bi';
+
+// Router
+import NextLink from 'next/link';
+
+// React Rating
+import { Rating } from 'react-simple-star-rating';
 
 interface DiaryTabProps {
     userId: number;
