@@ -1,7 +1,7 @@
 import UpvoteButton from '@/components/Screens/ReviewPage/UpvoteButton/UpvoteButton';
 import { ReviewsQuery, useReviewsQuery } from '@/generated/graphql';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 
 interface ReviewSectionProps {
@@ -9,6 +9,8 @@ interface ReviewSectionProps {
 }
 
 const ReviewSection = ({ movieId }: ReviewSectionProps) => {
+    const [showRating, setShowRating] = useState<boolean>(false);
+
     const { data: popularReviews } = useReviewsQuery({
         variables: {
             limit: 3,
@@ -30,6 +32,14 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
     });
 
     const router = useRouter();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShowRating(true);
+        } else {
+            setShowRating(false);
+        }
+    }, []);
 
     if (!popularReviews) {
         return <div>no reviews</div>;
@@ -74,16 +84,18 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                     <p className='inline cursor-pointer text-[13px] font-bold hover:underline'>
                                         {review.creator.username}
                                     </p>
-                                    <Rating
-                                        className='mb-2 mt-1 ml-2 navBarCollapse:ml-2'
-                                        ratingValue={0}
-                                        allowHalfIcon={true}
-                                        initialValue={review.ratingGiven}
-                                        size={12}
-                                        fillColor={'#FD4443'}
-                                        onClick={undefined}
-                                        readonly
-                                    />
+                                    {showRating ? (
+                                        <Rating
+                                            className='mb-2 mt-1 ml-2 navBarCollapse:ml-2'
+                                            ratingValue={0}
+                                            allowHalfIcon={true}
+                                            initialValue={review.ratingGiven}
+                                            size={12}
+                                            fillColor={'#FD4443'}
+                                            onClick={undefined}
+                                            readonly
+                                        />
+                                    ) : null}
                                     <p className='ml-[51px] w-[600px] break-words text-sm text-gray-300'>
                                         {review.text.slice(0, 250)}
                                         {review.text.slice.length > 270
@@ -136,16 +148,18 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                     <p className='inline cursor-pointer text-[13px] font-bold hover:underline'>
                                         {review.creator.username}
                                     </p>
-                                    <Rating
-                                        className='mb-2 mt-1 ml-2 navBarCollapse:ml-2'
-                                        ratingValue={0}
-                                        allowHalfIcon={true}
-                                        initialValue={review.ratingGiven}
-                                        size={12}
-                                        fillColor={'#FD4443'}
-                                        onClick={undefined}
-                                        readonly
-                                    />
+                                    {showRating ? (
+                                        <Rating
+                                            className='mb-2 mt-1 ml-2 navBarCollapse:ml-2'
+                                            ratingValue={0}
+                                            allowHalfIcon={true}
+                                            initialValue={review.ratingGiven}
+                                            size={12}
+                                            fillColor={'#FD4443'}
+                                            onClick={undefined}
+                                            readonly
+                                        />
+                                    ) : null}
                                     <p className='ml-[51px] break-words text-sm text-gray-300'>
                                         {review.text.slice(0, 250)}...
                                     </p>
