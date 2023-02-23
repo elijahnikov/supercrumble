@@ -170,7 +170,7 @@ const ReviewPage = ({}) => {
                                     {ScrollDemo()}
                                 </div>
 
-                                <div className='mt-[70px] mb-10'>
+                                <div className='mt-[70px] mb-10 w-[40vw]'>
                                     {data.review.containsSpoilers && (
                                         <p className='text-sm italic text-gray-500'>
                                             Contains spoilers...

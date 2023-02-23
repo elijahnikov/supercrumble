@@ -36,7 +36,7 @@ const ReviewTab = ({}: ReviewTabProps) => {
 
     const { data, loading, error, fetchMore, variables } = useReviewsQuery({
         variables: {
-            limit: 2,
+            limit: 10,
             orderBy: 'createdAt',
             username: username,
             cursor: null as null | string,
@@ -166,14 +166,20 @@ const Review = ({ data }: ReviewProps) => {
                     </div>
                     <div className='absolute bottom-0 clear-both flex text-left text-slate-400'>
                         <UpvoteButton review={data} variant={'small'} />
-                        <div className='ml-[20px] cursor-pointer'>
-                            <BiComment className='mr-3 inline' />
-                            <p className='mr-1 inline text-[12px] '>
-                                {data.noOfComments &&
-                                    kFormatter(data.noOfComments)}{' '}
-                                comments
-                            </p>
-                        </div>
+                        <a
+                            onClick={() =>
+                                router.push(`/review/${data.referenceId}`)
+                            }
+                        >
+                            <div className='ml-[20px] cursor-pointer'>
+                                <BiComment className='mr-3 inline' />
+                                <p className='mr-1 inline text-[12px] '>
+                                    {data.noOfComments &&
+                                        kFormatter(data.noOfComments)}{' '}
+                                    comments
+                                </p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
