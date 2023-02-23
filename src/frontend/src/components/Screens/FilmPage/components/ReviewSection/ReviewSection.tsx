@@ -115,7 +115,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                 </>
             ) : null}
             <br />
-            {recentReviews.reviews.reviews.length > 0 ? (
+            {/* {recentReviews.reviews.reviews.length > 0 ? (
                 <>
                     <div className='p-1'>
                         <p className='inline text-xs text-gray-500'>
@@ -174,7 +174,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                         ))}
                     </div>
                 </>
-            ) : null}
+            ) : null} */}
         </div>
     );
 };

@@ -238,7 +238,7 @@ const FilmPage = ({}: FilmPageProps) => {
                             <div className='mr-5 p-10'>
                                 <ReviewSection movieId={movieData?.id} />
                             </div>
-                            {/* {movieData.belongs_to_collection ? (
+                            {movieData.belongs_to_collection ? (
                                 <div className='p-10'>
                                     <RelatedFilms
                                         collectionId={
@@ -246,7 +246,7 @@ const FilmPage = ({}: FilmPageProps) => {
                                         }
                                     />
                                 </div>
-                            ) : null} */}
+                            ) : null}
                             <div className=' p-10'>
                                 <SimilarFilms filmId={filmId} />
                             </div>

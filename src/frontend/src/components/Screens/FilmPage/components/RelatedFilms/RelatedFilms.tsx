@@ -1,3 +1,5 @@
+import { formatForURL } from '@/utils/url/formatForURL';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { SimilarFilmsType } from '../SimilarFilms/types';
 import { RelatedFilmsType } from './types';
@@ -33,21 +35,49 @@ const RelatedFilms = ({ collectionId }: RelatedFilmsProps) => {
     };
 
     return (
-        <div>
-            <div className='mb-4 border-b-[1px] border-gray-600 p-1'>
-                <p className='inline text-xs text-gray-500'>RELATED FILMS</p>
+        // <div>
+        //     <div className='mb-4 border-b-[1px] border-gray-600 p-1'>
+        //         <p className='inline text-xs text-gray-500'>RELATED FILMS</p>
+        //         <p className='float-right mt-[6px] inline text-xs text-gray-500'>
+        //             MORE
+        //         </p>
+        //     </div>
+        //     <div className='text-center'>
+        //         {relatedFilmsData.map((films: RelatedFilmsType) => (
+        //             <div className='mt-2 inline cursor-pointer p-2'>
+        //                 <img
+        //                     className='inline aspect-auto h-[170px] rounded-md border-[1px] border-crumble-100 p-1'
+        //                     src={`https://image.tmdb.org/t/p/original${films.poster_path}`}
+        //                 />
+        //             </div>
+        //         ))}
+        //     </div>
+        // </div>
+        <div className='float-right mt-10 mr-[135px] w-[700px]'>
+            <div className='mb-2 pr-7 pl-7'>
+                <p className='inline text-xs text-gray-500'>BELONGS WITH</p>
                 <p className='float-right mt-[6px] inline text-xs text-gray-500'>
                     MORE
                 </p>
             </div>
-            <div className='text-center'>
+            <div className='ml-[20px]'>
                 {relatedFilmsData.map((films: RelatedFilmsType) => (
-                    <div className='mt-2 inline cursor-pointer p-2'>
-                        <img
-                            className='inline aspect-auto h-[170px] rounded-md border-[1px] border-crumble-100 p-1'
-                            src={`https://image.tmdb.org/t/p/original${films.poster_path}`}
-                        />
-                    </div>
+                    <Link
+                        passHref
+                        href='/film/[id]'
+                        as={`/film/${formatForURL(
+                            films.original_title.toString()
+                        )}-${films.id}`}
+                    >
+                        <div className='mt-2 inline cursor-pointer p-2'>
+                            <a target={'_blank'}>
+                                <img
+                                    className='inline aspect-auto h-[170px] rounded-md border-[1px] border-crumble-100 p-1'
+                                    src={`https://image.tmdb.org/t/p/original${films.poster_path}`}
+                                />
+                            </a>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </div>
