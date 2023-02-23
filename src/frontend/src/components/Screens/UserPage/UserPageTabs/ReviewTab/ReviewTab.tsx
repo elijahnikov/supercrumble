@@ -30,7 +30,6 @@ interface ReviewProps {
 
 const ReviewTab = ({}: ReviewTabProps) => {
     const username = getUsername();
-    const router = useRouter();
 
     const [reviewOpen, setReviewOpen] = useState<boolean>(false);
 
@@ -75,6 +74,8 @@ const ReviewTab = ({}: ReviewTabProps) => {
 };
 
 const Review = ({ data }: ReviewProps) => {
+    const router = useRouter();
+
     return (
         <div className='mt-5 w-full rounded-lg border border-slate-800 p-5 '>
             <div className='flex'>
@@ -119,9 +120,16 @@ const Review = ({ data }: ReviewProps) => {
                             {data.text.length > 260 ? (
                                 <div>
                                     <span>{data.text.slice(0, 250)}</span>
-                                    <span className='ml-2 text-sm text-superRed'>
+                                    <a
+                                        onClick={() =>
+                                            router.push(
+                                                `/review/${data.referenceId}`
+                                            )
+                                        }
+                                        className='ml-2 cursor-pointer text-sm text-superRed'
+                                    >
                                         Read more...
-                                    </span>
+                                    </a>
                                 </div>
                             ) : (
                                 <span>{data.text}</span>
