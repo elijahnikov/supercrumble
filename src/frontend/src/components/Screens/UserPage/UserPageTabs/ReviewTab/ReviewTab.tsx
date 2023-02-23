@@ -21,6 +21,7 @@ import { ReviewType } from './reviewType';
 
 // React Icons
 import { BiComment } from 'react-icons/bi';
+import Button from '@/components/Common/Button/Button';
 
 interface ReviewTabProps {}
 
@@ -35,7 +36,7 @@ const ReviewTab = ({}: ReviewTabProps) => {
 
     const { data, loading, error, fetchMore, variables } = useReviewsQuery({
         variables: {
-            limit: 10,
+            limit: 2,
             orderBy: 'createdAt',
             username: username,
             cursor: null as null | string,
@@ -47,15 +48,44 @@ const ReviewTab = ({}: ReviewTabProps) => {
             <div>
                 <SecondaryUserPageTabs />
                 <br />
-                <div className='mt-[100px]'>
+                <div className='mt-[100px] mb-[100px]'>
                     {loading && <p>loading...</p>}
                     {data && data?.reviews.reviews.length > 0 ? (
                         <div>
-                            {!loading &&
-                                data &&
-                                data.reviews.reviews.map((reviews) => (
-                                    <Review key={reviews.id} data={reviews} />
-                                ))}
+                            <div>
+                                {!loading &&
+                                    data &&
+                                    data.reviews.reviews.map((reviews) => (
+                                        <Review
+                                            key={reviews.id}
+                                            data={reviews}
+                                        />
+                                    ))}
+                            </div>
+                            <div>
+                                {data && data.reviews.hasMore ? (
+                                    <div>
+                                        <Button
+                                            className='mx-auto mt-4'
+                                            onClick={() => {
+                                                fetchMore({
+                                                    variables: {
+                                                        limit: variables?.limit,
+                                                        cursor: data.reviews
+                                                            .reviews[
+                                                            data.reviews.reviews
+                                                                .length - 1
+                                                        ].createdAt,
+                                                    },
+                                                });
+                                            }}
+                                            isLoading={loading}
+                                        >
+                                            Load More
+                                        </Button>
+                                    </div>
+                                ) : null}
+                            </div>
                         </div>
                     ) : (
                         <div className='h-[125px] rounded-md border border-slate-800'>
@@ -69,6 +99,7 @@ const ReviewTab = ({}: ReviewTabProps) => {
                     )}
                 </div>
             </div>
+            <br />
         </>
     );
 };
@@ -100,7 +131,7 @@ const Review = ({ data }: ReviewProps) => {
                         <p>?</p>
                     )}
                 </div>
-                <div className='mt-2 ml-5 w-full'>
+                <div className='relative mt-2 ml-5 w-full'>
                     <div className='flex w-full'>
                         <div className='flex w-full'>
                             <h4>{data.movie_title}</h4>
@@ -112,14 +143,11 @@ const Review = ({ data }: ReviewProps) => {
                             {epochToDate(data.createdAt)}
                         </span>
                     </div>
-                    <div className='text-left'>
-                        <p className='mb-[5px] text-xs text-slate-400'>
-                            You wrote...
-                        </p>
+                    <div className='w-[80%] text-left'>
                         <div>
-                            {data.text.length > 260 ? (
+                            {data.text.length > 200 ? (
                                 <div>
-                                    <span>{data.text.slice(0, 250)}</span>
+                                    <span>{data.text.slice(0, 190)}...</span>
                                     <a
                                         onClick={() =>
                                             router.push(
@@ -128,7 +156,7 @@ const Review = ({ data }: ReviewProps) => {
                                         }
                                         className='ml-2 cursor-pointer text-sm text-superRed'
                                     >
-                                        Read more...
+                                        Read more
                                     </a>
                                 </div>
                             ) : (
@@ -136,7 +164,7 @@ const Review = ({ data }: ReviewProps) => {
                             )}
                         </div>
                     </div>
-                    <div className='clear-both mt-[15px] flex text-left text-slate-400'>
+                    <div className='absolute bottom-0 clear-both flex text-left text-slate-400'>
                         <UpvoteButton review={data} variant={'small'} />
                         <div className='ml-[20px] cursor-pointer'>
                             <BiComment className='mr-3 inline' />

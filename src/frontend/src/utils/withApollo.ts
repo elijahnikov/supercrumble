@@ -1,4 +1,8 @@
-import { PaginatedReviewComments, PaginatedWatched } from '@/generated/graphql';
+import {
+    PaginatedReviewComments,
+    PaginatedReviews,
+    PaginatedWatched,
+} from '@/generated/graphql';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { NextPageContext } from 'next';
 
@@ -27,6 +31,21 @@ export const createClient = (ctx: NextPageContext) =>
                                     reviewComments: [
                                         ...(existing?.reviewComments || []),
                                         ...incoming.reviewComments,
+                                    ],
+                                };
+                            },
+                        },
+                        reviews: {
+                            keyArgs: [],
+                            merge(
+                                existing: PaginatedReviews | undefined,
+                                incoming: PaginatedReviews
+                            ): PaginatedReviews {
+                                return {
+                                    ...incoming,
+                                    reviews: [
+                                        ...(existing?.reviews || []),
+                                        ...incoming.reviews,
                                     ],
                                 };
                             },
