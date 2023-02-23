@@ -4,9 +4,11 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import { User } from "../user/user";
 
 @ObjectType()
 @Entity()
@@ -17,15 +19,23 @@ export class Watchlist extends BaseEntity {
 
 	@Field()
 	@Column()
-	movieId!: number;
+	filmId: number;
 
 	@Field()
 	@Column()
-	movieTitle!: string;
+	creatorId: number;
 
-	@Field({ nullable: true })
-	@Column({ nullable: true })
+	@Field()
+	@Column()
+	filmTitle: string;
+
+	@Field()
+	@Column()
 	posterPath: string;
+
+	@Field(() => User)
+	@ManyToOne(() => User, (user) => user.watchlist)
+	creator: User;
 
 	@Field(() => String)
 	@CreateDateColumn()

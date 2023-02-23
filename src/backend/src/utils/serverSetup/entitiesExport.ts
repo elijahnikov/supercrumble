@@ -27,33 +27,39 @@ import { Watched } from "../../entities/watched/watched";
 //Diary
 import { Diary } from "../../entities/diary/diary";
 
+// Watchlist
+import { Watchlist } from "../../entities/watchlist/watchlist";
+
 export default [
-    //User
-    User,
+	//User
+	User,
 
-    //Review
-    Review,
-    Upvote,
-    ReviewComment,
-    ReviewCommentUpvote,
-    ReviewTags,
+	//Review
+	Review,
+	Upvote,
+	ReviewComment,
+	ReviewCommentUpvote,
+	ReviewTags,
 
-    //Films
-    Films,
+	//Films
+	Films,
 
-    //FilmList
-    FilmList,
-    FilmListEntries,
-    FilmListTags,
-    FilmListUpvote,
-    FilmListComment,
+	//FilmList
+	FilmList,
+	FilmListEntries,
+	FilmListTags,
+	FilmListUpvote,
+	FilmListComment,
 
-    //Subscription
-    Subscription,
+	//Subscription
+	Subscription,
 
-    //Watched
-    Watched,
+	//Watched
+	Watched,
 
-    //Diary
-    Diary,
+	//Diary
+	Diary,
+
+	//Watchlist
+	Watchlist,
 ];
