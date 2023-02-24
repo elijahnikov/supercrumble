@@ -1,6 +1,7 @@
 import { Watchlist } from "../../entities/watchlist/watchlist";
 import {
 	Arg,
+	Ctx,
 	Field,
 	Int,
 	Mutation,
@@ -11,7 +12,9 @@ import {
 } from "type-graphql";
 import { User } from "src/entities/user/user";
 import { getConnection } from "typeorm";
-import { isAuth } from "src/middleware/isAuth";
+import { isAuth } from "../../middleware/isAuth";
+import { MyContext } from "../../types";
+import { AddToWatchlistInput } from "../inputs/AddToWatchlistInput";
 
 @ObjectType()
 class PaginatedWatchlist {
@@ -68,5 +71,25 @@ export class WatchlistResolver {
 			watchlist: watchlist.slice(0, maxLimit),
 			hasMore: watchlist.length === maxLimitPlusOne,
 		};
+	}
+
+	@Mutation(() => Watchlist, { nullable: true })
+	@UseMiddleware(isAuth)
+	async addToWatchlist(
+		@Arg("input") input: AddToWatchlistInput,
+		@Ctx() { req }: MyContext
+	): Promise<Watchlist | null> {
+		const check = await Watchlist.findOne({
+			where: { creatorId: req.session.userId, filmId: input },
+		});
+
+		if (check) {
+			return null;
+		}
+
+		return Watchlist.create({
+			creatorId: req.session.userId,
+			...input,
+		}).save();
 	}
 }
