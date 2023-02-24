@@ -1,0 +1,18 @@
+mutation AddToWatchlist($input: AddToWatchlistInput!) {
+    addToWatchlist(input: $input) {
+        id
+        filmId
+        creatorId
+        filmTitle
+        posterPath
+        creator {
+            id
+            username
+            displayName
+            email
+            avatar
+        }
+        createdAt
+        updatedAt
+    }
+}

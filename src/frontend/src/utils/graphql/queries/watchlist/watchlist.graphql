@@ -1,0 +1,32 @@
+query Watchlist(
+    $limit: Int
+    $cursor: String
+    $orderBy: String
+    $orderDir: String
+    $username: String!
+) {
+    watchlist(
+        limit: $limit
+        cursor: $cursor
+        orderBy: $orderBy
+        orderDir: $orderDir
+        username: $username
+    ) {
+        watchlist {
+            id
+            filmId
+            creatorId
+            filmTitle
+            posterPath
+            createdAt
+            updatedAt
+            creator {
+                id
+                username
+                displayName
+                avatar
+            }
+        }
+        hasMore
+    }
+}

@@ -10,7 +10,7 @@ import {
 	Resolver,
 	UseMiddleware,
 } from "type-graphql";
-import { User } from "src/entities/user/user";
+import { User } from "../../entities/user/user";
 import { getConnection } from "typeorm";
 import { isAuth } from "../../middleware/isAuth";
 import { MyContext } from "../../types";
