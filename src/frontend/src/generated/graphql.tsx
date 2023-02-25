@@ -492,6 +492,7 @@ export type QueryFilmListsArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
   tag?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -945,6 +946,7 @@ export type FilmListsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   dateLimit?: InputMaybe<Scalars['String']>;
   cursor?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -2327,13 +2329,14 @@ export type FilmListCommentsQueryHookResult = ReturnType<typeof useFilmListComme
 export type FilmListCommentsLazyQueryHookResult = ReturnType<typeof useFilmListCommentsLazyQuery>;
 export type FilmListCommentsQueryResult = Apollo.QueryResult<FilmListCommentsQuery, FilmListCommentsQueryVariables>;
 export const FilmListsDocument = gql`
-    query FilmLists($orderBy: String, $orderDir: String, $limit: Int, $dateLimit: String, $cursor: String) {
+    query FilmLists($orderBy: String, $orderDir: String, $limit: Int, $dateLimit: String, $cursor: String, $username: String) {
   filmLists(
     orderBy: $orderBy
     orderDir: $orderDir
     limit: $limit
     dateLimit: $dateLimit
     cursor: $cursor
+    username: $username
   ) {
     filmLists {
       id
@@ -2375,6 +2378,7 @@ export const FilmListsDocument = gql`
  *      limit: // value for 'limit'
  *      dateLimit: // value for 'dateLimit'
  *      cursor: // value for 'cursor'
+ *      username: // value for 'username'
  *   },
  * });
  */

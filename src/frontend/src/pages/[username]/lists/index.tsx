@@ -1,15 +1,15 @@
 import Layout from '@/components/Common/Layout/Layout';
+import ListsTab from '@/components/Screens/UserPage/UserPageTabs/ListsTab/ListsTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
-import WatchlistTab from '@/components/Screens/UserPage/UserPageTabs/WatchlistTab/WatchlistTab';
 import UserProfileMini from '@/components/Screens/UserPage/UserProfileMini/UserProfileMini';
 import { useMeQuery } from '@/generated/graphql';
 import { getUsernameFromURL } from '@/utils/getUsernameFromURL';
 import { withApollo } from '@/utils/withApollo';
 import { useEffect, useState } from 'react';
 
-interface WatchlistUserPageProps {}
+interface ListsUserPageProps {}
 
-const WatchlistUserPage = ({}: WatchlistUserPageProps) => {
+const ListsUserPage = ({}: ListsUserPageProps) => {
     const { data, error, loading } = getUsernameFromURL();
     const { data: me, error: meError, loading: meLoading } = useMeQuery();
 
@@ -44,11 +44,11 @@ const WatchlistUserPage = ({}: WatchlistUserPageProps) => {
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername?.username} />
-                    <WatchlistTab />
+                    <ListsTab />
                 </div>
             </div>
         </Layout>
     );
 };
 
-export default withApollo({ ssr: true })(WatchlistUserPage);
+export default withApollo({ ssr: true })(ListsUserPage);

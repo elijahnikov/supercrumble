@@ -4,6 +4,7 @@ query FilmLists(
     $limit: Int
     $dateLimit: String
     $cursor: String
+    $username: String
 ) {
     filmLists(
         orderBy: $orderBy
@@ -11,6 +12,7 @@ query FilmLists(
         limit: $limit
         dateLimit: $dateLimit
         cursor: $cursor
+        username: $username
     ) {
         filmLists {
             id
