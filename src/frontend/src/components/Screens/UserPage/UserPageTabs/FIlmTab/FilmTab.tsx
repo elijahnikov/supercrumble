@@ -22,7 +22,7 @@ interface FilmTabProps {}
 
 interface FilmProps {
     poster: string;
-    rating: number;
+    rating?: number | null;
     filmTitle: string;
     filmId: number;
 }
@@ -89,7 +89,7 @@ const FilmTab = ({}: FilmTabProps) => {
                 <div className='mt-[100px] mb-[100px]'>
                     {loading && <p>loading...</p>}
                     {data && data?.watched.watched.length > 0 ? (
-                        <div className='grid w-[100%] grid-cols-5 gap-2'>
+                        <div className='grid w-[100%] grid-cols-10 gap-2'>
                             {data.watched.watched.map((watched, index) => (
                                 <Film
                                     key={index}
@@ -99,23 +99,26 @@ const FilmTab = ({}: FilmTabProps) => {
                                     rating={watched.ratingGiven}
                                 />
                             ))}
-                            <div>
-                                <Button
-                                    onClick={() =>
-                                        fetchMore({
-                                            variables: {
-                                                limit: variables?.limit,
-                                                cursor: data.watched.watched[
-                                                    data.watched.watched
-                                                        .length - 1
-                                                ].createdAt,
-                                            },
-                                        })
-                                    }
-                                >
-                                    Load more
-                                </Button>
-                            </div>
+                            {!loading && data && data.watched.hasMore && (
+                                <div>
+                                    <Button
+                                        onClick={() =>
+                                            fetchMore({
+                                                variables: {
+                                                    limit: variables?.limit,
+                                                    cursor: data.watched
+                                                        .watched[
+                                                        data.watched.watched
+                                                            .length - 1
+                                                    ].createdAt,
+                                                },
+                                            })
+                                        }
+                                    >
+                                        Load more
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <>

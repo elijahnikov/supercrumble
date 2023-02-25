@@ -2,7 +2,7 @@ import { useWatchlistQuery } from '@/generated/graphql';
 import { getUsername } from '@/utils/getUsername';
 import { formatForURL } from '@/utils/url/formatForURL';
 import NextLink from 'next/link';
-import { BsEye, BsEyeFill } from 'react-icons/bs';
+import { BsFillBookmarkFill } from 'react-icons/bs';
 
 interface WatchlistTabProps {}
 
@@ -53,7 +53,7 @@ const WatchlistTab = ({}: WatchlistTabProps) => {
                                 <p className='inline'>
                                     Add films to your watchlist by clicking the{' '}
                                 </p>
-                                <BsEyeFill className='inline' />
+                                <BsFillBookmarkFill className='inline' />
                                 <p className='inline'> icon</p>
                                 <p>when browsing.</p>
                             </div>

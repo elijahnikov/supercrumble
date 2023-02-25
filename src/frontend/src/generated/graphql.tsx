@@ -42,7 +42,7 @@ export type CreateWatchedInput = {
   filmId: Scalars['Int'];
   filmTitle: Scalars['String'];
   posterPath: Scalars['String'];
-  ratingGiven: Scalars['Float'];
+  ratingGiven?: InputMaybe<Scalars['Float']>;
 };
 
 export type Diary = {
@@ -680,7 +680,7 @@ export type Watched = {
   filmTitle: Scalars['String'];
   id: Scalars['Float'];
   posterPath: Scalars['String'];
-  ratingGiven: Scalars['Float'];
+  ratingGiven?: Maybe<Scalars['Float']>;
   updatedAt: Scalars['String'];
 };
 
@@ -900,7 +900,7 @@ export type CreateWatchedMutationVariables = Exact<{
 }>;
 
 
-export type CreateWatchedMutation = { __typename?: 'Mutation', createWatched?: { __typename?: 'Watched', id: number, filmId: number, creatorId: number, ratingGiven: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null } } | null };
+export type CreateWatchedMutation = { __typename?: 'Mutation', createWatched?: { __typename?: 'Watched', id: number, filmId: number, creatorId: number, ratingGiven?: number | null, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, email: string, avatar?: string | null } } | null };
 
 export type AddToWatchlistMutationVariables = Exact<{
   input: AddToWatchlistInput;
@@ -1022,7 +1022,7 @@ export type WatchedQueryVariables = Exact<{
 }>;
 
 
-export type WatchedQuery = { __typename?: 'Query', watched: { __typename?: 'PaginatedWatched', hasMore: boolean, watched: Array<{ __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, ratingGiven: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type WatchedQuery = { __typename?: 'Query', watched: { __typename?: 'PaginatedWatched', hasMore: boolean, watched: Array<{ __typename?: 'Watched', id: number, filmId: number, creatorId: number, filmTitle: string, posterPath: string, createdAt: string, updatedAt: string, ratingGiven?: number | null, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type WatchlistQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
