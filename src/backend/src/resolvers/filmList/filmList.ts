@@ -213,16 +213,10 @@ export class FilmListResolver {
 	async filmList(
 		@Arg("id", () => String) id: string,
 		@Arg("limit", () => Int, { nullable: true }) limit: number,
-		@Arg("cursor", () => String, { nullable: true }) cursor: string,
-		@Arg("username", () => String, { nullable: true }) username: string
+		@Arg("cursor", () => String, { nullable: true }) cursor: string
 	): Promise<BatchedListResponse> {
 		const maxLimit = Math.min(50, limit);
 		const maxLimitPlusOne = maxLimit + 1;
-
-		let user;
-		if (username) {
-			user = await User.findOne({ where: { username } });
-		}
 
 		const dataSource = getConnection();
 
@@ -230,9 +224,6 @@ export class FilmListResolver {
 			.getRepository(FilmList)
 			.createQueryBuilder("fl")
 			.where('fl."id" = :id', { id });
-		if (user) {
-			filmListQuery.andWhere('fl."id" = :id', { id: user.id });
-		}
 
 		const entryQuery = dataSource
 			.getRepository(FilmListEntries)
@@ -266,10 +257,17 @@ export class FilmListResolver {
 		orderDir: "DESC" | "ASC",
 		@Arg("dateLimit", () => String, { nullable: true })
 		dateLimit: string | null,
-		@Arg("tag", () => String, { nullable: true }) tag: string | null
+		@Arg("tag", () => String, { nullable: true }) tag: string | null,
+		@Arg("username", () => String, { nullable: true })
+		username: string | null
 	): Promise<PaginatedFilmLists> {
 		const maxLimit = Math.min(50, limit);
 		const maxLimitPlusOne = maxLimit + 1;
+
+		let user;
+		if (user) {
+			user = await User.findOne({ where: { username } });
+		}
 
 		const lists = getConnection()
 			.getRepository(FilmList)
@@ -285,6 +283,9 @@ export class FilmListResolver {
 			lists.andWhere('fl. "createdAt" > :dateLimit', {
 				dateLimit: new Date(dateLimit),
 			});
+		}
+		if (user) {
+			lists.andWhere('fl. "creatorId" = :id', { id: user.id });
 		}
 		if (tag) {
 			lists.andWhere(`',' || fl.tags || ',' LIKE '%,${tag},%'`);
