@@ -17,13 +17,9 @@ const SecondaryUserPageTabs = ({}: SecondaryUserPageTabsProps) => {
     const router = useRouter();
 
     return (
-        <div className='z-10 float-left mb-5 mt-[-40px] w-full border-b-[1px] border-slate-500'>
+        <div className='z-10 float-left mb-5 mt-[40px] w-full border-b-[1px] border-slate-500'>
             <div className='flex'>
                 {filmTabs.map((tab: FilmTabType) => (
-                    // <NextLink
-                    //     href={`/@${username}/[tab]`}
-                    //     as={`/@${username}/${tab.url}`}
-                    // >
                     <div
                         key={tab.id}
                         onClick={() => router.push(`/@${username}${tab.url}`)}
@@ -35,7 +31,6 @@ const SecondaryUserPageTabs = ({}: SecondaryUserPageTabsProps) => {
                     >
                         <div className='cursor-pointer'>{tab.title}</div>
                     </div>
-                    // </NextLink>
                 ))}
             </div>
         </div>

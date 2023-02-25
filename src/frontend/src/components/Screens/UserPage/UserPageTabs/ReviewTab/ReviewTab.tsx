@@ -88,14 +88,22 @@ const ReviewTab = ({}: ReviewTabProps) => {
                             </div>
                         </div>
                     ) : (
-                        <div className='h-[125px] rounded-md border border-slate-800'>
-                            <p className='mt-5 mb-[-20px]'>No reviews</p>
-                            <CreateReviewModal
-                                fromMenu={false}
-                                open={reviewOpen}
-                                setOpen={setReviewOpen}
-                            />
-                        </div>
+                        <>
+                            <div className='mt-[20px] h-[150px] rounded-md border border-slate-800 text-center'>
+                                <div className='mt-[30px] w-full justify-center text-center'>
+                                    <div className='inline w-full text-slate-400'>
+                                        <h4 className='mb-[-20px] text-white'>
+                                            You haven't added any reviews.
+                                        </h4>
+                                        <CreateReviewModal
+                                            fromMenu={false}
+                                            open={reviewOpen}
+                                            setOpen={setReviewOpen}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

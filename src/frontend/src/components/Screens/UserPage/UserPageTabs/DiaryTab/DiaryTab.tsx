@@ -181,12 +181,41 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
     }
 
     return (
-        <div>
-            <SecondaryUserPageTabs />
-            <div className='mt-20'>
-                <SuperTable columns={columns} data={formattedData} />
+        <>
+            <div>
+                <SecondaryUserPageTabs />
+                <br />
+                <div className='mt-[100px] mb-[100px]'>
+                    {data && formattedData.length > 0 ? (
+                        <div>
+                            <SuperTable
+                                columns={columns}
+                                data={formattedData}
+                            />
+                        </div>
+                    ) : (
+                        <>
+                            <div className='mt-[20px] h-[120px] rounded-md border border-slate-800 text-center'>
+                                <div className='mt-[30px] w-full justify-center text-center'>
+                                    <div className='inline w-full text-slate-400'>
+                                        <h4 className='text-white'>
+                                            Looks like you haven't logged any
+                                            films on SuperCrumble
+                                        </h4>
+                                        <p className='inline'>
+                                            Review films or simply add to your
+                                            log with a watched date and they'll
+                                            show up here.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
-        </div>
+            <br />
+        </>
     );
 };
 

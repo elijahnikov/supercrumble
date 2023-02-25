@@ -2,6 +2,7 @@ import Button from '@/components/Common/Button/Button';
 import { GetUserByUsernameQuery } from '@/generated/graphql';
 import { useRouter } from 'next/router';
 import { BsFillPatchCheckFill, BsPencilFill } from 'react-icons/bs';
+import UserPageTabs from '../UserPageTabs/UserPageTabs';
 import FollowButton from '../UserProfile/FollowButton/FollowButton';
 import UserStats from '../UserStats/UserStats';
 
@@ -36,33 +37,9 @@ const UserProfileMini = ({ data, isCurrentUser }: UserProfileMiniProps) => {
                     }
                     alt='Profile image'
                 />
-
-                {/* <div className='m-3 '>
-                    <h3 className='float-left inline'>
-                        {data?.getUserByUsername?.displayName}
-                    </h3>
-                    {data?.getUserByUsername?.verified && (
-                        <BsFillPatchCheckFill className='float-left mt-[10px] ml-2 inline' />
-                    )}
-                    <p className='float-left clear-both text-sm text-slate-500'>
-                        @{data?.getUserByUsername?.username}
-                    </p>
-                    <br />
-                    <br />
-                    <p className='clear-both mt-5'>
-                        {data?.getUserByUsername?.bio}
-                    </p>
-                    <a
-                        target={'_blank'}
-                        href={`http://www.${data?.getUserByUsername?.bioLink}`}
-                        className='float-left clear-both mt-2 text-sm text-superRed hover:underline'
-                    >
-                        {data?.getUserByUsername?.bioLink}
-                    </a>
-                </div> */}
             </div>
             {isCurrentUser ? (
-                <div className='relative top-[-260px] float-right w-[19%]'>
+                <div className='relative top-[-260px] left-[700px] w-[19%]'>
                     <Button
                         variant='secondary'
                         onClick={() => {
@@ -81,10 +58,6 @@ const UserProfileMini = ({ data, isCurrentUser }: UserProfileMiniProps) => {
                     <FollowButton user={data!.getUserByUsername!!} />
                 </div>
             )}
-            {/* <UserStats
-                followers={data?.getUserByUsername?.followers!}
-                following={data?.getUserByUsername?.following!}
-            /> */}
         </div>
     );
 };

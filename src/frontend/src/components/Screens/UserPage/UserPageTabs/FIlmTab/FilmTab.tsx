@@ -40,44 +40,104 @@ const FilmTab = ({}: FilmTabProps) => {
         },
     });
 
+    if (!data) {
+        return <h1 className='text-white'>no data found</h1>;
+    }
+
     return (
-        <div>
-            <SecondaryUserPageTabs />
-            <div className=''>
-                {loading && <p>loading...</p>}
-                <div className='grid w-[100%] grid-cols-10 gap-2'>
-                    {!loading &&
-                        data &&
-                        data.watched.watched.map((watched) => (
-                            <Film
-                                key={watched.filmId}
-                                filmId={watched.filmId}
-                                filmTitle={watched.filmTitle}
-                                poster={watched.posterPath}
-                                rating={watched.ratingGiven}
-                            />
-                        ))}
+        // <div>
+        //     <SecondaryUserPageTabs />
+        //     <div className=''>
+        //         {loading && <p>loading...</p>}
+        //         <div className='grid w-[100%] grid-cols-10 gap-2'>
+        //             {!loading &&
+        //                 data &&
+        //                 data.watched.watched.map((watched) => (
+        //                     <Film
+        //                         key={watched.filmId}
+        //                         filmId={watched.filmId}
+        //                         filmTitle={watched.filmTitle}
+        //                         poster={watched.posterPath}
+        //                         rating={watched.ratingGiven}
+        //                     />
+        //                 ))}
+        //         </div>
+        //         {!loading && data && data.watched.hasMore ? (
+        //             <div>
+        //                 <Button
+        //                     onClick={() =>
+        //                         fetchMore({
+        //                             variables: {
+        //                                 limit: variables?.limit,
+        //                                 cursor: data.watched.watched[
+        //                                     data.watched.watched.length - 1
+        //                                 ].createdAt,
+        //                             },
+        //                         })
+        //                     }
+        //                 >
+        //                     Load more
+        //                 </Button>
+        //             </div>
+        //         ) : null}
+        //     </div>
+        // </div>
+        <>
+            <div>
+                <SecondaryUserPageTabs />
+                <br />
+                <div className='mt-[100px] mb-[100px]'>
+                    {loading && <p>loading...</p>}
+                    {data && data?.watched.watched.length > 0 ? (
+                        <div className='grid w-[100%] grid-cols-5 gap-2'>
+                            {data.watched.watched.map((watched, index) => (
+                                <Film
+                                    key={index}
+                                    filmId={watched.filmId}
+                                    filmTitle={watched.filmTitle}
+                                    poster={watched.posterPath}
+                                    rating={watched.ratingGiven}
+                                />
+                            ))}
+                            <div>
+                                <Button
+                                    onClick={() =>
+                                        fetchMore({
+                                            variables: {
+                                                limit: variables?.limit,
+                                                cursor: data.watched.watched[
+                                                    data.watched.watched
+                                                        .length - 1
+                                                ].createdAt,
+                                            },
+                                        })
+                                    }
+                                >
+                                    Load more
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className='mt-[20px] h-[120px] rounded-md border border-slate-800 text-center'>
+                                <div className='mt-[30px] w-full justify-center text-center'>
+                                    <div className='inline w-full text-slate-400'>
+                                        <h4 className='text-white'>
+                                            Looks like you haven't logged any
+                                            films on SuperCrumble
+                                        </h4>
+                                        <p className='inline'>
+                                            Review films or simply add to your
+                                            log and they'll show up here.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
-                {!loading && data && data.watched.hasMore ? (
-                    <div>
-                        <Button
-                            onClick={() =>
-                                fetchMore({
-                                    variables: {
-                                        limit: variables?.limit,
-                                        cursor: data.watched.watched[
-                                            data.watched.watched.length - 1
-                                        ].createdAt,
-                                    },
-                                })
-                            }
-                        >
-                            Load more
-                        </Button>
-                    </div>
-                ) : null}
             </div>
-        </div>
+        </>
     );
 };
 
