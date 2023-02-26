@@ -2,6 +2,7 @@ export type FilmListType = {
     __typename?: 'FilmList';
     id: string;
     title: string;
+    description?: string | null;
     score: number;
     noOfComments: number;
     filmOnePosterPath?: string | null;

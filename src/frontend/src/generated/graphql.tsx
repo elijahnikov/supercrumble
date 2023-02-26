@@ -450,6 +450,7 @@ export type QueryDiaryArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
   userId: Scalars['Int'];
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -951,7 +952,7 @@ export type FilmListsQueryVariables = Exact<{
 }>;
 
 
-export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, title: string, score: number, noOfComments: number, filmOnePosterPath?: string | null, filmTwoPosterPath?: string | null, filmThreePosterPath?: string | null, filmFourPosterPath?: string | null, filmFivePosterPath?: string | null, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, title: string, score: number, description?: string | null, noOfComments: number, filmOnePosterPath?: string | null, filmTwoPosterPath?: string | null, filmThreePosterPath?: string | null, filmFourPosterPath?: string | null, filmFivePosterPath?: string | null, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type FilmListTagsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2343,6 +2344,7 @@ export const FilmListsDocument = gql`
       id
       title
       score
+      description
       noOfComments
       filmOnePosterPath
       filmTwoPosterPath

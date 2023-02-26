@@ -18,6 +18,7 @@ query FilmLists(
             id
             title
             score
+            description
             noOfComments
             filmOnePosterPath
             filmTwoPosterPath

@@ -34,7 +34,7 @@ const ListsTab = ({ username }: ListsTabProps) => {
             {loading && <p>loading...</p>}
             {!loading && data.filmLists.filmLists.length > 0 ? (
                 <div>
-                    <div>
+                    <div className=''>
                         {data &&
                             data.filmLists.filmLists.map((filmList, index) => (
                                 <FilmList filmList={filmList} key={index} />
@@ -115,6 +115,7 @@ const FilmList = ({ filmList }: FilmListProps) => {
                         <p className='ml-1 text-[12px] text-slate-600'>
                             {filmList.noOfComments}
                         </p>
+                        <p className='float-left'>{filmList.description}</p>
                     </div>
                 </div>
             </div>
