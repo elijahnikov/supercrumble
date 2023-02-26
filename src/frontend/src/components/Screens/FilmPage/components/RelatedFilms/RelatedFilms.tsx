@@ -24,7 +24,6 @@ const RelatedFilms = ({ collectionId }: RelatedFilmsProps) => {
                 const url = `https://api.themoviedb.org/3/collection/${collectionId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US`;
                 const response = await fetch(url);
                 const data = await response.json();
-                console.log({ data });
                 setRelatedFilmsData(data.parts);
             }
         } catch (e) {

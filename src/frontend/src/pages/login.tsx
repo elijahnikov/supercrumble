@@ -50,7 +50,6 @@ const Login = ({}: LoginProps) => {
         });
         setLoading(false);
         if (response.data?.login.errors) {
-            console.log(response.data.login.errors);
             setError(response.data.login.errors[0].message);
         } else if (response.data?.login.user) {
             setError('');

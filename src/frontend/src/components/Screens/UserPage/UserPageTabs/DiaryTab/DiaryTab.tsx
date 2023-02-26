@@ -162,8 +162,6 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
         },
     ];
 
-    console.log(data);
-
     if (error) {
         return <h1>error...</h1>;
     }

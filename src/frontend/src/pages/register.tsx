@@ -48,7 +48,6 @@ const Register = ({}: RegisterProps) => {
         });
         setLoading(false);
         if (response.data?.register.errors) {
-            console.log(response.data.register.errors);
             setError(response.data.register.errors[0].message);
         } else if (response.data?.register.user) {
             setError('');

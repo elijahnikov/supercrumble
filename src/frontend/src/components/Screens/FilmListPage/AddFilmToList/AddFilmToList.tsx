@@ -24,7 +24,6 @@ const AddFilmToList = ({ listId }: AddFilmToListProps) => {
             const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&query=${searchText}`;
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
             setMovieFetchData(data.results);
         } else {
             setMovieFetchData([]);

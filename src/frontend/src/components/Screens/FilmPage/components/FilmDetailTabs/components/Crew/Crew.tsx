@@ -19,7 +19,6 @@ const Crew = ({ crew }: CrewProps) => {
     };
 
     useEffect(() => {
-        console.log(groupJobs(crew, 'job'));
         setJobs(groupJobs(crew, 'job'));
     }, []);
 
