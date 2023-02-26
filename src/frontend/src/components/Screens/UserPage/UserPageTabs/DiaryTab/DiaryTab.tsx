@@ -17,16 +17,19 @@ import NextLink from 'next/link';
 
 // React Rating
 import { Rating } from 'react-simple-star-rating';
+import Button from '@/components/Common/Button/Button';
 
 interface DiaryTabProps {
     userId: number;
 }
 
 const DiaryTab = ({ userId }: DiaryTabProps) => {
-    const { data, loading } = useDiaryQuery({
+    const { data, loading, error, fetchMore, variables } = useDiaryQuery({
         variables: {
             userId: userId,
-            limit: 10,
+            limit: 5,
+            orderBy: 'watchedOn',
+            orderDir: 'DESC',
         },
     });
 
@@ -37,14 +40,14 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             sortable: false,
             value: 'watchedOn',
             cell: (data: any) => (
-                <div className='justify-center text-center'>
+                <div className='justify-center'>
                     <p className='text-md text-slate-400'>
                         {getMonthName(
-                            Number(data.watchedOn.split('/')[1])
+                            new Date(parseInt(data.watchedOn)).getMonth()
                         ).toLocaleUpperCase()}
                     </p>
                     <p className='text-xs text-slate-300'>
-                        {data.watchedOn.split('/')[2]}
+                        {new Date(parseInt(data.watchedOn)).getFullYear()}
                     </p>
                 </div>
             ),
@@ -58,8 +61,8 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             sortable: false,
             value: 'watchedOn',
             cell: (data: any) => (
-                <p className='text-center text-2xl text-slate-400'>
-                    {data.watchedOn.split('/')[0]}
+                <p className='text-2xl text-slate-400'>
+                    {new Date(parseInt(data.watchedOn)).getDate()}
                 </p>
             ),
             show: true,
@@ -108,13 +111,15 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             value: 'ratingGiven',
             cell: (data: any) => (
                 <div>
-                    <Rating
-                        readonly
-                        allowFraction={true}
-                        size={15}
-                        fillColor={'#FD4443'}
-                        initialValue={Number(data.ratingGiven)}
-                    />
+                    {typeof window !== 'undefined' ? (
+                        <Rating
+                            readonly
+                            allowFraction={true}
+                            size={15}
+                            fillColor={'#FD4443'}
+                            initialValue={Number(data.ratingGiven)}
+                        />
+                    ) : null}
                 </div>
             ),
             show: true,
@@ -156,6 +161,12 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             width: '5%',
         },
     ];
+
+    console.log(data);
+
+    if (error) {
+        return <h1>error...</h1>;
+    }
 
     if (loading) {
         return <h1>loading...</h1>;

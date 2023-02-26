@@ -1,6 +1,6 @@
 export const getMonthName = (monthNumber: number) => {
     const date = new Date();
-    date.setMonth(monthNumber - 1);
+    date.setMonth(monthNumber);
 
     return date.toLocaleString('en-US', { month: 'short' });
 };

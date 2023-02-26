@@ -178,9 +178,7 @@ const CreateReviewModal = ({
                             ? `/review/${reviewResponse?.data?.createReview.referenceId}`
                             : null,
                         rewatch: rewatchChecked,
-                        watchedOn: createTimestamp(
-                            watchedOnDate.toLocaleDateString()
-                        ),
+                        watchedOn: createTimestamp(watchedOnDate),
                     },
                 },
             });

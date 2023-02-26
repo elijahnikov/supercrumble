@@ -1,4 +1,4 @@
-export const createTimestamp = (date: string) => {
+export const createTimestamp = (date: Date) => {
     const dt = new Date(date);
 
     const padL = (nr: number, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
