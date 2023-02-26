@@ -97,7 +97,6 @@ const SuperTable = ({
 
     useEffect(() => {
         setRows(data);
-        console.log('!', data);
     }, [data]);
 
     return (
