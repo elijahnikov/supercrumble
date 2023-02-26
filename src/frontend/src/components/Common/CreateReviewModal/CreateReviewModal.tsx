@@ -17,6 +17,7 @@ import MovieResults from './components/MovieResults/MovieResults';
 import SelectedMovie from './components/SelectedMovie/SelectedMovie';
 import Button from '../Button/Button';
 import { BiCommentDetail } from 'react-icons/bi';
+import { createTimestamp } from '@/utils/createTimestamp';
 
 interface CreateReviewModalProps {
     film?: {
@@ -140,7 +141,7 @@ const CreateReviewModal = ({
         const watched = await createWatched({
             variables: {
                 input: {
-                    ratingGiven: ratingValue / 20,
+                    ratingGiven: ratingValue,
                     filmId: chosenMovieDetails.movieId,
                     filmTitle: chosenMovieDetails.movieTitle,
                     posterPath: chosenMovieDetails.posterPath,
@@ -159,7 +160,7 @@ const CreateReviewModal = ({
                         backdrop: chosenMovieDetails.backdropPath,
                         movie_release_year: parseInt(chosenMovieDetails.year),
                         movie_title: chosenMovieDetails.movieTitle,
-                        ratingGiven: ratingValue / 20,
+                        ratingGiven: ratingValue,
                         text: reviewText,
                     },
                 },
@@ -172,12 +173,14 @@ const CreateReviewModal = ({
                         filmId: chosenMovieDetails.movieId,
                         filmTitle: chosenMovieDetails.movieTitle,
                         posterPath: chosenMovieDetails.posterPath,
-                        ratingGiven: ratingValue / 20,
+                        ratingGiven: ratingValue,
                         reviewLink: reviewResponse?.data
                             ? `/review/${reviewResponse?.data?.createReview.referenceId}`
                             : null,
                         rewatch: rewatchChecked,
-                        watchedOn: watchedOnDate.toLocaleDateString(),
+                        watchedOn: createTimestamp(
+                            watchedOnDate.toLocaleDateString()
+                        ),
                     },
                 },
             });

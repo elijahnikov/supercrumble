@@ -44,11 +44,11 @@ const ListsUserPage = ({}: ListsUserPageProps) => {
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername?.username} />
-                    <ListsTab />
+                    <ListsTab username={data.getUserByUsername.username} />
                 </div>
             </div>
         </Layout>
     );
 };
 
-export default withApollo({ ssr: true })(ListsUserPage);
+export default withApollo({ ssr: false })(ListsUserPage);

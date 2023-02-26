@@ -265,7 +265,7 @@ export class FilmListResolver {
 		const maxLimitPlusOne = maxLimit + 1;
 
 		let user;
-		if (user) {
+		if (username) {
 			user = await User.findOne({ where: { username } });
 		}
 

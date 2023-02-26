@@ -56,16 +56,16 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             id: 1,
             title: 'MONTH',
             sortable: false,
-            value: 'month',
+            value: 'watchedOn',
             cell: (data: any) => (
                 <div className='justify-center text-center'>
                     <p className='text-md text-slate-400'>
                         {getMonthName(
-                            Number(data.month.split('/')[1])
+                            Number(data.watchedOn.split('/')[1])
                         ).toLocaleUpperCase()}
                     </p>
                     <p className='text-xs text-slate-300'>
-                        {data.month.split('/')[2]}
+                        {data.watchedOn.split('/')[2]}
                     </p>
                 </div>
             ),
@@ -77,10 +77,10 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             id: 2,
             title: 'DAY',
             sortable: false,
-            value: 'day',
+            value: 'watchedOn',
             cell: (data: any) => (
                 <p className='text-center text-2xl text-slate-400'>
-                    {data.day.split('/')[0]}
+                    {data.watchedOn.split('/')[0]}
                 </p>
             ),
             show: true,
@@ -91,21 +91,21 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             id: 3,
             title: 'FILM',
             sortable: false,
-            value: 'film',
+            value: 'filmTitle',
             cell: (data: any) => (
                 <div className='flex text-center'>
-                    {data.poster ? (
+                    {data.posterPath ? (
                         <NextLink
                             href='/film/[id]'
-                            as={`/film/${formatForURL(data.film.toString())}-${
-                                data.filmId
-                            }`}
+                            as={`/film/${formatForURL(
+                                data.filmTitle.toString()
+                            )}-${data.filmId}`}
                         >
                             <img
                                 className={`aspect-auto h-16 rounded-md border-[1px] border-slate-700 hover:outline hover:outline-superRed `}
                                 src={
-                                    data.poster
-                                        ? `https://image.tmdb.org/t/p/w500${data.poster}`
+                                    data.posterPath
+                                        ? `https://image.tmdb.org/t/p/w500${data.posterPath}`
                                         : undefined
                                 }
                             />
@@ -113,7 +113,9 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
                     ) : (
                         <p>?</p>
                     )}
-                    <h4 className='mt-[20px] ml-5'>{data.film}</h4>
+                    <h4 className='mt-[20px] ml-5 text-white'>
+                        {data.filmTitle}
+                    </h4>
                 </div>
             ),
             show: true,
@@ -124,7 +126,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             id: 4,
             title: 'RATING',
             sortable: false,
-            value: 'rating',
+            value: 'ratingGiven',
             cell: (data: any) => (
                 <div>
                     <Rating
@@ -132,7 +134,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
                         allowFraction={true}
                         size={15}
                         fillColor={'#FD4443'}
-                        initialValue={Number(data.rating)}
+                        initialValue={Number(data.ratingGiven)}
                     />
                 </div>
             ),
@@ -160,11 +162,11 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
             id: 7,
             title: 'REVIEW',
             sortable: false,
-            value: 'review',
+            value: 'reviewLink',
             cell: (data: any) => (
                 <>
-                    {data.review ? (
-                        <NextLink href='/review/[id]' as={`${data.review}`}>
+                    {data.reviewLink ? (
+                        <NextLink href='/review/[id]' as={`${data.reviewLink}`}>
                             <BiCommentDetail className='h-[15px] w-[15px] fill-slate-400' />
                         </NextLink>
                     ) : null}
@@ -190,7 +192,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
                         <div>
                             <SuperTable
                                 columns={columns}
-                                data={formattedData}
+                                data={data.diary.diary}
                             />
                         </div>
                     ) : (

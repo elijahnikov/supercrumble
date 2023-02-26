@@ -446,6 +446,7 @@ export type QueryCheckIfUsernameTakenArgs = {
 export type QueryDiaryArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  month?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderDir?: InputMaybe<Scalars['String']>;
   userId: Scalars['Int'];
