@@ -108,7 +108,11 @@ const SuperTable = ({
                         (column: Column) =>
                             column.show && (
                                 <TableCell
-                                    className='border-slate-700 text-center text-xs text-slate-500'
+                                    style={{
+                                        color: 'white',
+                                        textAlign: 'left',
+                                        fontSize: '12px',
+                                    }}
                                     key={column.id + '-head'}
                                 >
                                     {column.title}

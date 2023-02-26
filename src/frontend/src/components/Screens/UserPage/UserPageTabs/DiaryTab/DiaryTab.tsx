@@ -30,27 +30,6 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
         },
     });
 
-    const [formattedData, setFormattedData] = useState<any[]>([]);
-
-    useEffect(() => {
-        if (data && !loading) formatData(data);
-    }, [data]);
-
-    const formatData = (data?: DiaryQuery) => {
-        console.log(data);
-        let tempData = data?.diary.diary.map((diary: any) => ({
-            month: diary.watchedOn,
-            day: diary.watchedOn,
-            film: diary.filmTitle,
-            filmId: diary.filmId,
-            rating: diary.ratingGiven,
-            rewatch: diary.rewatch,
-            review: diary.reviewLink,
-            poster: diary.posterPath,
-        }));
-        setFormattedData(tempData!!);
-    };
-
     const columns = [
         {
             id: 1,
@@ -188,7 +167,7 @@ const DiaryTab = ({ userId }: DiaryTabProps) => {
                 <SecondaryUserPageTabs />
                 <br />
                 <div className='mt-[100px] mb-[100px]'>
-                    {data && formattedData.length > 0 ? (
+                    {data && data.diary.diary.length > 0 ? (
                         <div>
                             <SuperTable
                                 columns={columns}
