@@ -111,6 +111,16 @@ export class WatchedResolver {
 		if (check) {
 			return null;
 		}
+
+		await getConnection()
+			.createQueryBuilder()
+			.update(User)
+			.set({
+				totalFilmsWatched: () => '"totalFilmsWatched" + 1',
+			})
+			.where("id = :id", { id: req.session.userId })
+			.execute();
+
 		return Watched.create({
 			creatorId: req.session.userId,
 			...input,
