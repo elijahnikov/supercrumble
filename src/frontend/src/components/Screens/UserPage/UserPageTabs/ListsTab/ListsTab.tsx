@@ -1,6 +1,8 @@
+import CreateListModal from '@/components/Common/CreateListModal/CreateListModal';
 import { useFilmListsQuery } from '@/generated/graphql';
 import { getUsername } from '@/utils/getUsername';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { BiComment } from 'react-icons/bi';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { FilmListType } from './types';
@@ -15,6 +17,8 @@ interface FilmListProps {
 
 const ListsTab = ({ username }: ListsTabProps) => {
     // const username = getUsername();
+
+    const [listOpen, setListOpen] = useState<boolean>(false);
 
     const { data, loading, error, fetchMore, variables } = useFilmListsQuery({
         variables: {
@@ -43,7 +47,22 @@ const ListsTab = ({ username }: ListsTabProps) => {
                     </div>
                 </div>
             ) : (
-                <></>
+                <>
+                    <div className='mt-[20px] h-[150px] rounded-md border border-slate-800 text-center'>
+                        <div className='mt-[30px] w-full justify-center text-center'>
+                            <div className='inline w-full text-slate-400'>
+                                <h4 className='mb-[-20px] text-white'>
+                                    You haven't added any lists.
+                                </h4>
+                                <CreateListModal
+                                    fromMenu={false}
+                                    open={listOpen}
+                                    setOpen={setListOpen}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </>
             )}
         </div>
     );

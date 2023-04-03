@@ -39,7 +39,7 @@ const UserProfileMini = ({ data, isCurrentUser }: UserProfileMiniProps) => {
                 />
             </div>
             {isCurrentUser ? (
-                <div className='relative top-[-260px] left-[700px] w-[19%]'>
+                <div className='relative top-[-260px] left-[690px] w-[19%]'>
                     <Button
                         variant='secondary'
                         onClick={() => {
