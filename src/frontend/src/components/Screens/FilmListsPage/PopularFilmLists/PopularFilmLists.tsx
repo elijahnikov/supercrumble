@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
 import { formatFilmListData } from '@/utils/formatFilmListData';
+import Link from 'next/link';
 
 interface PopularFilmListsProps {}
 
@@ -55,12 +56,8 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
                                         {/* <p>{list.title}</p> */}
 
                                         <div className='w-[17.9vw] p-4'>
-                                            <div
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/list/${list.id}`
-                                                    )
-                                                }
+                                            <Link
+                                                href={`/list/${list.id}`}
                                                 className='flex w-[352px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
                                             >
                                                 {list.filmOnePosterPath && (
@@ -93,19 +90,23 @@ const PopularFilmLists = ({}: PopularFilmListsProps) => {
                                                         src={`https://image.tmdb.org/t/p/w500${list.filmFivePosterPath}`}
                                                     />
                                                 )}
-                                            </div>
+                                            </Link>
                                             <div className='float-left ml-1 mt-2 w-[100%] text-left'>
                                                 <h4>{list.title}</h4>
                                                 <div className='mt-1 flex'>
                                                     {list.creator.avatar && (
-                                                        <img
-                                                            className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
-                                                            alt='Profile image'
-                                                            src={
-                                                                list.creator
-                                                                    .avatar
-                                                            }
-                                                        />
+                                                        <Link
+                                                            href={`/@${list.creator.username}`}
+                                                        >
+                                                            <img
+                                                                className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
+                                                                alt='Profile image'
+                                                                src={
+                                                                    list.creator
+                                                                        .avatar
+                                                                }
+                                                            />
+                                                        </Link>
                                                     )}
                                                     <p className='text-[14px] font-semibold text-slate-400'>
                                                         {list.creator.username}

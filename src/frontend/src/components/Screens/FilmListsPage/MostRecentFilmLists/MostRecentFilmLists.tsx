@@ -11,6 +11,7 @@ import { FilmListDataType, FilmListEntryType } from '../PopularFilmLists/types';
 import { formatFilmListData } from '@/utils/formatFilmListData';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { BiComment } from 'react-icons/bi';
+import Link from 'next/link';
 
 interface MostRecentFilmListsProps {}
 
@@ -35,12 +36,10 @@ const MostRecentFilmLists = ({}: MostRecentFilmListsProps) => {
                     {data?.filmLists &&
                         data.filmLists.filmLists.map(
                             (list: FilmListDataType) => (
-                                <div className='mt-5 w-[100%]'>
+                                <div key={list.id} className='mt-5 w-[100%]'>
                                     <div className='flex'>
-                                        <div
-                                            onClick={() =>
-                                                router.push(`/list/${list.id}`)
-                                            }
+                                        <Link
+                                            href={`/list/${list.id}`}
                                             className='mt-5 flex w-[350px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
                                         >
                                             {list.filmOnePosterPath && (
@@ -73,27 +72,28 @@ const MostRecentFilmLists = ({}: MostRecentFilmListsProps) => {
                                                     src={`https://image.tmdb.org/t/p/w500${list.filmFivePosterPath}`}
                                                 />
                                             )}
-                                        </div>
+                                        </Link>
                                         <div className='mt-8 ml-5 w-[25vw] text-left'>
-                                            <h4
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/list/${list.id}`
-                                                    )
-                                                }
+                                            <Link
+                                                href={`/list/${list.id}`}
                                                 className='cursor-pointer'
                                             >
                                                 {list.title}
-                                            </h4>
+                                            </Link>
                                             <div className='mt-1 flex'>
                                                 {list.creator.avatar && (
-                                                    <img
-                                                        className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
-                                                        alt='Profile image'
-                                                        src={
-                                                            list.creator.avatar
-                                                        }
-                                                    />
+                                                    <Link
+                                                        href={`/@${list.creator.username}`}
+                                                    >
+                                                        <img
+                                                            className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
+                                                            alt='Profile image'
+                                                            src={
+                                                                list.creator
+                                                                    .avatar
+                                                            }
+                                                        />
+                                                    </Link>
                                                 )}
                                                 <p className='text-[14px] font-semibold text-slate-400'>
                                                     {list.creator.username}

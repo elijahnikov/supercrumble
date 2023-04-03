@@ -90,8 +90,9 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                 <div className='invisible absolute left-[50%] top-[50%] inline translate-x-[-50%]  translate-y-[-50%] navBar:visible'>
                     {navMenu.map((nav) => (
                         // <div className='inline' key={nav.id}>
-                        <p
-                            onClick={() => router.push(nav.href)}
+                        <Link
+                            // onClick={() => router.push(nav.href)}
+                            href={nav.href}
                             key={nav.id}
                             className={`text-shadow-md ml-10 inline cursor-pointer text-[16px] font-semibold ${
                                 currentPath === nav.href
@@ -100,7 +101,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                             }`}
                         >
                             {nav.title.toLocaleUpperCase()}
-                        </p>
+                        </Link>
                         // </div>
                     ))}
                 </div>
@@ -136,7 +137,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                 <div className='px-1 py-1 '>
                                     <Menu.Item>
                                         {({ active }) => (
-                                            <NextLink
+                                            <Link
                                                 href='/[username]'
                                                 as={`/@${userData?.me?.username}`}
                                             >
@@ -156,17 +157,13 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                                     />
                                                     Profile
                                                 </button>
-                                            </NextLink>
+                                            </Link>
                                         )}
                                     </Menu.Item>
                                     <Menu.Item>
                                         {({ active }) => (
-                                            <button
-                                                onClick={() =>
-                                                    router.push(
-                                                        `/@${userData?.me?.username}/settings`
-                                                    )
-                                                }
+                                            <Link
+                                                href={`/@${userData?.me?.username}/settings`}
                                                 className={`${
                                                     active
                                                         ? 'bg-crumble-100 text-white'
@@ -181,7 +178,7 @@ const MainNavBar = ({ userData }: MainNavBarProps) => {
                                                     }`}
                                                 />
                                                 Settings
-                                            </button>
+                                            </Link>
                                         )}
                                     </Menu.Item>
                                 </div>

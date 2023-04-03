@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 
 // GraphQL
 import { useFilmListTagsQuery } from '@/generated/graphql';
+import Link from 'next/link';
 
 interface PopularTagsProps {}
 
@@ -23,7 +24,8 @@ const PopularTags = ({}: PopularTagsProps) => {
             </div>
             <div className='clear-both mt-5  text-left'>
                 {data?.filmListTags.filmListTags.map((tag) => (
-                    <NextLink
+                    <Link
+                        key={tag.id}
                         href='tag/[id]/list'
                         as={`/tag/${tag.text.trim()}/list`}
                     >
@@ -37,7 +39,7 @@ const PopularTags = ({}: PopularTagsProps) => {
                         >
                             {tag.text}
                         </span>
-                    </NextLink>
+                    </Link>
                 ))}
             </div>
         </div>

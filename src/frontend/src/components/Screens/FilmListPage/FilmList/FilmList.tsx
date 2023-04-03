@@ -1,11 +1,8 @@
 import { FilmListEntriesType } from './types';
-import NextLink from 'next/link';
 import { formatForURL } from '@/utils/url/formatForURL';
 import { useRouter } from 'next/router';
 import { BsX } from 'react-icons/bs';
-import { useDeleteFilmListEntryMutation } from '@/generated/graphql';
-import { useEffect } from 'react';
-import AddFilmToList from '../AddFilmToList/AddFilmToList';
+import Link from 'next/link';
 
 interface FilmListProps {
     filmListEntries?: FilmListEntriesType[];
@@ -44,7 +41,7 @@ const FilmList = ({
                 >
                     {entry.film.posterPath ? (
                         <>
-                            <NextLink
+                            <Link
                                 href='/film/[id]'
                                 as={`/film/${formatForURL(
                                     entry.film.movieTitle.toString()
@@ -66,7 +63,7 @@ const FilmList = ({
                                             : undefined
                                     }
                                 />
-                            </NextLink>
+                            </Link>
                         </>
                     ) : (
                         <p>?</p>
