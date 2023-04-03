@@ -5,6 +5,7 @@ export type FilmListType = {
     description?: string | null;
     score: number;
     noOfComments: number;
+    numberOfFilms: number;
     filmOnePosterPath?: string | null;
     filmTwoPosterPath?: string | null;
     filmThreePosterPath?: string | null;

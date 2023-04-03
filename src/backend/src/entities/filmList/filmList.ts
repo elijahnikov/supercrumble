@@ -1,13 +1,13 @@
 import { Field, ObjectType } from "type-graphql";
 import {
-    BaseEntity,
-    Column,
-    CreateDateColumn,
-    Entity,
-    ManyToOne,
-    OneToMany,
-    PrimaryColumn,
-    UpdateDateColumn,
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	PrimaryColumn,
+	UpdateDateColumn,
 } from "typeorm";
 import { User } from "../user/user";
 import { FilmListComment } from "./filmListComment";
@@ -17,78 +17,82 @@ import { FilmListUpvote } from "./filmListUpvote";
 @ObjectType()
 @Entity()
 export class FilmList extends BaseEntity {
-    @Field()
-    @PrimaryColumn({ type: "varchar" })
-    id!: string;
+	@Field()
+	@PrimaryColumn({ type: "varchar" })
+	id!: string;
 
-    @Field()
-    @Column()
-    title!: string;
+	@Field()
+	@Column()
+	title!: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    description: string;
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	description: string;
 
-    @Field()
-    @Column()
-    tags?: string;
+	@Field()
+	@Column()
+	tags?: string;
 
-    @Field()
-    @Column({ type: "int", default: 0 })
-    score!: number;
+	@Field()
+	@Column({ type: "int", default: 0 })
+	score!: number;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    filmOnePosterPath?: string;
+	@Field()
+	@Column({ type: "int", default: 0 })
+	numberOfFilms!: number;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    filmTwoPosterPath?: string;
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	filmOnePosterPath?: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    filmThreePosterPath?: string;
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	filmTwoPosterPath?: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    filmFourPosterPath?: string;
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	filmThreePosterPath?: string;
 
-    @Field({ nullable: true })
-    @Column({ nullable: true })
-    filmFivePosterPath?: string;
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	filmFourPosterPath?: string;
 
-    @OneToMany(() => FilmListEntries, (filmListEntries) => filmListEntries.list)
-    entries: FilmListEntries[];
+	@Field({ nullable: true })
+	@Column({ nullable: true })
+	filmFivePosterPath?: string;
 
-    @Field()
-    @Column()
-    creatorId: number;
+	@OneToMany(() => FilmListEntries, (filmListEntries) => filmListEntries.list)
+	entries: FilmListEntries[];
 
-    @Field(() => User)
-    @ManyToOne(() => User, (user) => user.lists)
-    creator: User;
+	@Field()
+	@Column()
+	creatorId: number;
 
-    @OneToMany(
-        () => FilmListUpvote,
-        (filmListUpvote) => filmListUpvote.filmList
-    )
-    filmListUpvotes: FilmListUpvote[];
+	@Field(() => User)
+	@ManyToOne(() => User, (user) => user.lists)
+	creator: User;
 
-    @OneToMany(
-        () => FilmListComment,
-        (filmListComment) => filmListComment.filmList
-    )
-    filmListComments: FilmListComment[];
+	@OneToMany(
+		() => FilmListUpvote,
+		(filmListUpvote) => filmListUpvote.filmList
+	)
+	filmListUpvotes: FilmListUpvote[];
 
-    @Field()
-    @Column({ type: "int", default: 0 })
-    noOfComments!: number;
+	@OneToMany(
+		() => FilmListComment,
+		(filmListComment) => filmListComment.filmList
+	)
+	filmListComments: FilmListComment[];
 
-    @Field(() => String)
-    @CreateDateColumn()
-    createdAt: Date;
+	@Field()
+	@Column({ type: "int", default: 0 })
+	noOfComments!: number;
 
-    @Field(() => String)
-    @UpdateDateColumn()
-    updatedAt: Date;
+	@Field(() => String)
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@Field(() => String)
+	@UpdateDateColumn()
+	updatedAt: Date;
 }

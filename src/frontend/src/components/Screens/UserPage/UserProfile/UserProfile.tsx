@@ -88,10 +88,10 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                     <FollowButton user={data!.getUserByUsername!!} />
                 </div>
             )}
-            <UserStats
+            {/* <UserStats
                 followers={data?.getUserByUsername?.followers!}
                 following={data?.getUserByUsername?.following!}
-            />
+            /> */}
         </div>
     );
 };

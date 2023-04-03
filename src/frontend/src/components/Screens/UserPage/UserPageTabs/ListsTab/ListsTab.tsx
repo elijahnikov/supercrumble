@@ -34,7 +34,8 @@ const ListsTab = ({ username }: ListsTabProps) => {
             {loading && <p>loading...</p>}
             {!loading && data.filmLists.filmLists.length > 0 ? (
                 <div>
-                    <div className=''>
+                    <br />
+                    <div className='w-full'>
                         {data &&
                             data.filmLists.filmLists.map((filmList, index) => (
                                 <FilmList filmList={filmList} key={index} />
@@ -52,71 +53,89 @@ const FilmList = ({ filmList }: FilmListProps) => {
     const router = useRouter();
 
     return (
-        <div className='mt-5'>
-            <div className='flex'>
-                <div
+        <div className='flex'>
+            <div
+                onClick={() => router.push(`/list/${filmList.id}`)}
+                className='mt-5 flex w-[350px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
+            >
+                {filmList.filmOnePosterPath && (
+                    <img
+                        className={`z-50 m-2 block h-[144px] w-[90px] rounded-md`}
+                        src={`https://image.tmdb.org/t/p/w500${filmList.filmOnePosterPath}`}
+                    />
+                )}
+                {filmList.filmTwoPosterPath && (
+                    <img
+                        className={`z-40 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
+                        src={`https://image.tmdb.org/t/p/w500${filmList.filmTwoPosterPath}`}
+                    />
+                )}
+                {filmList.filmThreePosterPath && (
+                    <img
+                        className={`z-30 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
+                        src={`https://image.tmdb.org/t/p/w500${filmList.filmThreePosterPath}`}
+                    />
+                )}
+                {filmList.filmFourPosterPath && (
+                    <img
+                        className={`z-20 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
+                        src={`https://image.tmdb.org/t/p/w500${filmList.filmFourPosterPath}`}
+                    />
+                )}
+                {filmList.filmFivePosterPath && (
+                    <img
+                        className={`z-10 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
+                        src={`https://image.tmdb.org/t/p/w500${filmList.filmFivePosterPath}`}
+                    />
+                )}
+            </div>
+            <div className='mt-8 ml-5 w-[25vw] text-left'>
+                <h4
                     onClick={() => router.push(`/list/${filmList.id}`)}
-                    className='mt-5 flex w-[350px] cursor-pointer rounded-md border-[1px] border-gray-800 bg-crumble-200'
+                    className='cursor-pointer'
                 >
-                    {filmList.filmOnePosterPath && (
+                    {filmList.title}
+                </h4>
+                <div className='mt-1 flex'>
+                    {filmList.creator.avatar && (
                         <img
-                            className={`z-50 m-2 block h-[144px] w-[90px] rounded-md`}
-                            src={`https://image.tmdb.org/t/p/w500${filmList.filmOnePosterPath}`}
+                            className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
+                            alt='Profile image'
+                            src={filmList.creator.avatar}
                         />
                     )}
-                    {filmList.filmTwoPosterPath && (
-                        <img
-                            className={`z-40 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
-                            src={`https://image.tmdb.org/t/p/w500${filmList.filmTwoPosterPath}`}
-                        />
-                    )}
-                    {filmList.filmThreePosterPath && (
-                        <img
-                            className={`z-30 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
-                            src={`https://image.tmdb.org/t/p/w500${filmList.filmThreePosterPath}`}
-                        />
-                    )}
-                    {filmList.filmFourPosterPath && (
-                        <img
-                            className={`z-20 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
-                            src={`https://image.tmdb.org/t/p/w500${filmList.filmFourPosterPath}`}
-                        />
-                    )}
-                    {filmList.filmFivePosterPath && (
-                        <img
-                            className={`z-10 m-2 block h-[144px] w-[90px] rounded-md [&:not(:first-child)]:ml-[-38px]`}
-                            src={`https://image.tmdb.org/t/p/w500${filmList.filmFivePosterPath}`}
-                        />
-                    )}
+                    <p className='text-[14px] font-semibold text-slate-400'>
+                        {filmList.creator.username}
+                    </p>
+                    <p className='ml-4 text-[12px] text-slate-600'>
+                        {filmList.numberOfFilms} films added
+                    </p>
+                    <BsFillHeartFill className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
+                    <p className='ml-1 text-[12px] text-slate-600'>
+                        {filmList.score}
+                    </p>
+                    <BiComment className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
+                    <p className='ml-1 text-[12px] text-slate-600'>
+                        {filmList.noOfComments}
+                    </p>
                 </div>
-                <div className='mt-8 ml-5 w-[25vw] text-left'>
-                    <h4
-                        onClick={() => router.push(`/list/${filmList.id}`)}
-                        className='cursor-pointer'
-                    >
-                        {filmList.title}
-                    </h4>
-                    <div className='mt-1 flex'>
-                        {filmList.creator.avatar && (
-                            <img
-                                className='mr-[10px] inline h-[20px] w-[20px] rounded-full object-cover'
-                                alt='Profile image'
-                                src={filmList.creator.avatar}
-                            />
-                        )}
-                        <p className='text-[14px] font-semibold text-slate-400'>
-                            {filmList.creator.username}
-                        </p>
-                        <BsFillHeartFill className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
-                        <p className='ml-1 text-[12px] text-slate-600'>
-                            {filmList.score}
-                        </p>
-                        <BiComment className='float-left mt-[7px] ml-2 inline h-3 w-3 fill-slate-600' />
-                        <p className='ml-1 text-[12px] text-slate-600'>
-                            {filmList.noOfComments}
-                        </p>
-                        <p className='float-left'>{filmList.description}</p>
-                    </div>
+                <div className='mt-2 w-full'>
+                    {filmList.description &&
+                    filmList.description.length > 150 ? (
+                        <div>
+                            <span>{filmList.description.slice(0, 140)}...</span>
+                            <a
+                                onClick={() =>
+                                    router.push(`/list/${filmList.id}`)
+                                }
+                                className='ml-2 cursor-pointer text-sm text-superRed'
+                            >
+                                Read more
+                            </a>
+                        </div>
+                    ) : (
+                        <span>{filmList.description}</span>
+                    )}
                 </div>
             </div>
         </div>

@@ -89,6 +89,7 @@ export type FilmList = {
   filmTwoPosterPath?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   noOfComments: Scalars['Float'];
+  numberOfFilms: Scalars['Float'];
   score: Scalars['Float'];
   tags: Scalars['String'];
   title: Scalars['String'];
@@ -423,6 +424,7 @@ export type Query = {
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
+  numberOfWatchedByYear: Scalars['Int'];
   review?: Maybe<Review>;
   reviewComment?: Maybe<ReviewComment>;
   reviewComments: PaginatedReviewComments;
@@ -505,6 +507,11 @@ export type QueryGetUserArgs = {
 
 export type QueryGetUserByUsernameArgs = {
   username: Scalars['String'];
+};
+
+
+export type QueryNumberOfWatchedByYearArgs = {
+  year?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -952,7 +959,7 @@ export type FilmListsQueryVariables = Exact<{
 }>;
 
 
-export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, title: string, score: number, description?: string | null, noOfComments: number, filmOnePosterPath?: string | null, filmTwoPosterPath?: string | null, filmThreePosterPath?: string | null, filmFourPosterPath?: string | null, filmFivePosterPath?: string | null, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+export type FilmListsQuery = { __typename?: 'Query', filmLists: { __typename?: 'PaginatedFilmLists', hasMore: boolean, filmLists: Array<{ __typename?: 'FilmList', id: string, title: string, score: number, description?: string | null, numberOfFilms: number, noOfComments: number, filmOnePosterPath?: string | null, filmTwoPosterPath?: string | null, filmThreePosterPath?: string | null, filmFourPosterPath?: string | null, filmFivePosterPath?: string | null, creatorId: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
 
 export type FilmListTagsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -1016,6 +1023,13 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, verified: boolean, username: string, displayName?: string | null, email: string, avatar?: string | null, header?: string | null, bio?: string | null, bioLink?: string | null, totalFilmsWatched?: number | null, totalHoursWatched?: number | null, totalListsCreated?: number | null, following: number, followers: number, createdAt: string, updatedAt: string, usernameChangeDate?: string | null, onboarded?: boolean | null } | null };
+
+export type NumberOfWatchedByYearQueryVariables = Exact<{
+  year: Scalars['String'];
+}>;
+
+
+export type NumberOfWatchedByYearQuery = { __typename?: 'Query', numberOfWatchedByYear: number };
 
 export type WatchedQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2345,6 +2359,7 @@ export const FilmListsDocument = gql`
       title
       score
       description
+      numberOfFilms
       noOfComments
       filmOnePosterPath
       filmTwoPosterPath
@@ -2703,6 +2718,39 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const NumberOfWatchedByYearDocument = gql`
+    query NumberOfWatchedByYear($year: String!) {
+  numberOfWatchedByYear(year: $year)
+}
+    `;
+
+/**
+ * __useNumberOfWatchedByYearQuery__
+ *
+ * To run a query within a React component, call `useNumberOfWatchedByYearQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNumberOfWatchedByYearQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNumberOfWatchedByYearQuery({
+ *   variables: {
+ *      year: // value for 'year'
+ *   },
+ * });
+ */
+export function useNumberOfWatchedByYearQuery(baseOptions: Apollo.QueryHookOptions<NumberOfWatchedByYearQuery, NumberOfWatchedByYearQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NumberOfWatchedByYearQuery, NumberOfWatchedByYearQueryVariables>(NumberOfWatchedByYearDocument, options);
+      }
+export function useNumberOfWatchedByYearLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NumberOfWatchedByYearQuery, NumberOfWatchedByYearQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NumberOfWatchedByYearQuery, NumberOfWatchedByYearQueryVariables>(NumberOfWatchedByYearDocument, options);
+        }
+export type NumberOfWatchedByYearQueryHookResult = ReturnType<typeof useNumberOfWatchedByYearQuery>;
+export type NumberOfWatchedByYearLazyQueryHookResult = ReturnType<typeof useNumberOfWatchedByYearLazyQuery>;
+export type NumberOfWatchedByYearQueryResult = Apollo.QueryResult<NumberOfWatchedByYearQuery, NumberOfWatchedByYearQueryVariables>;
 export const WatchedDocument = gql`
     query Watched($limit: Int, $cursor: String, $orderBy: String, $orderDir: String, $username: String!) {
   watched(

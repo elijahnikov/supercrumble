@@ -1,5 +1,6 @@
 // Components
 import Layout from '@/components/Common/Layout/Layout';
+import ProfileTab from '@/components/Screens/UserPage/UserPageTabs/ProfileTab/ProfileTab';
 import UserPageTabs from '@/components/Screens/UserPage/UserPageTabs/UserPageTabs';
 import UserProfile from '@/components/Screens/UserPage/UserProfile/UserProfile';
 
@@ -42,6 +43,7 @@ const UserPage = ({}: UserPageProps) => {
                         />
                     )}
                     <UserPageTabs username={data.getUserByUsername.username} />
+                    <ProfileTab data={data} />
                 </div>
             </div>
         </Layout>

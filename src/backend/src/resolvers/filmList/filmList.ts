@@ -149,7 +149,7 @@ export class FilmListResolver {
 				const tagCheck = await FilmListTags.findOne({
 					where: { text: tag },
 				});
-				console.log(tagCheck);
+
 				if (tagCheck) {
 					await connection
 						.createQueryBuilder()
@@ -196,12 +196,22 @@ export class FilmListResolver {
 		filmIds.map((film) => {
 			filmListEntriesArr.push({ listId, filmId: film });
 		});
+
 		await connection
 			.createQueryBuilder()
 			.insert()
 			.into(FilmListEntries)
 			.values(filmListEntriesArr)
 			.returning("*")
+			.execute();
+
+		await getConnection()
+			.createQueryBuilder()
+			.update(FilmList)
+			.set({
+				numberOfFilms: filmListEntriesArr.length,
+			})
+			.where("id = :id", { id: listId })
 			.execute();
 
 		return {

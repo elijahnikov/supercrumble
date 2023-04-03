@@ -1,0 +1,11 @@
+interface StatsProps {}
+
+const Stats = ({}: StatsProps) => {
+    return (
+        <div>
+            <h1></h1>
+        </div>
+    );
+};
+
+export default Stats;

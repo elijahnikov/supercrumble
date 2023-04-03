@@ -1,0 +1,3 @@
+query NumberOfWatchedByYear($year: String!) {
+    numberOfWatchedByYear(year: $year)
+}
