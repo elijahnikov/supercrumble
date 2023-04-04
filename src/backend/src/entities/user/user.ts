@@ -81,15 +81,15 @@ export class User extends BaseEntity {
 
 	//USER STATS______________________________________________
 	//________________________________________________________
-	@Field({ nullable: true })
+	@Field()
 	@Column({ default: 0, type: "int" })
 	totalFilmsWatched: number;
 
-	@Field({ nullable: true })
+	@Field()
 	@Column({ default: 0, type: "int" })
 	totalHoursWatched: number;
 
-	@Field({ nullable: true })
+	@Field()
 	@Column({ default: 0, type: "int" })
 	totalListsCreated: number;
 

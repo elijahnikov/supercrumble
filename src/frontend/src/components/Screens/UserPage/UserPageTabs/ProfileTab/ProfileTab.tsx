@@ -1,29 +1,36 @@
-import {
-    GetUserByUsernameQuery,
-    useNumberOfWatchedByYearQuery,
-} from '@/generated/graphql';
+import { GetUserByUsernameQuery } from '@/generated/graphql';
+import Stats from './Stats/Stats';
 
 interface ProfileTabProps {
     data: GetUserByUsernameQuery;
 }
 
 const ProfileTab = ({ data }: ProfileTabProps) => {
-    const { data: watched } = useNumberOfWatchedByYearQuery({
-        variables: {
-            year: new Date().getFullYear().toString(),
-        },
-    });
+    if (!data.getUserByUsername) {
+        return <div>data not found</div>;
+    }
+
+    const {
+        followers,
+        following,
+        totalListsCreated,
+        totalFilmsWatched,
+        totalHoursWatched,
+    } = data?.getUserByUsername;
 
     return (
-        <div className='mt-5 flex rounded-md border border-slate-800 bg-blue-400'>
-            <div className='flex bg-red-400'>
-                <div>
-                    <h1>{data.getUserByUsername?.totalFilmsWatched}</h1>
-                </div>
-                <div></div>
-                {/* <h1>{data.getUserByUsername?.followers}</h1>
-                <h1>{data.getUserByUsername?.following}</h1> */}
-            </div>
+        <div>
+            {data && (
+                <Stats
+                    stats={{
+                        followers,
+                        following,
+                        totalListsCreated,
+                        totalFilmsWatched,
+                        totalHoursWatched,
+                    }}
+                />
+            )}
         </div>
     );
 };
