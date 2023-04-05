@@ -1,0 +1,25 @@
+query Followers(
+    $userId: Int!
+    $limit: Int!
+    $cursor: String
+    $orderBy: String
+    $orderDir: String
+) {
+    followers(
+        userId: $userId
+        limit: $limit
+        cursor: $cursor
+        orderBy: $orderBy
+        orderDir: $orderDir
+    ) {
+        subscription {
+            follower {
+                id
+                username
+                avatar
+                displayName
+            }
+        }
+        hasMore
+    }
+}

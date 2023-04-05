@@ -386,6 +386,12 @@ export type PaginatedFilmLists = {
   hasMore: Scalars['Boolean'];
 };
 
+export type PaginatedFollowers = {
+  __typename?: 'PaginatedFollowers';
+  hasMore: Scalars['Boolean'];
+  subscription: Array<Subscription>;
+};
+
 export type PaginatedReviewComments = {
   __typename?: 'PaginatedReviewComments';
   hasMore: Scalars['Boolean'];
@@ -421,6 +427,7 @@ export type Query = {
   filmListEntries: PaginatedFilmListEntries;
   filmListTags: PaginatedFilmListTags;
   filmLists: PaginatedFilmLists;
+  followers: PaginatedFollowers;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
@@ -497,6 +504,15 @@ export type QueryFilmListsArgs = {
   orderDir?: InputMaybe<Scalars['String']>;
   tag?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryFollowersArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+  userId: Scalars['Int'];
 };
 
 
@@ -635,6 +651,15 @@ export type S3Payload = {
   __typename?: 'S3Payload';
   signedRequest: Scalars['String'];
   url: Scalars['String'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  createdAt: Scalars['String'];
+  follower: User;
+  followerId: Scalars['Float'];
+  followingBack: Scalars['Boolean'];
+  userId: Scalars['Float'];
 };
 
 export type User = {
@@ -1004,6 +1029,17 @@ export type ReviewsQueryVariables = Exact<{
 
 
 export type ReviewsQuery = { __typename?: 'Query', reviews: { __typename?: 'PaginatedReviews', hasMore: boolean, reviews: Array<{ __typename?: 'Review', id: number, referenceId: string, movieId: number, text: string, movie_poster: string, backdrop: string, movie_title: string, movie_release_year: number, ratingGiven: number, score: number, watchedOn?: string | null, containsSpoilers: boolean, tags: string, createdAt: string, updatedAt: string, voteStatus?: number | null, noOfComments: number, creator: { __typename?: 'User', id: number, username: string, displayName?: string | null, avatar?: string | null } }> } };
+
+export type FollowersQueryVariables = Exact<{
+  userId: Scalars['Int'];
+  limit: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type FollowersQuery = { __typename?: 'Query', followers: { __typename?: 'PaginatedFollowers', hasMore: boolean, subscription: Array<{ __typename?: 'Subscription', follower: { __typename?: 'User', id: number, username: string, avatar?: string | null, displayName?: string | null } }> } };
 
 export type CheckIfUsernameTakenQueryVariables = Exact<{
   username: Scalars['String'];
@@ -2616,6 +2652,59 @@ export function useReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Re
 export type ReviewsQueryHookResult = ReturnType<typeof useReviewsQuery>;
 export type ReviewsLazyQueryHookResult = ReturnType<typeof useReviewsLazyQuery>;
 export type ReviewsQueryResult = Apollo.QueryResult<ReviewsQuery, ReviewsQueryVariables>;
+export const FollowersDocument = gql`
+    query Followers($userId: Int!, $limit: Int!, $cursor: String, $orderBy: String, $orderDir: String) {
+  followers(
+    userId: $userId
+    limit: $limit
+    cursor: $cursor
+    orderBy: $orderBy
+    orderDir: $orderDir
+  ) {
+    subscription {
+      follower {
+        id
+        username
+        avatar
+        displayName
+      }
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useFollowersQuery__
+ *
+ * To run a query within a React component, call `useFollowersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFollowersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFollowersQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      limit: // value for 'limit'
+ *      cursor: // value for 'cursor'
+ *      orderBy: // value for 'orderBy'
+ *      orderDir: // value for 'orderDir'
+ *   },
+ * });
+ */
+export function useFollowersQuery(baseOptions: Apollo.QueryHookOptions<FollowersQuery, FollowersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
+      }
+export function useFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FollowersQuery, FollowersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
+        }
+export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
+export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
+export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
 export const CheckIfUsernameTakenDocument = gql`
     query CheckIfUsernameTaken($username: String!) {
   checkIfUsernameTaken(username: $username)
