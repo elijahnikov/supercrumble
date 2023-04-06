@@ -47,15 +47,12 @@ export class SubscriptionResolver {
 		return userLoader.load(subscription.userId);
 	}
 
-	@FieldResolver(() => Boolean)
-	followingBack(
+	@FieldResolver(() => User)
+	following(
 		@Root() subscription: Subscription,
-		@Ctx() { followBackChecker, req }: MyContext
+		@Ctx() { userLoader }: MyContext
 	) {
-		return createFollowBackChecker(
-			subscription.followerId,
-			req.session.userId!!
-		);
+		return userLoader.load(subscription.followerId);
 	}
 
 	@Query(() => Boolean)
@@ -103,6 +100,41 @@ export class SubscriptionResolver {
 		return {
 			subscription: followers.slice(0, maxLimit),
 			hasMore: followers.length === maxLimitPlusOne,
+		};
+	}
+
+	@Query(() => PaginatedFollowing)
+	async followings(
+		@Arg("limit", () => Int, { nullable: true }) limit: number,
+		@Arg("cursor", () => String, { nullable: true }) cursor: string | null,
+		@Arg("orderBy", () => String, {
+			defaultValue: "createdAt",
+			nullable: true,
+		})
+		orderBy: string | null,
+		@Arg("orderDir", () => String, { defaultValue: "DESC", nullable: true })
+		orderDir: "DESC" | "ASC",
+		@Arg("userId", () => Int) userId: number
+	): Promise<PaginatedFollowing> {
+		const maxLimit = Math.min(50, limit);
+		const maxLimitPlusOne = maxLimit + 1;
+
+		const qb = getConnection()
+			.getRepository(Subscription)
+			.createQueryBuilder("sub")
+			.orderBy(`sub."${orderBy}"`, orderDir)
+			.where('sub. "userId" = :userId', { userId })
+			.take(maxLimitPlusOne);
+		if (cursor) {
+			qb.andWhere('sub. "createdAt" < :cursor', {
+				cursor: new Date(parseInt(cursor)),
+			});
+		}
+
+		const followings = await qb.getMany();
+		return {
+			subscription: followings.slice(0, maxLimit),
+			hasMore: followings.length === maxLimitPlusOne,
 		};
 	}
 
