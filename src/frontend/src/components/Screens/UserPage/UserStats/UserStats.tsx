@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FollowersModal from '../UserPageTabs/ProfileTab/FollowersModal/FollowersModal';
+import FollowingsModal from '../UserPageTabs/ProfileTab/FollowingsModal/FollowingsModal';
 
 interface UserStatsProps {
     following: number;
@@ -40,6 +41,11 @@ const UserStats = ({ followers, following, userId }: UserStatsProps) => {
                 userId={userId}
                 open={followersModalOpen}
                 setOpen={setFollowersModalOpen}
+            />
+            <FollowingsModal
+                userId={userId}
+                open={followingModalOpen}
+                setOpen={setFollowingModalOpen}
             />
         </>
     );

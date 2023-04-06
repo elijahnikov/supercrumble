@@ -1,18 +1,18 @@
-import { useFollowersQuery } from '@/generated/graphql';
+import { useFollowingsQuery } from '@/generated/graphql';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef } from 'react';
 
-interface FollowersModalProps {
+interface FollowingsModalProps {
     open: boolean;
     setOpen: (value: boolean) => void;
     userId: number;
 }
 
-const FollowersModal = ({ open, setOpen, userId }: FollowersModalProps) => {
+const FollowingsModal = ({ open, setOpen, userId }: FollowingsModalProps) => {
     const closeButtonRef = useRef(null);
 
-    const { data, loading, error } = useFollowersQuery({
+    const { data, loading, error } = useFollowingsQuery({
         variables: {
             limit: 20,
             userId: userId,
@@ -21,7 +21,6 @@ const FollowersModal = ({ open, setOpen, userId }: FollowersModalProps) => {
     });
 
     if (error) setOpen(!open);
-
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog
@@ -80,25 +79,25 @@ const FollowersModal = ({ open, setOpen, userId }: FollowersModalProps) => {
                                                 {loading && <h3>Loading...</h3>}
                                                 {data &&
                                                     !loading &&
-                                                    data.followers.subscription.map(
-                                                        (follower) => (
+                                                    data.followings.subscription.map(
+                                                        (following) => (
                                                             <Link
                                                                 key={
-                                                                    follower
-                                                                        .follower
+                                                                    following
+                                                                        .following
                                                                         .id
                                                                 }
                                                                 className='flex border-b-[1px] border-slate-800 p-4'
-                                                                href={`/@${follower.follower.username}`}
+                                                                href={`/@${following.following.username}`}
                                                             >
                                                                 <img
                                                                     className='inline h-[30px] w-[30px] rounded-full object-cover'
                                                                     src={
-                                                                        follower
-                                                                            .follower
+                                                                        following
+                                                                            .following
                                                                             .avatar
-                                                                            ? follower
-                                                                                  .follower
+                                                                            ? following
+                                                                                  .following
                                                                                   .avatar
                                                                             : ''
                                                                     }
@@ -106,8 +105,8 @@ const FollowersModal = ({ open, setOpen, userId }: FollowersModalProps) => {
                                                                 />
                                                                 <p className='ml-2 mt-1'>
                                                                     {
-                                                                        follower
-                                                                            .follower
+                                                                        following
+                                                                            .following
                                                                             .username
                                                                     }
                                                                 </p>
@@ -139,4 +138,4 @@ const FollowersModal = ({ open, setOpen, userId }: FollowersModalProps) => {
     );
 };
 
-export default FollowersModal;
+export default FollowingsModal;

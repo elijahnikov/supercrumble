@@ -16,8 +16,6 @@ import { User } from "../../entities/user/user";
 import { MyContext } from "../../types";
 import { isAuth } from "../../middleware/isAuth";
 import { getConnection } from "typeorm";
-import { ReviewTagsResolver } from "../review/reviewTags";
-import { createFollowBackChecker } from "../../utils/checkers/createFollowBackChecker";
 
 @ObjectType()
 class PaginatedFollowers {
