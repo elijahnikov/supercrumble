@@ -4,6 +4,7 @@ import {
     GetUserByUsernameQuery,
 } from '@/generated/graphql';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { BsFillPatchCheckFill, BsPencil, BsPencilFill } from 'react-icons/bs';
 import UserStats from '../UserStats/UserStats';
 import FollowButton from './FollowButton/FollowButton';
@@ -15,6 +16,7 @@ interface UserProfileProps {
 
 const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
     const router = useRouter();
+
     return (
         <div className='mb-[-10px]  h-[350px] rounded-xl border-[0.5px] border-slate-700'>
             {data?.getUserByUsername?.header ? (
@@ -89,6 +91,7 @@ const UserProfile = ({ data, isCurrentUser }: UserProfileProps) => {
                 </div>
             )}
             <UserStats
+                userId={data?.getUserByUsername?.id!}
                 followers={data?.getUserByUsername?.followers!}
                 following={data?.getUserByUsername?.following!}
             />
