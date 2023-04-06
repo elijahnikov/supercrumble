@@ -392,6 +392,12 @@ export type PaginatedFollowers = {
   subscription: Array<Subscription>;
 };
 
+export type PaginatedFollowing = {
+  __typename?: 'PaginatedFollowing';
+  hasMore: Scalars['Boolean'];
+  subscription: Array<Subscription>;
+};
+
 export type PaginatedReviewComments = {
   __typename?: 'PaginatedReviewComments';
   hasMore: Scalars['Boolean'];
@@ -428,6 +434,7 @@ export type Query = {
   filmListTags: PaginatedFilmListTags;
   filmLists: PaginatedFilmLists;
   followers: PaginatedFollowers;
+  followings: PaginatedFollowing;
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   me?: Maybe<User>;
@@ -508,6 +515,15 @@ export type QueryFilmListsArgs = {
 
 
 export type QueryFollowersArgs = {
+  cursor?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+  userId: Scalars['Int'];
+};
+
+
+export type QueryFollowingsArgs = {
   cursor?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
@@ -658,7 +674,7 @@ export type Subscription = {
   createdAt: Scalars['String'];
   follower: User;
   followerId: Scalars['Float'];
-  followingBack: Scalars['Boolean'];
+  following: User;
   userId: Scalars['Float'];
 };
 
@@ -1040,6 +1056,17 @@ export type FollowersQueryVariables = Exact<{
 
 
 export type FollowersQuery = { __typename?: 'Query', followers: { __typename?: 'PaginatedFollowers', hasMore: boolean, subscription: Array<{ __typename?: 'Subscription', follower: { __typename?: 'User', id: number, username: string, avatar?: string | null, displayName?: string | null } }> } };
+
+export type FollowingsQueryVariables = Exact<{
+  userId: Scalars['Int'];
+  limit: Scalars['Int'];
+  cursor?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderDir?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type FollowingsQuery = { __typename?: 'Query', followings: { __typename?: 'PaginatedFollowing', hasMore: boolean, subscription: Array<{ __typename?: 'Subscription', following: { __typename?: 'User', id: number, username: string, avatar?: string | null, displayName?: string | null } }> } };
 
 export type CheckIfUsernameTakenQueryVariables = Exact<{
   username: Scalars['String'];
@@ -2705,6 +2732,59 @@ export function useFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
 export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
 export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
+export const FollowingsDocument = gql`
+    query Followings($userId: Int!, $limit: Int!, $cursor: String, $orderBy: String, $orderDir: String) {
+  followings(
+    userId: $userId
+    limit: $limit
+    cursor: $cursor
+    orderBy: $orderBy
+    orderDir: $orderDir
+  ) {
+    subscription {
+      following {
+        id
+        username
+        avatar
+        displayName
+      }
+    }
+    hasMore
+  }
+}
+    `;
+
+/**
+ * __useFollowingsQuery__
+ *
+ * To run a query within a React component, call `useFollowingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFollowingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFollowingsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      limit: // value for 'limit'
+ *      cursor: // value for 'cursor'
+ *      orderBy: // value for 'orderBy'
+ *      orderDir: // value for 'orderDir'
+ *   },
+ * });
+ */
+export function useFollowingsQuery(baseOptions: Apollo.QueryHookOptions<FollowingsQuery, FollowingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FollowingsQuery, FollowingsQueryVariables>(FollowingsDocument, options);
+      }
+export function useFollowingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FollowingsQuery, FollowingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FollowingsQuery, FollowingsQueryVariables>(FollowingsDocument, options);
+        }
+export type FollowingsQueryHookResult = ReturnType<typeof useFollowingsQuery>;
+export type FollowingsLazyQueryHookResult = ReturnType<typeof useFollowingsLazyQuery>;
+export type FollowingsQueryResult = Apollo.QueryResult<FollowingsQuery, FollowingsQueryVariables>;
 export const CheckIfUsernameTakenDocument = gql`
     query CheckIfUsernameTaken($username: String!) {
   checkIfUsernameTaken(username: $username)
