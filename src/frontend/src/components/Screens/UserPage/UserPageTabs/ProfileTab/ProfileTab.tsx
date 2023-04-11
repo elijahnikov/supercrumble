@@ -1,4 +1,5 @@
 import { GetUserByUsernameQuery } from '@/generated/graphql';
+import RecentReviews from './RecentReviews/RecentReviews';
 import Stats from './Stats/Stats';
 
 interface ProfileTabProps {
@@ -31,6 +32,7 @@ const ProfileTab = ({ data }: ProfileTabProps) => {
                     }}
                 />
             )}
+            <RecentReviews username={data.getUserByUsername.username} />
         </div>
     );
 };

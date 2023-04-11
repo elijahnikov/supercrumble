@@ -87,8 +87,7 @@ const ReviewSection = ({ movieId }: ReviewSectionProps) => {
                                     {showRating ? (
                                         <Rating
                                             className='mb-2 mt-1 ml-2 navBarCollapse:ml-2'
-                                            ratingValue={0}
-                                            allowHalfIcon={true}
+                                            allowFraction={true}
                                             initialValue={review.ratingGiven}
                                             size={12}
                                             fillColor={'#FD4443'}

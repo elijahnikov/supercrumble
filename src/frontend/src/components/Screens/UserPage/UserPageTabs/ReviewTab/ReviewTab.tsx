@@ -22,6 +22,7 @@ import { ReviewType } from './reviewType';
 // React Icons
 import { BiComment } from 'react-icons/bi';
 import Button from '@/components/Common/Button/Button';
+import { Rating } from 'react-simple-star-rating';
 
 interface ReviewTabProps {}
 
@@ -146,6 +147,14 @@ const Review = ({ data }: ReviewProps) => {
                             <h4 className='mb-1 ml-2 font-semibold text-superRed'>
                                 {data.movie_release_year}
                             </h4>
+                            <div className='ml-3 mt-[-3px]'>
+                                <Rating
+                                    allowFraction={true}
+                                    size={20}
+                                    fillColor={'#FD4443'}
+                                    initialValue={data.ratingGiven}
+                                />
+                            </div>
                         </div>
                         <span className='w-[200px] text-xs text-slate-400'>
                             {epochToDate(data.createdAt)}
